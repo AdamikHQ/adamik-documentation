@@ -15,15 +15,9 @@
       "to": "#07C983"
     }
   },
-  "topbarLinks": [
-    {
-      "name": "Support",
-      "url": "mailto:hi@mintlify.com"
-    }
-  ],
   "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "name": "Contact us",
+    "url": "https://specific-marketing-744850.framer.app/contact"
   },
   "tabs": [
     {
@@ -35,22 +29,22 @@
     {
       "name": "Free API Key",
       "icon": "key",
-      "url": "https://mintlify.com/blog"
+      "url": "https://specific-marketing-744850.framer.app/get-api-key"
+    },
+    {
+      "name": "Demo App",
+      "icon": "rocket",
+      "url": "https://adamik-client.vercel.app/"
+    },
+    {
+      "name": "GitHub",
+      "icon": "github",
+      "url": "https://github.com/AdamikHQ"
     },
     {
       "name": "Support",
       "icon": "telegram",
       "url": "TODO"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
-    },
-    {
-      "name": "Demo App",
-      "icon": "rocket",
-      "url": "https://mintlify.com/blog"
     }
   ],
   "navigation": [
@@ -60,13 +54,6 @@
         "get_started/welcome",
         "get_started/overview",
         "get_started/quick_start"
-      ]
-    },
-    {
-      "group": "Company",
-      "pages": [
-        "company/about",
-        "company/careers"
       ]
     },
     {
