@@ -40,11 +40,6 @@
       "name": "GitHub",
       "icon": "github",
       "url": "https://github.com/AdamikHQ"
-    },
-    {
-      "name": "Support",
-      "icon": "telegram",
-      "url": "TODO"
     }
   ],
   "navigation": [
