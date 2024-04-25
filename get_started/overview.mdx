@@ -1,0 +1,31 @@
+
+
+Before delving into the detailed specifications and API references, it's recommended to review the high-level principles below. This preliminary step aims to provide a comprehensive understanding of the APIs' capabilities and operational dynamics.
+
+
+The Adamik APIs are segregated into two principal categories: the **Read API** for data retrieval and the **Write API** for transaction management. Both APIs are standardized across a wide range of blockchain networks.
+
+## Read API
+
+The Read API facilitates essential data access operations, including:
+
+- Retrieval of an on-chain account's balance.
+- Extraction of transaction details from the mempool.
+
+## Write API
+
+Unlike traditional solutions, the Write API is:
+
+- Fully stateless
+- Designed without needing access to private keys
+
+Usage scenarios for the Write API encompass a range of transaction-related activities, from executing straightforward cryptocurrency or token transfers to delegations or smart contract interactions.
+
+
+## Additional Services
+
+Beyond the core APIs, Adamik extends its functionality through the **Utility API** and an open-source **Transaction Decoder**:
+
+- The **Utility API** provides tools for various operational needs, such as address format validation, transaction fee estimation, and network congestion assessment.
+  
+- The **Transaction Decoder** is designed to interpret the output from Adamik's Write API, enabling autonomous and secure verification of transaction parameters before signature application.

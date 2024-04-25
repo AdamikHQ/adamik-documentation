@@ -1,11 +1,11 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Adamik",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/Adamik_symbol_flat_blue.svg",
   "colors": {
     "primary": "#0D9373",
     "light": "#07C983",
@@ -33,18 +33,23 @@
   ],
   "anchors": [
     {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "name": "Free API Key",
+      "icon": "key",
+      "url": "https://mintlify.com/blog"
     },
     {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
+      "name": "Support",
+      "icon": "telegram",
+      "url": "TODO"
     },
     {
       "name": "Blog",
       "icon": "newspaper",
+      "url": "https://mintlify.com/blog"
+    },
+    {
+      "name": "Demo App",
+      "icon": "rocket",
       "url": "https://mintlify.com/blog"
     }
   ],
@@ -52,20 +57,16 @@
     {
       "group": "Get Started",
       "pages": [
-        "introduction",
-        "quickstart",
-        "development"
+        "get_started/welcome",
+        "get_started/overview",
+        "get_started/quick_start"
       ]
     },
     {
-      "group": "Essentials",
+      "group": "Company",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
+        "company/about",
+        "company/careers"
       ]
     },
     {
@@ -84,8 +85,8 @@
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "x": "https://twitter.com/adamik_io",
+    "github": "https://github.com/AdamikHQ",
+    "linkedin": "https://www.linkedin.com/company/adamik/"
   }
 }
