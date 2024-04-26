@@ -5,9 +5,44 @@ Start your Adamik journey by generating your personal API key. It's your ticket 
 ## Create your first read request 🔍
 Dive into blockchain data with your first read request. Fetch data seamlessly with our API by trying the request below.
 
+```cURL Read API example
+curl --request POST \
+  --url https://adamik.vercel.app/api/data/state \
+  --header 'Content-Type: application/json' \
+  --header 'X-API-KEY: afd0b43d3c2297ff5771fa6c4d6a0bf2d12405b310ff295d2ac5ad54ff509852' \
+  --data '{
+  "chainId": "ethereum",
+  "address": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+}'
+```
+
 ## Create your first write request 🖊️
 Make your mark on the blockchain. Learn to create write requests to submit transactions or data. Give the following request a try.
+It will help you craft a transaction from a Binance account to Vitalik on the Ethereum network.
+
+```cURL Write example
+curl --request POST \
+  --url https://adamik.vercel.app/api/transaction/encode \
+  --header 'Content-Type: application/json' \
+  --header 'X-API-KEY: afd0b43d3c2297ff5771fa6c4d6a0bf2d12405b310ff295d2ac5ad54ff509852' \
+  --data '{
+  "transaction": {
+    "chainId": "ethereum",
+    "mode": "transfer",
+    "senders": [
+      "0x3f5CE5FBFe3E9af3971dD833D26bA9b5C936f0bE"
+    ],
+    "recipients": [
+      "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+    ],
+    "amount": "1234560",
+    "useMaxAmount": false
+  }
+}'
+```
+
+
 
 ## Fork our Demo App and deep-dive into Adamik's API 
 Explore Adamik's capabilities hands-on. Fork our [Demo App](https://github.com/AdamikHQ/adamik-client) and see what you can build. 
-Dive deeper into our [API Documentation](#) and unlock your project's potential.
+Dive deeper into our [API Documentation](../api-reference/introduction) and unlock your project's potential.

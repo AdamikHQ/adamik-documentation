@@ -1,5 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
+  "openapi": "https://adamik.vercel.app/openapi.json",
   "name": "Adamik",
   "logo": {
     "dark": "/logo/dark.svg",
@@ -58,13 +59,29 @@
       ]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "Read Examples",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "api-reference/endpoint/get-apichains",
+        "api-reference/endpoint/get-apichains-1",
+        "api-reference/endpoint/post-apidatastate",
+        "api-reference/endpoint/get-apidatavalidators"
       ]
-    }
+    },
+    {
+      "group": "Write Examples",
+      "pages": [
+        "api-reference/endpoint/post-apitransactionbroadcast",
+        "api-reference/endpoint/post-apitransactionencode"
+      ]
+    } ,
+    {
+      "group": "Utilitary Examples",
+      "pages": [
+        "api-reference/endpoint/post-apiaddressencode",
+        "api-reference/endpoint/post-apiaddressvalidate",
+        "api-reference/endpoint/post-apitransactionvalidate"
+      ]
+    } 
   ],
   "footerSocials": {
     "x": "https://twitter.com/adamik_io",
