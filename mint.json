@@ -6,7 +6,7 @@
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
   },
-  "favicon": "/Adamik_symbol_flat_blue.svg",
+  "favicon": "/Adamik_symbol_flat_white.svg",
   "colors": {
     "primary": "#0D9373",
     "light": "#07C983",
@@ -59,7 +59,7 @@
       ]
     },
     {
-      "group": "Read Examples",
+      "group": "Read Endpoints",
       "pages": [
         "api-reference/endpoint/get-apichains",
         "api-reference/endpoint/get-apichains-1",
@@ -68,14 +68,14 @@
       ]
     },
     {
-      "group": "Write Examples",
+      "group": "Write Endpoints",
       "pages": [
         "api-reference/endpoint/post-apitransactionbroadcast",
         "api-reference/endpoint/post-apitransactionencode"
       ]
     } ,
     {
-      "group": "Utilitary Examples",
+      "group": "Utilitary Endpoints",
       "pages": [
         "api-reference/endpoint/post-apiaddressencode",
         "api-reference/endpoint/post-apiaddressvalidate",

@@ -10,7 +10,7 @@ Dive into blockchain data with your first read request. Fetch data seamlessly wi
 curl --request POST \
   --url https://adamik.vercel.app/api/data/state \
   --header 'Content-Type: application/json' \
-  --header 'X-API-KEY: afd0b43d3c2297ff5771fa6c4d6a0bf2d12405b310ff295d2ac5ad54ff509852' \
+  --header 'X-API-KEY: <YOUR-API-KEY>' \
   --data '{
   "chainId": "ethereum",
   "address": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
@@ -25,7 +25,7 @@ It will help you craft a transaction from a Binance account to Vitalik on the Et
 curl --request POST \
   --url https://adamik.vercel.app/api/transaction/encode \
   --header 'Content-Type: application/json' \
-  --header 'X-API-KEY: afd0b43d3c2297ff5771fa6c4d6a0bf2d12405b310ff295d2ac5ad54ff509852' \
+  --header 'X-API-KEY: <YOUR-API-KEY>' \
   --data '{
   "transaction": {
     "chainId": "ethereum",
@@ -41,7 +41,6 @@ curl --request POST \
   }
 }'
 ```
-
 
 
 ## Fork our Demo App and deep-dive into Adamik's API 
