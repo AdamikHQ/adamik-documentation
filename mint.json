@@ -56,8 +56,8 @@
       "group": "API Documentation",
       "pages": [
         "api-reference/introduction",
+        "api-reference/authentication",
         "api-reference/errors"
-
       ]
     },
     {
