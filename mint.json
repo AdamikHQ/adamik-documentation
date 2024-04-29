@@ -70,8 +70,8 @@
     {
       "group": "Write Endpoints",
       "pages": [
-        "api-reference/endpoint/post-apitransactionbroadcast",
-        "api-reference/endpoint/post-apitransactionencode"
+        "api-reference/endpoint/post-apitransactionencode",
+        "api-reference/endpoint/post-apitransactionbroadcast"
       ]
     } ,
     {
