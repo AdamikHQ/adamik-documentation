@@ -36,11 +36,6 @@
       "name": "Adamik App",
       "icon": "rocket",
       "url": "https://adamik-client.vercel.app/"
-    },
-    {
-      "name": "GitHub",
-      "icon": "github",
-      "url": "https://github.com/AdamikHQ"
     }
   ],
   "navigation": [
