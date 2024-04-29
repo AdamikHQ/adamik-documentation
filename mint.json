@@ -28,14 +28,14 @@
   ],
   "anchors": [
     {
-      "name": "Contact us",
-      "icon": "envelope",
-      "url": "https://specific-marketing-744850.framer.app/contact"
-    },
-    {
       "name": "Adamik App",
       "icon": "rocket",
       "url": "https://adamik-client.vercel.app/"
+    },
+    {
+      "name": "Contact us",
+      "icon": "envelope",
+      "url": "https://specific-marketing-744850.framer.app/contact"
     }
   ],
   "navigation": [
