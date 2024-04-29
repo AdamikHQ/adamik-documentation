@@ -17,8 +17,8 @@
     }
   },
   "topbarCtaButton": {
-    "name": "Contact us",
-    "url": "https://specific-marketing-744850.framer.app/contact"
+    "name": "Get Free API Key",
+    "url": "https://specific-marketing-744850.framer.app/get-api-key"
   },
   "tabs": [
     {
@@ -28,9 +28,9 @@
   ],
   "anchors": [
     {
-      "name": "Free API Key",
-      "icon": "key",
-      "url": "https://specific-marketing-744850.framer.app/get-api-key"
+      "name": "Contact us",
+      "icon": "contact",
+      "url": "https://specific-marketing-744850.framer.app/contact"
     },
     {
       "name": "Adamik App",
