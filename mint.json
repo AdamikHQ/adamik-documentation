@@ -17,7 +17,7 @@
     }
   },
   "topbarCtaButton": {
-    "name": "Get Free API Key",
+    "name": "Get API Key",
     "url": "https://specific-marketing-744850.framer.app/get-api-key"
   },
   "tabs": [
@@ -44,7 +44,8 @@
       "pages": [
         "get_started/welcome",
         "get_started/overview",
-        "get_started/quick_start"
+        "get_started/quick_start",
+        "get_started/chains_supported"
       ]
     },
     {
