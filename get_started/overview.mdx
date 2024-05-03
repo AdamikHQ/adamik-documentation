@@ -4,10 +4,21 @@ icon: telescope
 
 Before delving into the detailed specifications and API references, it's recommended to review the high-level principles below. This preliminary step aims to provide a comprehensive understanding of the APIs' capabilities and operational dynamics.
 
+## Flow of operations
+
+The Adamik API operates on a client/server model. 
+Your application handles interfacing with wallet signers and capturing user intents, while Adamik servers manage on-chain data retrieval and transaction engineering (crafting).
+
+<img className="block h-128 dark:hidden" src="images/operation_flow_light.png" />
+<img className="hidden h-128 dark:block" src="images/operation_flow_dark.png" />
+
+## Read and Write APIs
+
 
 The Adamik APIs are segregated into two principal categories: 
 - the **Read API** for data retrieval and the **Write API** for transaction management. Both APIs are standardized across a wide range of blockchain networks.
 - Beyond the core APIs, Adamik extends its functionality through the **Utility API** which provides tools for various operational needs, such as address format validation, transaction fee estimation, and network congestion assessment.
+
 
 
 <CardGroup cols={3}>
