@@ -1,0 +1,15 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid black;
+    padding: 8px; /* Adjust padding as needed */
+    text-align: center;
+  }
+  .cell-content {
+    display: flex;
+    align-items: center; /* Vertical centering */
+    justify-content: center; /* Horizontal centering */
+    gap: 10px; /* Adjust the gap between text and image as needed */
+  }
