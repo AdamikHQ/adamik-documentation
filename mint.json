@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "openapi": "https://adamik.vercel.app/openapi.json",
+  "openapi": "https://api.adamik.io/openapi.json",
   "name": "Adamik",
   "logo": {
     "dark": "/logo/dark.svg",
