@@ -6,14 +6,14 @@ icon: bolt
 
 ## Get your first API key 🔑
 Start your Adamik journey by generating your personal API key. It's your ticket to the Multichain universe. 
-[Sign up here](TODO).
+[Sign up here](https://dashboard.adamik.io).
 
 ## Create your first read request 🔍
 Dive into blockchain data with your first read request. Fetch data seamlessly with our API by trying the request below.
 
 ```cURL Read API example
 curl --request POST \
-  --url https://adamik.vercel.app/api/data/state \
+  --url https://api.adamik.io/api/data/state \
   --header 'Content-Type: application/json' \
   --header 'X-API-KEY: <YOUR-API-KEY>' \
   --data '{
@@ -28,7 +28,7 @@ It will help you craft a transaction from a Binance account to Vitalik on the Et
 
 ```cURL Write example
 curl --request POST \
-  --url https://adamik.vercel.app/api/transaction/encode \
+  --url https://api.adamik.io/api/transaction/encode \
   --header 'Content-Type: application/json' \
   --header 'X-API-KEY: <YOUR-API-KEY>' \
   --data '{
