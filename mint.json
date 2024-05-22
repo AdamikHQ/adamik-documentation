@@ -16,6 +16,11 @@
       "to": "#4261F4"
     }
   },
+  "metadata": {
+    "og:image": "/social_media.png",
+    "og:title": "Adamik",
+    "og:description": "The easiest way to scale blockchain integration"
+  },
   "topbarCtaButton": {
     "name": "Get API Key",
     "url": "https://dashboard.adamik.io"
