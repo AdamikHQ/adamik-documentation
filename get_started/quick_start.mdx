@@ -15,7 +15,7 @@ Dive into blockchain data with your first read request. Fetch data seamlessly wi
 curl --request POST \
   --url https://api.adamik.io/api/data/state \
   --header 'Content-Type: application/json' \
-  --header 'X-API-KEY: <YOUR-API-KEY>' \
+  --header 'Authorization: <YOUR-API-KEY>' \
   --data '{
   "chainId": "ethereum",
   "address": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
@@ -30,7 +30,7 @@ It will help you craft a transaction from a Binance account to Vitalik on the Et
 curl --request POST \
   --url https://api.adamik.io/api/transaction/encode \
   --header 'Content-Type: application/json' \
-  --header 'X-API-KEY: <YOUR-API-KEY>' \
+  --header 'Authorization: <YOUR-API-KEY>' \
   --data '{
   "transaction": {
     "chainId": "ethereum",
