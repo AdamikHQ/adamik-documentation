@@ -65,7 +65,7 @@
       "group": "Read API",
       "pages": [
         "api-reference/endpoint/get-apichains",
-        "api-reference/endpoint/get-apichains-1",
+        "api-reference/endpoint/get-apichains-chainid",
         "api-reference/endpoint/post-apidatastate",
         "api-reference/endpoint/post-apidatavalidators"
       ]
