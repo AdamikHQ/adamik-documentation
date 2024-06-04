@@ -29,20 +29,22 @@ It will help you craft a transaction from a Binance account to the address demo.
 ```cURL Write example
 curl --request POST \
   --url https://api.adamik.io/api/transaction/encode \
-  --header 'Content-Type: application/json' \
   --header 'Authorization: <YOUR-API-KEY>' \
+  --header 'Content-Type: application/json' \
   --data '{
   "transaction": {
-    "chainId": "ethereum",
-    "mode": "transfer",
-    "senders": [
-      "0x3f5CE5FBFe3E9af3971dD833D26bA9b5C936f0bE"
-    ],
-    "recipients": [
-      "0xfc43f5f9dd45258b3aff31bdbe6561d97e8b71de"
-    ],
-    "amount": "1234560",
-    "useMaxAmount": false
+    "plain": {
+      "chainId": "ethereum",
+      "mode": "transfer",
+      "senders": [
+        "0x3f5CE5FBFe3E9af3971dD833D26bA9b5C936f0bE"
+      ],
+      "recipients": [
+        "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+      ],
+      "amount": "1234560",
+      "useMaxAmount": false
+    }
   }
 }'
 ```
