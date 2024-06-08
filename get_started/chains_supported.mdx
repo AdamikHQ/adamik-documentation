@@ -2,75 +2,93 @@
 icon: link
 ---
 
-List of blockchains supported in the Adamik API.
+List of blockchains supported in the Adamik API with their respective features.
 
 
 <table>
-  <thead>
-    <tr>
-      <th>Blockchain Name</th>
-      <th>Network</th>
-      <th>Balances</th>
-      <th>Transfer</th>
-      <th>Delegation</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><div class="cell-content">Algorand</div></td>
-      <td><div class="cell-content">algorand</div></td>
-      <td><div class="cell-content">✓</div></td>
-      <td><div class="cell-content">✓</div></td>
-      <td><div class="cell-content">✗</div></td>
-    </tr>
-    <tr>
-      <td><div class="cell-content">Cosmos</div></td>
-      <td><div class="cell-content">cosmoshub-4 </div></td>
-      <td><div class="cell-content">✓</div></td>
-      <td><div class="cell-content">✓</div></td>
-      <td><div class="cell-content">✓</div></td>
-    </tr>
-    <tr>
-      <td><div class="cell-content">Osmosis</div></td>
-      <td><div class="cell-content">osmosis</div></td>
-      <td><div class="cell-content">✓</div></td>
-      <td><div class="cell-content">✓</div></td>
-      <td><div class="cell-content">✓</div></td>
-    </tr>
-    <tr>
-      <td><div class="cell-content">Ethereum</div></td>
-      <td><div class="cell-content">mainnet, sepolia, holesky</div></td>
-      <td><div class="cell-content">✓</div></td>
-      <td><div class="cell-content">✓</div></td>
-      <td><div class="cell-content">✗</div></td>
-    </tr>
-    <tr>
-      <td><div class="cell-content">zkSync</div></td>
-      <td><div class="cell-content">mainnet, sepolia</div></td>
-      <td><div class="cell-content">✓</div></td>
-      <td><div class="cell-content">✓</div></td>
-      <td><div class="cell-content">✗</div></td>
-    </tr>
-    <tr>
-      <td><div class="cell-content">Injective (EVM)</div></td>
-      <td><div class="cell-content">mainnet, testnet</div></td>
-      <td><div class="cell-content">✓</div></td>
-      <td><div class="cell-content">✓</div></td>
-      <td><div class="cell-content">✓</div></td>
-    </tr>
-    <tr>
-      <td><div class="cell-content">Base</div></td>
-      <td><div class="cell-content">mainnet, sepolia</div></td>
-      <td><div class="cell-content">✓</div></td>
-      <td><div class="cell-content">✓</div></td>
-      <td><div class="cell-content">✗</div></td>
-    </tr>
-    <tr>
-      <td><div class="cell-content">Optimism</div></td>
-      <td><div class="cell-content">mainnet, sepolia</div></td>
-      <td><div class="cell-content">✓</div></td>
-      <td><div class="cell-content">✓</div></td>
-      <td><div class="cell-content">✗</div></td>
-    </tr>
-  </tbody>
-</table>
+      <thead>
+        <tr>
+          <th>Blockchain Name</th>
+          <th>Network identifier</th>
+          <th>Native Balance</th>
+          <th>Token Balance</th>
+          <th>Native Transfer</th>
+          <th>Token Transfer</th>
+          <th>Staking and Rewards</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Algorand</td>
+          <td>algorand</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>Cosmos</td>
+          <td>cosmoshub-4</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+        </tr>
+        <tr>
+          <td>Ethereum</td>
+          <td>mainnet, sepolia, holesky</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>zkSync</td>
+          <td>mainnet, sepolia</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>Base</td>
+          <td>mainnet, sepolia</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>Optimism</td>
+          <td>mainnet, sepolia</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>Arbitrum</td>
+          <td>mainnet, testnet</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>Polygon</td>
+          <td>mainnet, mumbai</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="checkmark">✓</td>
+          <td class="cross">✗</td>
+        </tr>
+      </tbody>
+    </table>
