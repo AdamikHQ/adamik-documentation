@@ -52,9 +52,7 @@
         "get_started/overview",
         "get_started/quick_start",
         "get_started/chains_supported",
-        "get_started/pricing",
-        "get_started/credits"
-      ]
+        "get_started/pricing"      ]
     },
     {
       "group": "API Documentation",
