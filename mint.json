@@ -68,8 +68,8 @@
         "api-reference/endpoint/get-apichains",
         "api-reference/endpoint/get-apichains-chainid",
         "api-reference/endpoint/get-apichains-chainid-token-tokenid",
-        "api-reference/endpoint/post-apidatastate",
-        "api-reference/endpoint/post-apidatavalidators"
+        "api-reference/endpoint/post-apiaddressstate",
+        "api-reference/endpoint/post-apichains-chainid-validators"
       ]
     },
     {
