@@ -7,6 +7,11 @@
     "light": "/logo/blue.svg",
     "href": "https://adamik.io"
   },
+  "analytics": {
+    "gtm": {
+        "tagId": "GTM-PDZKXGD6"
+    }
+  },
   "favicon": "Adamik_symbol_flat_blue.svg",
   "colors": {
     "primary": "#4261F4",
