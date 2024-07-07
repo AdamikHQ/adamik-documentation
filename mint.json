@@ -9,7 +9,7 @@
   },
   "analytics": {
     "gtm": {
-        "tagId": "GTM-PDZKXGD6"
+      "tagId": "GTM-PDZKXGD6"
     }
   },
   "favicon": "Adamik_symbol_flat_blue.svg",
@@ -57,7 +57,8 @@
         "get_started/overview",
         "get_started/quick_start",
         "get_started/chains_supported",
-        "get_started/pricing"      ]
+        "get_started/pricing"
+      ]
     },
     {
       "group": "API Documentation",
@@ -87,6 +88,7 @@
     {
       "group": "Utility API",
       "pages": [
+        "api-reference/endpoint/get-openapi",
         "api-reference/endpoint/post-apiaddressencode",
         "api-reference/endpoint/post-apiaddressvalidate",
         "api-reference/endpoint/post-apitransactionvalidate"
