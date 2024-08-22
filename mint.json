@@ -61,6 +61,10 @@
       ]
     },
     {
+      "group": "Guides and Tutorials",
+      "pages": ["guides/using-adamik-API-with-Ethereum"]
+    },
+    {
       "group": "API Documentation",
       "pages": [
         "api-reference/introduction",
