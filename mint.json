@@ -69,7 +69,8 @@
       "pages": [
         "api-reference/introduction",
         "api-reference/authentication",
-        "api-reference/errors"
+        "api-reference/errors",
+        "api-reference/endpoint/get-openapi"
       ]
     },
     {
@@ -92,7 +93,6 @@
     {
       "group": "Utility API",
       "pages": [
-        "api-reference/endpoint/get-openapi",
         "api-reference/endpoint/post-apiaddressencode",
         "api-reference/endpoint/post-apiaddressvalidate",
         "api-reference/endpoint/post-apitransactionvalidate"
