@@ -2,115 +2,54 @@
 icon: wallet
 ---
 
-<Info>
-The Adamik API is in beta, and we value your feedback. Enjoy the Free plan during this phase. Interested in more features or increased performance? [Contact us](https://adamik.io/contact) to discuss upgrades.
-</Info>
+# Adamik API Pricing
 
-{/* Explore the Adamik API with four different plans tailored to suit various needs.
+Our pricing is dynamic and scalable, adjusting in real-time based on your API usage over the last 30 days. This model ensures you always get the best rates as your API call volume changes.
 
-<CardGroup cols={4}>
-  <Card
-    title="Free"
-    icon="bolt"
-  >
-  Get started quickly and test the API with ease.
-  </Card>
-  <Card
-    title="Developer"
-    icon="code"
-  >
-  Build your app with enhanced performance and features.
-  </Card>
-  <Card
-    title="Pro"
-    icon="users"
-  >
-  Ideal for supporting thousands of users.
-  </Card>
-  <Card
-    title="Custom"
-    icon="user-tie"
-  >
-  Tailored solutions for specific requirements.
-  </Card>
-</CardGroup>
+## How It Works
 
-## Plan Comparison
-A comprehensive guide to understanding Adamik's pricing plans.
+Your costs are recalculated immediately after each API call, based on a rolling 30-day total. As your usage changes, the price per call adjusts to match the appropriate tier.
 
-<table>
-    <thead>
-        <tr>
-            <th>Feature</th>
-            <th>Free Tier</th>
-            <th>Developer Plan</th>
-            <th>Pro Plan</th>
-            <th>Enterprise Plan</th>
-        </tr>
-    </thead>
-    
-    <tbody>
-        <tr>
-            <td>Base Rate</td>
-            <td>Free</td>
-            <td>&#36;49/month</td>
-            <td>&#36;199/month</td>
-            <td>from &#36;750/month</td>
-        </tr>
-        <tr>
-            <td>Requests/month</td>
-            <td>10,000</td>
-            <td>50,000</td>
-            <td>300,000</td>
-            <td>Custom</td>
-        </tr>
-        <tr>
-            <td>Rate limiting</td>
-            <td>1 per second</td>
-            <td>5 per second</td>
-            <td>10 per second</td>
-            <td>Custom</td>
-        </tr>
-         <tr>
-            <td>Auto-scale</td>
-            <td class="cross">✗</td>
-            <td class="cross">✗</td>
-            <td class="checkmark">✓</td>
-            <td class="checkmark">✓</td>
-        </tr>
-        <tr>
-            <td>Access all chains</td>
-            <td class="checkmark">✓</td>
-            <td class="checkmark">✓</td>
-            <td class="checkmark">✓</td>
-            <td class="checkmark">✓</td>
-        </tr>
-        <tr>
-            <td>Discord Support</td>
-            <td class="checkmark">✓</td>
-            <td class="checkmark">✓</td>
-            <td class="checkmark">✓</td>
-            <td class="checkmark">✓</td>
-        </tr>
-        <tr>
-            <td>Premium support</td>
-            <td class="cross">✗</td>
-            <td class="cross">✗</td>
-            <td class="checkmark">✓</td>
-            <td class="checkmark">✓</td>
-        </tr>
-        <tr>
-            <td>Pay in Crypto</td>
-            <td class="cross">✗</td>
-            <td class="cross">✗</td>
-            <td class="checkmark">✓</td>
-            <td class="checkmark">✓</td>
-        </tr>
-    </tbody>
-</table>
+### Pricing Tiers
 
+| **Tier** |      **API Calls**       | **Price per Call** |
+| :------: | :----------------------: | :----------------: |
+|    1     |       0 - 500,000        |      $0.0071       |
+|    2     |   500,001 - 1,000,000    |      $0.0064       |
+|    3     |  1,000,001 - 5,000,000   |      $0.0057       |
+|    4     |  5,000,001 - 15,000,000  |      $0.0050       |
+|    5     | 15,000,001 - 50,000,000  |      $0.0028       |
+|    6     | 50,000,001 - 100,000,000 |      $0.0023       |
+|    7     |    Above 100,000,000     |      $0.0011       |
 
-<Info>
-You can still upgrade your plan at any time and downgrade it on a monthly basis. If Auto-scale is enabled, you can continue using the service beyond your plan’s limit. In this case, an additional charge of $73.50 will apply for every 10,000 extra requests.
-</Info>
- */}
+### Chain Activation Fee
+
+- **Monthly Fee**: $100 per blockchain, recurring as long as the chain is active.
+
+You only pay for the blockchains you use, allowing you to manage costs effectively.
+
+## Example: Monthly Cost Calculation
+
+**Example Scenario:**
+
+- **Chains Activated**: 3
+- **Total API Calls**: 1,200,000 (monthly)
+
+### Calculation:
+
+1. **API Call Charges**:
+
+   - First 500,000 calls:  
+     `500,000 × 0.0071 = $3,557.14`
+   - Next 500,000 calls (Tier 2):  
+     `500,000 × 0.0064 = $3,201.43`
+   - Remaining 200,000 calls (Tier 3):  
+     `200,000 × 0.0057 = $1,138.29`
+   - **Total API Call Cost**:  
+     `$7,896.86`
+
+2. **Chain Activation Cost**:  
+   `3 × 100 = $300`
+
+3. **Total Monthly Cost**:  
+   `$7,896.86 + $300 = $8,196.86`
