@@ -87,6 +87,7 @@
     {
       "group": "Write API",
       "pages": [
+        "api-reference/transaction_encoding_and_validation",
         "api-reference/endpoint/post-apitransactionencode",
         "api-reference/endpoint/post-apitransactionbroadcast"
       ]
