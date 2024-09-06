@@ -7,13 +7,13 @@ The `/api/transaction/encode` endpoint is designed to streamline the process of 
 ### Key Functions:
 
 1. **Input Validation**  
-   The endpoint checks that all required fields are provided and flags any inconsistencies. For example, it ensures that incompatible fields like `amount` and `useMaxAmount` are not used together.
+   The endpoint checks that all required fields are provided and flags any inconsistencies. For example, it ensures that incompatible fields like `amount` and `useMaxAmount` are not used together. The system also verifies that the sender’s account has enough balance to cover both the transaction amount and the fees.
 
 2. **Automatic Fee & Gas Calculation**  
    One of the key benefits of this endpoint is that it automatically calculates the necessary transaction fees and gas estimates. There's no need to input these manually, as the system computes them based on network conditions.
 
 3. **Transaction Completion**  
-   It computes the final transaction details, such as adjusting the amount when `useMaxAmount` is specified. The system also verifies that the sender’s account has enough balance to cover both the transaction amount and the fees.
+   It computes the final transaction details, such as adjusting the amount when `useMaxAmount` is specified, or set the nonce when applicable.
 
 4. **Custom Chain Rule Validation**  
    The endpoint applies specific validation rules based on the blockchain network. This ensures that the transaction complies with the unique requirements of each supported chain.
