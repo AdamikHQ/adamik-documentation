@@ -2,19 +2,40 @@
 icon: wallet
 ---
 
-Our pricing is dynamic and scalable, adjusting in real-time based on your API usage over the last 30 days. This model ensures you always get the best rates as your API call volume changes.
+We offer two flexible plans based on your needs:
 
 <Info>
-  The Adamik API is still in beta, and we value your feedback. Enjoy our API for
-  free during this phase. Interested in more features? [Contact
-  us](https://adamik.io/contact) to discuss upgrades.
+  The Adamik API is still in beta, and we value your feedback. During this
+  phase, you can enjoy our API for free **without limits**.
 </Info>
+
+<CardGroup cols={2}>
+  <Card title="Free Plan" icon="handshake">
+    Start for free.  
+    - No payment required  
+    - 10,000 API calls/month  
+    - Access all blockchains  
+    - Basic rate limits  
+  </Card>
+
+  <Card title="Pay-As-You-Go Plan" icon="arrow-up-right-dots">
+    Scale as you grow.  
+    - $250/month base  
+    - 100,000 API calls included  
+    - Flexible, pay per extra call  
+    - Full blockchain access  
+  </Card>
+</CardGroup>
 
 ## How It Works
 
-Your costs are recalculated immediately after each API call, based on a rolling 30-day total. As your usage changes, the price per call adjusts to match the appropriate tier.
+1. **Free Plan**: Get started without providing any payment information. The free plan gives you 10,000 API calls per month and access to all supported blockchains, with rate limits applied for non-production use.
 
-### Pricing Tiers
+2. **Pay-As-You-Go Plan**: For production environments, this plan requires a $250 monthly flat fee and comes with 100,000 free API calls. Additional API calls beyond 100,000 are billed according to the dynamic pricing tiers below. This plan is designed to scale with your usage, ensuring cost efficiency as your business grows.
+
+## Pricing Tiers for Pay-As-You-Go Plan
+
+Your cost is recalculated immediately after each API call based on a rolling 30-day total, with prices dynamically adjusting to match the appropriate tier.
 
 <table style={{ width: "100%", tableLayout: "fixed" }}>
   <thead>
@@ -27,7 +48,7 @@ Your costs are recalculated immediately after each API call, based on a rolling 
   <tbody>
     <tr>
       <td style={{ textAlign: "center" }}>1</td>
-      <td style={{ whiteSpace: "nowrap" }}>0&nbsp;-&nbsp;500,000</td>
+      <td style={{ whiteSpace: "nowrap" }}>100,001&nbsp;-&nbsp;500,000</td>
       <td style={{ textAlign: "center" }}>$0.000711</td>
     </tr>
     <tr>
@@ -67,34 +88,31 @@ Your costs are recalculated immediately after each API call, based on a rolling 
   </tbody>
 </table>
 
-### Chain Access Fee
-
-- **Monthly Fee**: $100 per blockchain, recurring as long as access to the chain is required.
-
-You only pay for the blockchains you use, allowing you to manage costs effectively.
-
 ## Example: Monthly Cost Calculation
 
 **Example Scenario:**
 
-- **Chains Used**: 3
+- **Plan**: Pay-As-You-Go
 - **Total API Calls**: 1,200,000 (monthly)
 
 ### Calculation:
 
 1. **API Call Charges**:
 
-   - First 500,000 calls:  
-     `500,000 × 0.000711 = $355.50`
+   - First 100,000 calls:  
+     Included in the monthly fee of $250
+   - Next 400,000 calls (Tier 1):  
+     `400,000 × 0.000711 = $284.40`
    - Next 500,000 calls (Tier 2):  
      `500,000 × 0.000640 = $320.00`
    - Remaining 200,000 calls (Tier 3):  
      `200,000 × 0.000569 = $113.80`
    - **Total API Call Cost**:  
-     `$789.30`
+     `$284.40 + $320.00 + $113.80 = $718.20`
 
-2. **Chain Access Cost**:  
-   `3 × 100 = $300`
+2. **Total Monthly Cost**:  
+   `$718.20 (API Call Cost) + $250 (Flat Fee) = $968.20`
 
-3. **Total Monthly Cost**:  
-   `$789.30 + $300 = $1,089.30`
+## Need More Features?
+
+The Adamik API is still in beta, and we value your feedback. Enjoy our API for free during this phase. Interested in more features? [Contact us](https://adamik.io/contact) to discuss upgrades.
