@@ -12,26 +12,28 @@ We offer two flexible plans based on your needs:
 <CardGroup cols={2}>
   <Card title="Free Plan" icon="handshake">
     Start for free.  
-    - No payment required  
-    - 10,000 API calls/month  
     - Access all blockchains  
     - Basic rate limits  
+    - No payment required  
+    - 10,000 API calls/month  
   </Card>
 
   <Card title="Pay-As-You-Go Plan" icon="arrow-up-right-dots">
-    Scale as you grow.  
-    - $250/month base  
-    - 100,000 API calls included  
-    - Flexible, pay per extra call  
-    - Full blockchain access  
+    All Free Plan features + extras.
+    - Access all blockchains  
+    - Increased rate limits for production use  
+    - $250 monthly base fee  
+    - Flexible, pay per call after 10,000 
+    - Premium support
+
   </Card>
 </CardGroup>
 
 ## How It Works
 
-1. **Free Plan**: Get started without providing any payment information. The free plan gives you 10,000 API calls per month and access to all supported blockchains, with rate limits applied for non-production use.
+1. **Free Plan**: The Free Plan gives you 10,000 API calls per month with access to all supported blockchains. It's perfect for non-production use, offering basic rate limits and access to community support. No payment information is required to get started.
 
-2. **Pay-As-You-Go Plan**: For production environments, this plan requires a $250 monthly flat fee and comes with 100,000 free API calls. Additional API calls beyond 100,000 are billed according to the dynamic pricing tiers below. This plan is designed to scale with your usage, ensuring cost efficiency as your business grows.
+2. **Pay-As-You-Go Plan**: This plan is designed for production environments. For $250 per month, you get 10,000 API calls included, premium support, and increased rate limits for higher-volume use. After the first 10,000 API calls, additional calls are charged according to the dynamic pricing tiers below, which scale based on your usage.
 
 ## Pricing Tiers for Pay-As-You-Go Plan
 
@@ -48,42 +50,42 @@ Your cost is recalculated immediately after each API call based on a rolling 30-
   <tbody>
     <tr>
       <td style={{ textAlign: "center" }}>1</td>
-      <td style={{ whiteSpace: "nowrap" }}>100,001&nbsp;-&nbsp;500,000</td>
-      <td style={{ textAlign: "center" }}>$0.000711</td>
+      <td style={{ whiteSpace: "nowrap" }}>10,001&nbsp;-&nbsp;500,000</td>
+      <td style={{ textAlign: "center" }}>$0.00071</td>
     </tr>
     <tr>
       <td style={{ textAlign: "center" }}>2</td>
       <td style={{ whiteSpace: "nowrap" }}>500,001&nbsp;-&nbsp;1,000,000</td>
-      <td style={{ textAlign: "center" }}>$0.000640</td>
+      <td style={{ textAlign: "center" }}>$0.00064</td>
     </tr>
     <tr>
       <td style={{ textAlign: "center" }}>3</td>
       <td style={{ whiteSpace: "nowrap" }}>1,000,001&nbsp;-&nbsp;5,000,000</td>
-      <td style={{ textAlign: "center" }}>$0.000569</td>
+      <td style={{ textAlign: "center" }}>$0.00057</td>
     </tr>
     <tr>
       <td style={{ textAlign: "center" }}>4</td>
       <td style={{ whiteSpace: "nowrap" }}>5,000,001&nbsp;-&nbsp;15,000,000</td>
-      <td style={{ textAlign: "center" }}>$0.000498</td>
+      <td style={{ textAlign: "center" }}>$0.00050</td>
     </tr>
     <tr>
       <td style={{ textAlign: "center" }}>5</td>
       <td style={{ whiteSpace: "nowrap" }}>
         15,000,001&nbsp;-&nbsp;50,000,000
       </td>
-      <td style={{ textAlign: "center" }}>$0.000285</td>
+      <td style={{ textAlign: "center" }}>$0.00029</td>
     </tr>
     <tr>
       <td style={{ textAlign: "center" }}>6</td>
       <td style={{ whiteSpace: "nowrap" }}>
         50,000,001&nbsp;-&nbsp;100,000,000
       </td>
-      <td style={{ textAlign: "center" }}>$0.000231</td>
+      <td style={{ textAlign: "center" }}>$0.00023</td>
     </tr>
     <tr>
       <td style={{ textAlign: "center" }}>7</td>
       <td style={{ whiteSpace: "nowrap" }}>&gt;100,000,000</td>
-      <td style={{ textAlign: "center" }}>$0.000107</td>
+      <td style={{ textAlign: "center" }}>$0.00011</td>
     </tr>
   </tbody>
 </table>
@@ -99,19 +101,19 @@ Your cost is recalculated immediately after each API call based on a rolling 30-
 
 1. **API Call Charges**:
 
-   - First 100,000 calls:  
+   - First 10,000 calls:  
      Included in the monthly fee of $250
-   - Next 400,000 calls (Tier 1):  
-     `400,000 × 0.000711 = $284.40`
+   - Next 490,000 calls (Tier 1):  
+     `490,000 × 0.00071 = $347.90`
    - Next 500,000 calls (Tier 2):  
-     `500,000 × 0.000640 = $320.00`
+     `500,000 × 0.00064 = $320.00`
    - Remaining 200,000 calls (Tier 3):  
-     `200,000 × 0.000569 = $113.80`
+     `200,000 × 0.00057 = $114.00`
    - **Total API Call Cost**:  
-     `$284.40 + $320.00 + $113.80 = $718.20`
+     `$347.90 + $320.00 + $114.00 = $781.90`
 
 2. **Total Monthly Cost**:  
-   `$718.20 (API Call Cost) + $250 (Flat Fee) = $968.20`
+   `$781.90 (API Call Cost) + $250 (Flat Fee) = $1,031.90`
 
 ## Need More Features?
 
