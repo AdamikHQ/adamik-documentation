@@ -7,18 +7,21 @@ The diagram below outlines the specific flow for encoding and broadcasting trans
 ```mermaid
 sequenceDiagram
     participant USER as End-User
-    participant APP as Client-App
+    participant CLIENT as Client-App
     participant ADAMIK as Adamik API
 
-    USER->>APP: set transaction data (type, amount, sender, recipient, etc.)
-    APP->>ADAMIK: /api/transaction/encode
-    ADAMIK->>APP: encoded transaction (pre-validation, fees, etc.)
+    %% Transaction Preparation %%
+    USER->>CLIENT: Set transaction data <br/>(type, amount, sender, recipient)
+    CLIENT->>ADAMIK: POST /api/transaction/encode
+    ADAMIK->>CLIENT: Encoded transaction <br/>(pre-validation, fees)
 
-    APP->>USER: request signature
-    USER->>APP: sign transaction
+    %% Signature Process %%
+    CLIENT->>USER: Request signature
+    USER->>CLIENT: Sign transaction
 
-    APP->>ADAMIK: /api/transaction/broadcast
-    ADAMIK->>APP: transaction hash
+    %% Broadcasting %%
+    CLIENT->>ADAMIK: POST /api/transaction/broadcast
+    ADAMIK->>CLIENT: Return transaction hash
 ```
 
 This diagram simplifies the process into two main steps:
