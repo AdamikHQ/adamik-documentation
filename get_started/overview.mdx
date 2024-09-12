@@ -13,27 +13,34 @@ The diagram below outlines the basic flow of interactions between the app, the u
 ```mermaid
 
 sequenceDiagram
-participant USER
-participant APP
-participant ADAMIK API
+    participant USER as End-User
+    participant CLIENT as Client App
+    participant ADAMIK as Adamik API
 
-    APP->>ADAMIK API: Request supported chains and networks
-    ADAMIK API->>APP: Return chains and networks info
+    %% Application Bootstrapping %%
+    USER->>CLIENT: Application starts
+    CLIENT->>ADAMIK: Request supported chains and networks
+    ADAMIK->>CLIENT: Return chains and networks info
 
-    APP->>ADAMIK API: Get account state and history
-    ADAMIK API->>APP: Return account data and history
+    %% Account Management %%
+    USER->>CLIENT: Check account status
+    CLIENT->>ADAMIK: Fetch account state and history
+    ADAMIK->>CLIENT: Return account data and history
 
-    USER->>APP: Initiate transaction (intent)
-    APP->>ADAMIK API: Share intent
-    ADAMIK API->>APP: Return prepared transaction
-    APP->> USER: Request approval
-    USER->>APP: Approve prepared transaction
-    APP->>ADAMIK API: Return transaction signature
-    ADAMIK API->>APP: Assemble transaction & signature, and broadcast
+    %% Transaction Process %%
+    USER->>CLIENT: Initiate transaction (intent)
+    CLIENT->>ADAMIK: Share intent
+    ADAMIK->>CLIENT: Prepare transaction
+    CLIENT->>USER: Request approval
+    USER->>CLIENT: Approve/Sign transaction
+    CLIENT->>ADAMIK: Send signature
+    ADAMIK->>CLIENT: Assemble and broadcast transaction
 
-    USER->>APP: Get transaction status
-    APP->>ADAMIK API: Fetch transaction info / history / balance
-    ADAMIK API->>APP: Return updated transaction history and balances
+    %% Transaction Status %%
+    USER->>CLIENT: Check transaction status
+    CLIENT->>ADAMIK: Get transaction status / history / balance
+    ADAMIK->>CLIENT: Return updated transaction data
+
 ```
 
 ## Read and Write APIs

@@ -6,33 +6,33 @@ The diagram below outlines the basic flow of interactions between the app, the u
 
 ```mermaid
 sequenceDiagram
-    participant User
-    participant APP
-    participant ADAMIK API
+    participant USER as End-User
+    participant APP as Client App
+    participant ADAMIK as Adamik API
 
-    User->>APP: get chains supported
-    APP->>ADAMIK API: /api/chains
-    ADAMIK API->>APP: chains, data, supported features
+    USER->>APP: get chains supported
+    APP->>ADAMIK: /api/chains
+    ADAMIK->>APP: chains, data, supported features
 
-    User->>APP: get chain info
-    APP->>ADAMIK API: /api/chain/{chainId}
-    ADAMIK API->>APP: chain info
+    USER->>APP: get chain info
+    APP->>ADAMIK: /api/chain/{chainId}
+    ADAMIK->>APP: chain info
 
-    User->>APP: get token info
-    APP->>ADAMIK API: /api/token/{tokenId}
-    ADAMIK API->>APP: token info
+    USER->>APP: get token info
+    APP->>ADAMIK: /api/token/{tokenId}
+    ADAMIK->>APP: token info
 
-    User->>APP: get account balances
-    APP->>ADAMIK API: /api/account/state
-    ADAMIK API->>APP: account state (balances, staking, etc.)
+    USER->>APP: get account balances
+    APP->>ADAMIK: /api/account/state
+    ADAMIK->>APP: account state (balances, staking, etc.)
 
-    User->>APP: get validators information
-    APP->>ADAMIK API: /api/{chainId}/validators
-    ADAMIK API->>APP: validators info
+    USER->>APP: get validators information
+    APP->>ADAMIK: /api/{chainId}/validators
+    ADAMIK->>APP: validators info
 
-    User->>APP: get transaction info
-    APP->>ADAMIK API: /api/{chainId}/transaction/{txId}
-    ADAMIK API->>APP: transaction info
+    USER->>APP: get transaction info
+    APP->>ADAMIK: /api/{chainId}/transaction/{txId}
+    ADAMIK->>APP: transaction info
 ```
 
 ## Read API Overview
