@@ -28,10 +28,10 @@ participant ADAMIK API
     ADAMIK API->>APP: Return prepared transaction
     APP->> USER: Request approval
     USER->>APP: Approve prepared transaction
-    APP->>ADAMIK API: Share transaction signature
+    APP->>ADAMIK API: Return transaction signature
     ADAMIK API->>APP: Assemble transaction & signature, and broadcast
 
-    USER->>APP: Check transaction status
+    USER->>APP: Get transaction status
     APP->>ADAMIK API: Fetch transaction info / history / balance
     ADAMIK API->>APP: Return updated transaction history and balances
 ```
