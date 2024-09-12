@@ -2,25 +2,50 @@
 icon: telescope
 ---
 
-Before delving into the detailed specifications and API references, it's recommended to review the high-level principles below. This preliminary step aims to provide a comprehensive understanding of the APIs' capabilities and operational dynamics.
+Before exploring the detailed specifications and API references, review these high-level principles for an overview of the API’s capabilities and workflow.
 
 ## Flow of operations
 
-The Adamik API operates on a client/server model. 
-Your application handles interfacing with wallet signers and capturing user intents, while Adamik servers manage on-chain data retrieval and transaction engineering (crafting).
+The Adamik API operates on a client/server model. Your application captures user intents and has signing capabilities. The Adamik server manages on-chain data retrieval and transaction crafting, ensuring that user intents are properly translated and executed on the blockchain.
 
-<img className="block h-128 dark:hidden" src="../images/operation_flow_light.png" />
-<img className="hidden h-128 dark:block" src="../images/operation_flow_dark.png" />
+The diagram below outlines the basic flow of interactions between the app, the user, and the Adamik API.
 
+```mermaid
+
+sequenceDiagram
+participant USER
+participant APP
+participant ADAMIK API
+
+    APP->>ADAMIK API: Request supported chains and networks
+    ADAMIK API->>APP: Return chains and networks info
+
+    APP->>ADAMIK API: Get account state and history
+    ADAMIK API->>APP: Return account data and history
+
+    USER->>APP: Initiate transaction (intent)
+    APP->>ADAMIK API: Share intent
+    ADAMIK API->>APP: Return prepared transaction
+    APP->> USER: Request approval
+    USER->>APP: Approve prepared transaction
+    APP->>ADAMIK API: Share transaction signature
+    ADAMIK API->>APP: Assemble transaction & signature, and broadcast
+
+    USER->>APP: Check transaction status
+    APP->>ADAMIK API: Fetch transaction info / history / balance
+    ADAMIK API->>APP: Return updated transaction history and balances
+```
 
 ## Read and Write APIs
 
+The Adamik APIs are divided into two principal categories:
 
-The Adamik APIs are segregated into two principal categories: 
-- the **Read API** for data retrieval and the **Write API** for transaction management. Both APIs are standardized across a wide range of blockchain networks.
-- Beyond the core APIs, Adamik extends its functionality through the **Utility API** which provides tools for various operational needs, such as address format validation, transaction fee estimation, and network congestion assessment.
+- **Read API**: For data retrieval, including fetching account details and transaction history.
+- **Write API**: For managing transactions such as cryptocurrency transfers or staking operations.
 
+These APIs work consistently across various blockchain networks.
 
+In addition to the core APIs, Adamik offers the **Utility API** to support common operational needs. It includes tools for address format validation, or pubkey conversion to addresses, helping to streamline crypto application development.
 
 <CardGroup cols={3}>
   <Card
@@ -28,26 +53,25 @@ The Adamik APIs are segregated into two principal categories:
     icon="readme"
     href="../api-reference/endpoint/get-apichains"
   >
-The Read API facilitates easy access to on-chain information.
-</Card>
+    Retrieve on-chain information with ease using the Read API.
+  </Card>
   <Card
     title="Write API"
     icon="pen-to-square"
     href="../api-reference/endpoint/post-apitransactionencode"
   >
-The Write API supports simple cryptocurrency transfers, delegations, and smart contract interactions.
-
+    Manage cryptocurrency transfers and delegations with the Write API.
   </Card>
   <Card
     title="Utility API"
     icon="gear"
     href="../api-reference/endpoint/post-apiaddressencode"
   >
-The Utility API provides tools to aid crypto application development.
-</Card>
+    Leverage tools like address format validation with the Utility API.
+  </Card>
 </CardGroup>
 
 <Info>
-  Note that our API are fully stateless and operates without requiring access to private keys.
+  Note that our APIs are fully stateless and do not require access to private
+  keys.
 </Info>
-

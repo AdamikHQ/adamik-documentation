@@ -79,6 +79,7 @@
     {
       "group": "Read API",
       "pages": [
+        "api-reference/read_API_overview_and_interaction_flow",
         "api-reference/endpoint/get-apichains",
         "api-reference/endpoint/get-apichains-chainid",
         "api-reference/endpoint/get-apichains-chainid-token-tokenid",
@@ -90,7 +91,7 @@
     {
       "group": "Write API",
       "pages": [
-        "api-reference/transaction_encoding_and_validation",
+        "api-reference/write_API_overview_and_interaction_flow",
         "api-reference/endpoint/post-apitransactionencode",
         "api-reference/endpoint/post-apitransactionbroadcast"
       ]
