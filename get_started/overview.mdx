@@ -6,41 +6,30 @@ Before exploring the detailed specifications and API references, review these hi
 
 ## Flow of operations
 
-The Adamik API operates on a client/server model. Your application captures user intents and has signing capabilities. The Adamik server manages on-chain data retrieval and transaction crafting, ensuring that user intents are properly translated and executed on the blockchain.
-
-The diagram below outlines the basic flow of interactions between the app, the user, and the Adamik API.
+The Adamik API follows a client/server model. Your application handles user intents and signing, while the Adamik server manages on-chain data retrieval and transaction creation, ensuring user actions are executed on the blockchain.
+The diagram below outlines the basic flow of interactions between an App and the Adamik API.
 
 ```mermaid
-
 sequenceDiagram
-    participant USER as End-User
     participant CLIENT as Client App
     participant ADAMIK as Adamik API
 
-    %% Application Bootstrapping %%
-    USER->>CLIENT: Application starts
-    CLIENT->>ADAMIK: Request supported chains and networks
-    ADAMIK->>CLIENT: Return chains and networks info
-
     %% Account Management %%
-    USER->>CLIENT: Check account status
+    Note right of CLIENT: Account Management
     CLIENT->>ADAMIK: Fetch account state and history
     ADAMIK->>CLIENT: Return account data and history
 
     %% Transaction Process %%
-    USER->>CLIENT: Initiate transaction (intent)
-    CLIENT->>ADAMIK: Share intent
-    ADAMIK->>CLIENT: Prepare transaction
-    CLIENT->>USER: Request approval
-    USER->>CLIENT: Approve/Sign transaction
+    Note right of CLIENT: Transaction Process
+    CLIENT->>ADAMIK: Initiate transaction
+    ADAMIK->>CLIENT: Return prepared transaction
     CLIENT->>ADAMIK: Send signature
     ADAMIK->>CLIENT: Assemble and broadcast transaction
 
     %% Transaction Status %%
-    USER->>CLIENT: Check transaction status
-    CLIENT->>ADAMIK: Get transaction status / history / balance
+    Note right of CLIENT: Transaction Status
+    CLIENT->>ADAMIK: Get transaction status/history/balance
     ADAMIK->>CLIENT: Return updated transaction data
-
 ```
 
 ## Read and Write APIs
