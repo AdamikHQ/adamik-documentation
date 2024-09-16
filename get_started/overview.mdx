@@ -22,7 +22,7 @@ sequenceDiagram
     %% Transaction Process %%
     Note right of CLIENT: Transaction Process
     CLIENT->>ADAMIK: Initiate transaction
-    ADAMIK->>CLIENT: Return prepared transaction
+    ADAMIK->>CLIENT: Prepared unsigned transaction
     CLIENT->>ADAMIK: Send signature
     ADAMIK->>CLIENT: Assemble and broadcast transaction
 
