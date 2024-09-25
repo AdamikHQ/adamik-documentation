@@ -39,11 +39,11 @@ async function main() {
   // Prepare the transaction request
   const requestBody = {
     transaction: {
-      plain: {
+      data: {
         chainId: "sepolia", // Target Ethereum testnet chain
         mode: "transfer",
-        senders: [wallet.address],
-        recipients: [recipientAddress || wallet.address], // Self-send if no recipient
+        sender: wallet.address,
+        recipient: recipientAddress || wallet.address, // Self-send if no recipient
         amount: "10000", // Transaction amount
         useMaxAmount: false,
         fees: "0",
@@ -71,17 +71,17 @@ async function main() {
     }
   );
 
-  const encodeData = await responseEncode.json();
-  console.log(encodeData);
+  const encodedData = await responseEncode.json();
+  console.log(encodedData);
 
   // Sign the encoded transaction
-  const tx = encodeData.transaction.encoded;
+  const tx = encodedData.transaction.encoded;
   const signature = await wallet.signTransaction(tx);
 
   // Prepare to broadcast the signed transaction
   const sendTransactionBody = {
     transaction: {
-      plain: encodeData.transaction.plain,
+      data: encodedData.transaction.data,
       encoded: tx,
       signature: signature,
     },
