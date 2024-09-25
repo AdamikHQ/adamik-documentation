@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "openapi": "https://api.adamik.io/openapi.json",
+  "openapi": "openapi.json",
   "name": "Adamik",
   "logo": {
     "dark": "/logo/dark.svg",
@@ -64,7 +64,8 @@
       "group": "Guides and Tutorials",
       "pages": [
         "guides/using-Adamik-API-with-Ethereum",
-        "guides/using-Adamik-API-with-TON"
+        "guides/using-Adamik-API-with-TON",
+        "guides/using-Adamik-API-with-Bitcoin"
       ]
     },
     {
@@ -73,6 +74,7 @@
         "api-reference/introduction",
         "api-reference/authentication",
         "api-reference/errors",
+        "api-reference/chain_specific_limitations",
         "api-reference/endpoint/get-openapi"
       ]
     },
