@@ -111,5 +111,8 @@
     "github": "https://github.com/AdamikHQ",
     "linkedin": "https://www.linkedin.com/company/adamik/",
     "discord": "https://discord.gg/gsZJR2JfMR"
+  },
+  "search": {
+    "prompt": "Search Adamik docs..."
   }
 }
