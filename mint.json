@@ -86,7 +86,8 @@
         "api-reference/endpoint/get-apichains-chainid-token-tokenid",
         "api-reference/endpoint/post-apiaccountstate",
         "api-reference/endpoint/post-apichains-chainid-validators",
-        "api-reference/endpoint/get-apichains-chainid-transaction-transactionid"
+        "api-reference/endpoint/get-apichains-chainid-transaction-transactionid",
+        "api-reference/endpoint/post-apiaccounthistory"
       ]
     },
     {
