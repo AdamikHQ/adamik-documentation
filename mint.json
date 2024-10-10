@@ -115,5 +115,10 @@
   },
   "search": {
     "prompt": "Search Adamik docs..."
+  },
+  "feedback": {
+    "thumbsRating": true,
+    "suggestEdit": true,
+    "raiseIssue": true
   }
 }
