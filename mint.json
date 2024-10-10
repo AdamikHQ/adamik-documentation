@@ -54,6 +54,7 @@
       "group": "Get Started",
       "pages": [
         "get_started/welcome",
+        "get_started/Build-VS-Buy",
         "get_started/overview",
         "get_started/quick_start",
         "get_started/chains_supported",
