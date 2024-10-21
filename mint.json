@@ -104,7 +104,8 @@
       "pages": [
         "api-reference/endpoint/post-apiaddressencode",
         "api-reference/endpoint/post-apiaddressvalidate",
-        "api-reference/endpoint/post-apitransactionvalidate"
+        "api-reference/endpoint/post-apitransactionvalidate",
+        "api-reference/endpoint/post-apitransactionbroadcast-raw"
       ]
     }
   ],
