@@ -4,458 +4,681 @@ icon: link
 
 List of blockchains supported in the Adamik API with their respective features.
 
-<table>
+<table style={{ borderCollapse: "collapse", border: "none" }}>
   <thead>
     <tr>
-      <th style={{ textAlign: "center" }}>Blockchain Name</th>
-      <th style={{ textAlign: "center" }}>Network Identifier</th>
-      <th style={{ textAlign: "center" }}>Native Balance</th>
-      <th style={{ textAlign: "center" }}>Token Balance</th>
-      <th style={{ textAlign: "center" }}>Native Transfer</th>
-      <th style={{ textAlign: "center" }}>Token Transfer</th>
-      <th style={{ textAlign: "center" }}>Staking and Rewards</th>
+      <th style={{ textAlign: "center", border: "none"}}>Blockchain Name</th>
+      <th style={{ textAlign: "center", border: "none"}}>Network Identifier</th>
+      <th style={{ textAlign: "center", border: "none"}}>Native Balance</th>
+      <th style={{ textAlign: "center", border: "none"}}>Token Balance</th>
+      <th style={{ textAlign: "center", border: "none"}}>Native Transfer</th>
+      <th style={{ textAlign: "center", border: "none"}}>Token Transfer</th>
+      <th style={{ textAlign: "center", border: "none"}}>Staking and Rewards</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style={{ textAlign: "center" }}>Algorand</td>
-      <td style={{ textAlign: "center" }}>algorand</td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}}>Akash</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>akash</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="cross">
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
         ✗
       </td>
-    </tr>
-    <tr>
-      <td style={{ textAlign: "center" }}>Arbitrum</td>
-      <td style={{ textAlign: "center", whiteSpace: "nowrap" }}>
-        arbitrum, arbitrum-sepolia
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="cross">
-        ✗
-      </td>
-    </tr>
-    <tr>
-      <td style={{ textAlign: "center" }}>Avalanche</td>
-      <td style={{ textAlign: "center" }}>avalanche</td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="cross">
-        ✗
-      </td>
-    </tr>
-    <tr>
-      <td style={{ textAlign: "center" }}>Axelar</td>
-      <td style={{ textAlign: "center", whiteSpace: "nowrap" }}>
-        axelar-dojo-1
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="cross">
-        ✗
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
     </tr>
     <tr>
-      <td style={{ textAlign: "center" }}>Base</td>
-      <td style={{ textAlign: "center", whiteSpace: "nowrap" }}>
-        base, base-sepolia
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}}>Algorand</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>algorand</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="cross">
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
         ✗
       </td>
     </tr>
     <tr>
-      <td style={{ textAlign: "center" }}>Bitcoin</td>
-      <td style={{ textAlign: "center", whiteSpace: "nowrap" }}>
-        bitcoin, bitcoin-testnet
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}}>Arbitrum</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>arbitrum, arbitrum-sepolia</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="cross">
-        ✗
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="cross">
-        ✗
-      </td>
-      <td style={{ textAlign: "center" }} class="cross">
-        ✗
-      </td>
-    </tr>
-    <tr>
-      <td style={{ textAlign: "center" }}>Binance Smart Chain</td>
-      <td style={{ textAlign: "center", whiteSpace: "nowrap" }}>
-        bsc, bsc-testnet
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="cross">
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
         ✗
       </td>
     </tr>
     <tr>
-      <td style={{ textAlign: "center" }}>CosmosHub</td>
-      <td style={{ textAlign: "center", whiteSpace: "nowrap" }}>
-        cosmoshub, cosmoshub-testnet
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}}>Avalanche</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>avalanche</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="cross">
-        ✗
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-    </tr>
-    <tr>
-      <td style={{ textAlign: "center" }}>dYdX</td>
-      <td style={{ textAlign: "center", whiteSpace: "nowrap" }}>dydx</td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="cross">
-        ✗
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-    </tr>
-    <tr>
-      <td style={{ textAlign: "center" }}>Ethereum</td>
-      <td style={{ textAlign: "center", whiteSpace: "nowrap" }}>
-        ethereum, sepolia, holesky
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="cross">
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
         ✗
       </td>
     </tr>
     <tr>
-      <td style={{ textAlign: "center" }}>Fantom</td>
-      <td style={{ textAlign: "center" }}>fantom</td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}}>Avalanche Fuji Testnet</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>avalanche-fuji</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="cross">
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
         ✗
       </td>
     </tr>
     <tr>
-      <td style={{ textAlign: "center" }}>Gnosis</td>
-      <td style={{ textAlign: "center", whiteSpace: "nowrap" }}>
-        gnosis, gnosis-chiado
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}}>Axelar</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>axelar</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="cross">
+    </tr>
+    <tr>
+      <td style={{ textAlign: "center", border: "none"}}>Band Protocol</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>band</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+    </tr>
+    <tr>
+      <td style={{ textAlign: "center", border: "none"}}>Base</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>base, base-sepolia</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
         ✗
       </td>
     </tr>
     <tr>
-      <td style={{ textAlign: "center" }}>Injective</td>
-      <td style={{ textAlign: "center" }}>injective-testnet</td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}}>Binance Smart Chain</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>bsc, bsc-testnet</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="cross">
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
         ✗
       </td>
     </tr>
     <tr>
-      <td style={{ textAlign: "center" }}>Linea</td>
-      <td style={{ textAlign: "center", whiteSpace: "nowrap" }}>
-        linea, linea-sepolia
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}}>Bitcoin</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>bitcoin, bitcoin-testnet</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="cross">
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
         ✗
       </td>
     </tr>
     <tr>
-      <td style={{ textAlign: "center" }}>Moonbeam</td>
-      <td style={{ textAlign: "center" }}>moonbeam</td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}}>Celestia</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>celestia, celestia-testnet</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="cross">
+    </tr>
+    <tr>
+      <td style={{ textAlign: "center", border: "none"}}>Chiliz</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>chiliz, chiliz-testnet</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
         ✗
       </td>
     </tr>
     <tr>
-      <td style={{ textAlign: "center" }}>Moonbase</td>
-      <td style={{ textAlign: "center" }}>moonbase</td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}}>CosmosHub</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>cosmoshub, cosmoshub-testnet</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="cross">
+    </tr>
+    <tr>
+      <td style={{ textAlign: "center", border: "none"}}>Dogecoin</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>dogecoin</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
         ✗
       </td>
     </tr>
     <tr>
-      <td style={{ textAlign: "center" }}>Moonriver</td>
-      <td style={{ textAlign: "center" }}>moonriver</td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}}>dYdX Protocol</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>dydx</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="cross">
+    </tr>
+    <tr>
+      <td style={{ textAlign: "center", border: "none"}}>Dymension</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>dymension</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+    </tr>
+    <tr>
+      <td style={{ textAlign: "center", border: "none"}}>Ethereum</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>ethereum, sepolia, holesky, injective-testnet, moonbase</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
         ✗
       </td>
     </tr>
     <tr>
-      <td style={{ textAlign: "center" }}>Osmosis</td>
-      <td style={{ textAlign: "center" }}>osmosis</td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}}>Fantom</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>fantom</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-    </tr>
-    <tr>
-      <td style={{ textAlign: "center" }}>Optimism</td>
-      <td style={{ textAlign: "center", whiteSpace: "nowrap" }}>
-        optimism, optimism-sepolia
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
-        ✓
-      </td>
-      <td style={{ textAlign: "center" }} class="cross">
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
         ✗
       </td>
     </tr>
     <tr>
-      <td style={{ textAlign: "center" }}>Palm</td>
-      <td style={{ textAlign: "center" }}>palm</td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}}>Gnosis</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>gnosis, gnosis-chiado</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="cross">
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
         ✗
       </td>
     </tr>
     <tr>
-      <td style={{ textAlign: "center" }}>Polygon</td>
-      <td style={{ textAlign: "center", whiteSpace: "nowrap" }}>
-        polygon, polygon-amoy
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}}>Injective</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>injective</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="cross">
+    </tr>
+    <tr>
+      <td style={{ textAlign: "center", border: "none"}}>KYVE</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>kyve</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+    </tr>
+    <tr>
+      <td style={{ textAlign: "center", border: "none"}}>Linea</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>linea, linea-sepolia</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
         ✗
       </td>
     </tr>
     <tr>
-      <td style={{ textAlign: "center" }}>ZkSync</td>
-      <td style={{ textAlign: "center", whiteSpace: "nowrap" }}>
-        zksync, zksync-sepolia
-      </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}}>Litecoin</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>litecoin</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+    </tr>
+    <tr>
+      <td style={{ textAlign: "center", border: "none"}}>Mantle Network</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>mantle</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="checkmark">
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
         ✓
       </td>
-      <td style={{ textAlign: "center" }} class="cross">
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+    </tr>
+    <tr>
+      <td style={{ textAlign: "center", border: "none"}}>Moonbeam</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>moonbeam</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+    </tr>
+    <tr>
+      <td style={{ textAlign: "center", border: "none"}}>Moonriver</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>moonriver</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+    </tr>
+    <tr>
+      <td style={{ textAlign: "center", border: "none"}}>Neutron</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>neutron</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+    </tr>
+    <tr>
+      <td style={{ textAlign: "center", border: "none"}}>Optimism</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>optimism, optimism-sepolia</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+    </tr>
+    <tr>
+      <td style={{ textAlign: "center", border: "none"}}>Osmosis</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>osmosis, osmosis-testnet</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+    </tr>
+    <tr>
+      <td style={{ textAlign: "center", border: "none"}}>Polygon</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>polygon, polygon-amoy</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+    </tr>
+    <tr>
+      <td style={{ textAlign: "center", border: "none"}}>RootStock</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>rootstock, rootstock-testnet</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+    </tr>
+    <tr>
+      <td style={{ textAlign: "center", border: "none"}}>Stargaze</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>stargaze</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+    </tr>
+    <tr>
+      <td style={{ textAlign: "center", border: "none"}}>Terra</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>terra2</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+    </tr>
+    <tr>
+      <td style={{ textAlign: "center", border: "none"}}>TON</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>ton</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
+        ✗
+      </td>
+    </tr>
+    <tr>
+      <td style={{ textAlign: "center", border: "none"}}>ZkSync</td>
+      <td style={{ textAlign: "center", border: "none", whiteSpace: "nowrap"}}>zksync, zksync-sepolia</td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="checkmark">
+        ✓
+      </td>
+      <td style={{ textAlign: "center", border: "none"}} class="cross">
         ✗
       </td>
     </tr>
@@ -463,6 +686,5 @@ List of blockchains supported in the Adamik API with their respective features.
 </table>
 
 <Info>
-  You will get the same result using the [chain
-  endpoint](../api-reference/endpoint/get-apichains) of the Adamik API.
+  You will get the same result using the [chain endpoint](../api-reference/endpoint/get-apichains) of the Adamik API.
 </Info>
