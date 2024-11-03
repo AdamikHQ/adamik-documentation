@@ -74,6 +74,24 @@ curl --request POST \
 }'
 ```
 
+```cURL Write API Bitcoin {8-9, 12}
+curl --request POST \
+  --url https://api.adamik.io/api/transaction/encode \
+  --header 'Authorization: <YOUR-API-KEY>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "transaction": {
+    "data": {
+      "chainId": "bitcoin",
+      "mode": "transfer",
+      "sender": "bc1pdvagvvtvs3k35zxq7hp86x6cgp5kl6np786y50p7dj2m394rhrwq236ryc",
+      "recipient": "bc1qekphvuz20qvdhkzywfe29r9vvtwxrszvaxzmqm",
+      "amount": "1"
+    }
+  }
+}'
+```
+
 ```cURL Write API Cosmos {8-9, 12-13}
 curl --request POST \
   --url https://api.adamik.io/api/transaction/encode \
