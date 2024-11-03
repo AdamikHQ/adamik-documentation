@@ -111,6 +111,25 @@ curl --request POST \
 }'
 ```
 
+```cURL Claim Rewards Dydx {8-9, 12-13}
+curl --request POST \
+  --url https://api.adamik.io/api/transaction/encode \
+  --header 'Authorization: <YOUR-API-KEY>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "transaction": {
+    "data": {
+      "chainId": "dydx",
+      "mode": "claimRewards",
+      "sender": "dydx1yvuhqg73fdzxvam9sj7mazfa38gpn7uleyzn78",
+      "recipient": "",
+      "validatorAddress": "dydxvaloper1mwhwf9rqh64ktr8t8xnz37nhg7vvy42ec56jwe",
+      "useMaxAmount": true
+    }
+  }
+}'
+```
+
 </CodeGroup>
 
 ## Fork the Adamik App and deep-dive into Adamik's API
