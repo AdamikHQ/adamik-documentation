@@ -11,9 +11,11 @@ Start your Adamik journey by generating your personal API key. It's your ticket 
 
 Dive into blockchain data with your first read request. Fetch data seamlessly with our API by trying the request below.
 
-```cURL Read API example
+<CodeGroup>
+
+```cURL Read API Ethereum {1,3-5}
 curl --request POST \
-  --url https://api.adamik.io/api/data/state \
+  --url https://api.adamik.io/api/account/state \
   --header 'Content-Type: application/json' \
   --header 'Authorization: <YOUR-API-KEY>' \
   --data '{
@@ -21,6 +23,30 @@ curl --request POST \
   "address": "0xfc43f5f9dd45258b3aff31bdbe6561d97e8b71de"
 }'
 ```
+
+```cURL Read API Bitcoin
+curl --request POST \
+  --url https://api.adamik.io/api/account/state \
+  --header 'Content-Type: application/json' \
+  --header 'Authorization: <YOUR-API-KEY>' \
+  --data '{
+  "chainId": "bitcoin",
+  "address": "bc1qekphvuz20qvdhkzywfe29r9vvtwxrszvaxzmqm"
+}'
+```
+
+```cURL Read API Tron
+curl --request POST \
+  --url https://api.adamik.io/api/account/state \
+  --header 'Content-Type: application/json' \
+  --header 'Authorization: <YOUR-API-KEY>' \
+  --data '{
+  "chainId": "tron",
+  "address": "TVKG4gUar24bpAVrDv4GSzyDRtPkjPkogL"
+}'
+```
+
+</CodeGroup>
 
 ## Create your first write request 🖊️
 
