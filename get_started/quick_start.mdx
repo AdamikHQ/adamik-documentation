@@ -51,16 +51,19 @@ curl --request POST \
 ## Create your first write request 🖊️
 
 Make your mark on the blockchain. Learn to create write requests to submit transactions or data. Give the following request a try.
-It will help you craft a transaction from a Binance account to the address demo.eth on the Ethereum network.
+The Ethereum one will help you craft a transaction from a Binance account to the address `demo.eth` on the Ethereum network.
+The Cosmos one will help you craft a staking transaction on the Cosmos network. Notice how similar they are.
 
-```cURL Write example
+<CodeGroup>
+
+```cURL Write API Ethereum {8-9, 14, 16}
 curl --request POST \
   --url https://api.adamik.io/api/transaction/encode \
   --header 'Authorization: <YOUR-API-KEY>' \
   --header 'Content-Type: application/json' \
   --data '{
   "transaction": {
-    "plain": {
+    "data": {
       "chainId": "ethereum",
       "mode": "transfer",
       "senders": [
@@ -69,12 +72,32 @@ curl --request POST \
       "recipients": [
         "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
       ],
-      "amount": "1234560",
-      "useMaxAmount": false
+      "amount": "12345600000"
     }
   }
 }'
 ```
+
+```cURL Write API Cosmos {8-9, 12-13}
+curl --request POST \
+  --url https://api.adamik.io/api/transaction/encode \
+  --header 'Authorization: <YOUR-API-KEY>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "transaction": {
+    "data": {
+			"chainId": "cosmoshub",
+			"mode": "delegate",
+			"sender": "cosmos1g84934jpu3v5de5yqukkkhxmcvsw3u2ajxvpdl",
+			"recipient": "",
+			"validatorAddress": "cosmosvaloper1clpqr4nrk4khgkxj78fcwwh6dl3uw4epsluffn",
+      "amount": "123"
+    }
+  }
+}'
+```
+
+</CodeGroup>
 
 ## Fork the Adamik App and deep-dive into Adamik's API
 
