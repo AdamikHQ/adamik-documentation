@@ -40,11 +40,11 @@ sequenceDiagram
 The **Read API** allows users to retrieve key information related to blockchain networks, tokens, account data, and transaction history. These endpoints provide essential data that can help users track assets, get insights into chain activity, and monitor validator status.
 
 - **Get Chains Supported** (`GET /api/chains`): Retrieve a list of supported chains and available features.
-- **Get Chain Info** (`GET /api/chain/{chainId}`): Fetch details about a specific blockchain, such as its supported tokens and network information.
-- **Get Token Info** (`GET /api/token/{tokenId}`): Get details about specific tokens on the chain, such as decimals and contract addresses.
+- **Get Chain Info** (`GET /api/chains/{chainId}`): Fetch details about a specific blockchain, such as its supported tokens and network information.
+- **Get Validators Information** (`GET /api/chains/{chainId}/validators`): Retrieve information about the current staking validators for the selected chain.
+- **Get Token Info** (`GET /api/chains/{chainId}/token/{tokenId}`): Get details about specific tokens on the chain, such as decimals and contract addresses.
+- **Get Transaction Info** (`GET /api/chains/{chainId}/transaction/{txId}`): Get details on a specific transaction, including status, history, and block confirmations.
 - **Get Account State (Balances)** (`POST /api/account/state`): Retrieve the account's current state, including balances, staking positions, and rewards.
-- **Get Validators Information** (`POST /api/{chainId}/validators`): Retrieve information about the current staking validators for the selected chain.
-- **Get Transaction Info** (`GET /api/{chainId}/transaction/{txId}`): Get details on a specific transaction, including status, history, and block confirmations.
 
 <Info>
   **Note**: These endpoints form the core of the Read API, enabling applications
