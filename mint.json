@@ -10,6 +10,10 @@
   "analytics": {
     "gtm": {
       "tagId": "GTM-PDZKXGD6"
+    },
+    "hotjar": {
+      "hjid": "5204260",
+      "hjsv": "6"
     }
   },
   "favicon": "Adamik_symbol_flat_blue.svg",
