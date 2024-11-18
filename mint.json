@@ -41,16 +41,7 @@
       "url": "api-reference"
     }
   ],
-  "topAnchor": {
-    "name": "Documentation",
-    "icon": "house"
-  },
   "anchors": [
-    {
-      "name": "API Reference",
-      "icon": "code",
-      "url": "api-reference"
-    },
     {
       "name": "Adamik App",
       "icon": "rocket",
