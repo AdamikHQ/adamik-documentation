@@ -35,12 +35,6 @@
     "name": "Get API Key",
     "url": "https://dashboard.adamik.io"
   },
-  "tabs": [
-    {
-      "name": "API Reference",
-      "url": "api-reference"
-    }
-  ],
   "topAnchor": {
     "name": "API Reference",
     "icon": "code"
