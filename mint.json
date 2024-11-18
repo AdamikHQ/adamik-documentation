@@ -41,6 +41,10 @@
       "url": "api-reference"
     }
   ],
+  "topAnchor": {
+    "name": "API Reference",
+    "icon": "code"
+  },
   "anchors": [
     {
       "name": "Adamik App",
@@ -51,12 +55,6 @@
       "name": "Support",
       "icon": "discord",
       "url": "https://discord.gg/gsZJR2JfMR"
-    },
-    {
-      "name": "API Reference",
-      "icon": "code",
-      "url": "api-reference/introduction",
-      "isDefaultHidden": false
     }
   ],
   "navigation": [
