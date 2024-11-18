@@ -36,10 +36,15 @@
     "url": "https://dashboard.adamik.io"
   },
   "topAnchor": {
-    "name": "API Reference",
-    "icon": "code"
+    "name": "Documentation",
+    "icon": "house"
   },
   "anchors": [
+    {
+      "name": "API Reference",
+      "icon": "code",
+      "url": "api-reference"
+    },
     {
       "name": "Adamik App",
       "icon": "rocket",
