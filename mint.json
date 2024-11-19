@@ -35,13 +35,16 @@
     "name": "Get API Key",
     "url": "https://dashboard.adamik.io"
   },
-  "tabs": [
+  "topAnchor": {
+    "name": "Documentation",
+    "icon": "house"
+  },
+  "anchors": [
     {
       "name": "API Reference",
+      "icon": "code",
       "url": "api-reference"
-    }
-  ],
-  "anchors": [
+    },
     {
       "name": "Adamik App",
       "icon": "rocket",
