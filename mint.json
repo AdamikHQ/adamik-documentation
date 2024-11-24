@@ -74,7 +74,8 @@
       "pages": [
         "guides/using-Adamik-API-with-Ethereum",
         "guides/using-Adamik-API-with-TON",
-        "guides/using-Adamik-API-with-Bitcoin"
+        "guides/using-Adamik-API-with-Bitcoin",
+        "guides/Bitcoin-Transaction-Crafting"
       ]
     },
     {
