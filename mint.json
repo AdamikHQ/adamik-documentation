@@ -70,13 +70,16 @@
       ]
     },
     {
-      "group": "Guides and Tutorials",
+      "group": "Examples",
       "pages": [
-        "guides/using-Adamik-API-with-Ethereum",
-        "guides/using-Adamik-API-with-TON",
-        "guides/using-Adamik-API-with-Bitcoin",
-        "guides/Bitcoin-Transaction-Crafting"
+        "guides/e2e-examples/using-Adamik-API-with-Ethereum",
+        "guides/e2e-examples/using-Adamik-API-with-TON",
+        "guides/e2e-examples/using-Adamik-API-with-Bitcoin"
       ]
+    },
+    {
+      "group": "Tutorials",
+      "pages": ["guides/tutorials/Bitcoin-Transaction-Crafting"]
     },
     {
       "group": "API Documentation",
