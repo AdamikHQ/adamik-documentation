@@ -54,7 +54,7 @@
     {
       "name": "Guides and Tutorials",
       "icon": "book",
-      "url": "guides"
+      "url": "guides/e2e-examples"
     }
   ],
   "navigation": [
