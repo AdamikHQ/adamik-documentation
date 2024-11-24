@@ -35,8 +35,14 @@
     "name": "Get API Key",
     "url": "https://dashboard.adamik.io"
   },
+  "topbarLinks": [
+    {
+      "name": "Discord Support",
+      "url": "https://discord.gg/gsZJR2JfMR"
+    }
+  ],
   "topAnchor": {
-    "name": "Documentation",
+    "name": "Introduction",
     "icon": "house"
   },
   "anchors": [
@@ -46,19 +52,14 @@
       "url": "api-reference"
     },
     {
-      "name": "Adamik App",
-      "icon": "rocket",
-      "url": "https://app.adamik.io"
-    },
-    {
-      "name": "Support",
-      "icon": "discord",
-      "url": "https://discord.gg/gsZJR2JfMR"
+      "name": "Guides and Tutorials",
+      "icon": "book",
+      "url": "guides"
     }
   ],
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "Introduction",
       "pages": [
         "get_started/welcome",
         "get_started/overview",
