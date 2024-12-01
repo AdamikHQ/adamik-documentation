@@ -12,10 +12,22 @@ The Adamik API is designed with a chain-agnostic approach, ensuring that develop
 
 Each API request processes single objects to ensure precise updates, supporting clear and straightforward blockchain interactions. This precision aligns with our goal of maintaining simplicity and clarity in blockchain integrations.
 
+## Authentication
+
+The Adamik API authenticates requests using API keys to ensure secure interactions. This authentication system supports scalable operations across various endpoints, from address encoding and validation to transaction broadcasting. You can obtain your free API key through the [Adamik Dashboard](https://dashboard.adamik.io).
+
+## Error Handling
+
+The API uses standard HTTP response codes to indicate request outcomes:
+
+- **2xx codes** indicate successful operations
+- **4xx codes** signify client errors, such as missing parameters or failed validations
+- **5xx codes** are used to indicate server-side errors within the Adamik systems (these should be infrequent)
+
 ## OpenAPI Specification
 
 The Adamik API is detailed in an OpenAPI Description (OAD). You can access the full specification via the [OpenAPI endpoint](./endpoint/get-openapi).
 
 ## Versioning
 
-Currently in beta, the Adamik API is continuously enhanced to meet diverse needs with new versions and features. Our chain-agnostic design drives ongoing development, ensuring future updates are flexible and scalable across all blockchain ecosystems.
+The Adamik API is continuously enhanced to meet diverse needs with new versions and features. Our chain-agnostic design drives ongoing development, ensuring future updates are flexible and scalable across all blockchain ecosystems.

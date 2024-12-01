@@ -82,20 +82,24 @@
       "pages": ["guides/tutorials/Bitcoin-Transaction-Crafting"]
     },
     {
-      "group": "API Documentation",
+      "group": "API Overview",
       "pages": [
         "api-reference/introduction",
-        "api-reference/authentication",
-        "api-reference/errors",
+        "api-reference/read_API_overview_and_interaction_flow",
+        "api-reference/write_API_overview_and_interaction_flow",
         "api-reference/endpoint/get-openapi"
+      ]
+    },
+    {
+      "group": "Chain Information API",
+      "pages": [
+        "api-reference/endpoint/get-apichains",
+        "api-reference/endpoint/get-apichains-chainid"
       ]
     },
     {
       "group": "Read API",
       "pages": [
-        "api-reference/read_API_overview_and_interaction_flow",
-        "api-reference/endpoint/get-apichains",
-        "api-reference/endpoint/get-apichains-chainid",
         "api-reference/endpoint/get-apichains-chainid-token-tokenid",
         "api-reference/endpoint/post-apiaccountstate",
         "api-reference/endpoint/post-apiaccounthistory",
@@ -106,7 +110,6 @@
     {
       "group": "Write API",
       "pages": [
-        "api-reference/write_API_overview_and_interaction_flow",
         "api-reference/endpoint/post-apitransactionencode",
         "api-reference/endpoint/post-apitransactionbroadcast"
       ]
