@@ -102,6 +102,7 @@
       "pages": [
         "api-reference/endpoint/get-apichains-chainid-token-tokenid",
         "api-reference/endpoint/post-apiaccountstate",
+        "api-reference/endpoint/post-apiaccountstatetokens",
         "api-reference/endpoint/post-apiaccounthistory",
         "api-reference/endpoint/get-apichains-chainid-validators",
         "api-reference/endpoint/get-apichains-chainid-transaction-transactionid"
