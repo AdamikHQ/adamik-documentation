@@ -49,7 +49,8 @@
     {
       "name": "API Reference",
       "icon": "code",
-      "url": "api-reference"
+      "url": "api-reference",
+      "openapi": "https://api.adamik.io/openapi.json"
     },
     {
       "name": "Guides and Tutorials",
@@ -83,46 +84,7 @@
     },
     {
       "group": "API Overview",
-      "pages": [
-        "api-reference/introduction",
-        "api-reference/read_API_overview_and_interaction_flow",
-        "api-reference/write_API_overview_and_interaction_flow",
-        "api-reference/endpoint/get-openapi"
-      ]
-    },
-    {
-      "group": "Chain Information API",
-      "pages": [
-        "api-reference/endpoint/get-apichains",
-        "api-reference/endpoint/get-apichains-chainid"
-      ]
-    },
-    {
-      "group": "Read API",
-      "pages": [
-        "api-reference/endpoint/get-apichains-chainid-token-tokenid",
-        "api-reference/endpoint/post-apiaccountstate",
-        "api-reference/endpoint/post-apiaccountstatetokens",
-        "api-reference/endpoint/post-apiaccounthistory",
-        "api-reference/endpoint/get-apichains-chainid-validators",
-        "api-reference/endpoint/get-apichains-chainid-transaction-transactionid"
-      ]
-    },
-    {
-      "group": "Write API",
-      "pages": [
-        "api-reference/endpoint/post-apitransactionencode",
-        "api-reference/endpoint/post-apitransactionbroadcast"
-      ]
-    },
-    {
-      "group": "Utility API",
-      "pages": [
-        "api-reference/endpoint/post-apiaddressencode",
-        "api-reference/endpoint/post-apiaddressvalidate",
-        "api-reference/endpoint/post-apitransactionvalidate",
-        "api-reference/endpoint/post-apitransactionbroadcast-raw"
-      ]
+      "pages": ["api-reference"]
     }
   ],
   "footerSocials": {
