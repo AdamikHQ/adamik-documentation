@@ -1,0 +1,56 @@
+---
+icon: arrow-progress
+title: Read API Interaction Flow
+---
+
+The diagram below outlines the basic flow of interactions between the app, the user, and the Adamik API.
+
+```mermaid
+sequenceDiagram
+    participant USER as End-User
+    participant APP as Client App
+    participant ADAMIK as Adamik API
+
+    USER->>APP: get chains supported
+    APP->>ADAMIK: /api/chains
+    ADAMIK->>APP: chains, data, supported features
+
+    USER->>APP: get chain info
+    APP->>ADAMIK: /api/chain/{chainId}
+    ADAMIK->>APP: chain info
+
+    USER->>APP: get token info
+    APP->>ADAMIK: /api/token/{tokenId}
+    ADAMIK->>APP: token info
+
+    USER->>APP: get account balances
+    APP->>ADAMIK: /api/account/state
+    ADAMIK->>APP: account state (balances, staking, etc.)
+
+    USER->>APP: get validators information
+    APP->>ADAMIK: /api/{chainId}/validators
+    ADAMIK->>APP: validators info
+
+    USER->>APP: get transaction info
+    APP->>ADAMIK: /api/{chainId}/transaction/{txId}
+    ADAMIK->>APP: transaction info
+```
+
+## Read API Overview
+
+The **Read API** allows users to retrieve key information related to blockchain networks, tokens, account data, and transaction history. These endpoints provide essential data that can help users track assets, get insights into chain activity, and monitor validator status.
+
+- **Get Chains Supported** (`GET /api/chains`): Retrieve a list of supported chains and available features.
+- **Get Chain Info** (`GET /api/chains/{chainId}`): Fetch details about a specific blockchain, such as its supported tokens and network information.
+- **Get Validators Information** (`GET /api/chains/{chainId}/validators`): Retrieve information about the current staking validators for the selected chain.
+- **Get Token Info** (`GET /api/chains/{chainId}/token/{tokenId}`): Get details about specific tokens on the chain, such as decimals and contract addresses.
+- **Get Transaction Info** (`GET /api/chains/{chainId}/transaction/{txId}`): Get details on a specific transaction, including status, history, and block confirmations.
+- **Get Account State (Balances)** (`POST /api/account/state`): Retrieve the account's current state, including balances, staking positions, and rewards.
+
+<Info>
+  **Note**: These endpoints form the core of the Read API, enabling applications
+  to fetch the necessary on-chain information without needing access to private
+  keys. Importantly, the responses from the API are **always standardized**
+  across all supported networks, ensuring a unified, consistent format
+  regardless of the blockchain being accessed.
+</Info>
