@@ -1,6 +1,7 @@
 {
   "$schema": "https://mintlify.com/schema.json",
   "versions": ["current", "next"],
+  "openapi": "https://api.adamik.io/openapi.json",
   "name": "Adamik",
   "logo": {
     "dark": "/logo/dark.svg",
@@ -50,8 +51,7 @@
       "name": "API Reference",
       "icon": "code",
       "url": "api-reference/current",
-      "version": "current",
-      "openapi": "https://api.adamik.io/openapi.json"
+      "version": "current"
     },
     {
       "name": "API Reference",
