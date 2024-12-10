@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "openapi": "https://api.adamik.io/openapi.json",
+  "versions": ["current", "next"],
   "name": "Adamik",
   "logo": {
     "dark": "/logo/dark.svg",
@@ -49,7 +49,16 @@
     {
       "name": "API Reference",
       "icon": "code",
-      "url": "api-reference"
+      "url": "api-reference/current",
+      "version": "current",
+      "openapi": "https://api.adamik.io/openapi.json"
+    },
+    {
+      "name": "API Reference",
+      "icon": "code",
+      "url": "api-reference/next",
+      "version": "next",
+      "openapi": "openapi.json"
     },
     {
       "name": "Guides and Tutorials",
@@ -83,45 +92,50 @@
     },
     {
       "group": "API Overview",
+      "version": "current",
       "pages": [
-        "api-reference/introduction",
-        "api-reference/read_API_overview_and_interaction_flow",
-        "api-reference/write_API_overview_and_interaction_flow",
-        "api-reference/endpoint/get-openapi"
+        "api-reference/current/introduction",
+        "api-reference/current/read_API_overview_and_interaction_flow",
+        "api-reference/current/write_API_overview_and_interaction_flow",
+        "api-reference/current/endpoint/get-openapi"
       ]
     },
     {
       "group": "Chain Information API",
+      "version": "current",
       "pages": [
-        "api-reference/endpoint/get-apichains",
-        "api-reference/endpoint/get-apichains-chainid"
+        "api-reference/current/endpoint/get-apichains",
+        "api-reference/current/endpoint/get-apichains-chainid"
       ]
     },
     {
       "group": "Read API",
+      "version": "current",
       "pages": [
-        "api-reference/endpoint/get-apichains-chainid-token-tokenid",
-        "api-reference/endpoint/post-apiaccountstate",
-        "api-reference/endpoint/post-apiaccountstatetokens",
-        "api-reference/endpoint/post-apiaccounthistory",
-        "api-reference/endpoint/get-apichains-chainid-validators",
-        "api-reference/endpoint/get-apichains-chainid-transaction-transactionid"
+        "api-reference/current/endpoint/get-apichains-chainid-token-tokenid",
+        "api-reference/current/endpoint/post-apiaccountstate",
+        "api-reference/current/endpoint/post-apiaccountstatetokens",
+        "api-reference/current/endpoint/post-apiaccounthistory",
+        "api-reference/current/endpoint/get-apichains-chainid-validators",
+        "api-reference/current/endpoint/get-apichains-chainid-transaction-transactionid"
       ]
     },
     {
       "group": "Write API",
+      "version": "current",
       "pages": [
-        "api-reference/endpoint/post-apitransactionencode",
-        "api-reference/endpoint/post-apitransactionbroadcast"
+        "api-reference/current/endpoint/post-apitransactionencode",
+        "api-reference/current/endpoint/post-apitransactionbroadcast"
       ]
     },
     {
       "group": "Utility API",
+      "version": "current",
       "pages": [
-        "api-reference/endpoint/post-apiaddressencode",
-        "api-reference/endpoint/post-apiaddressvalidate",
-        "api-reference/endpoint/post-apitransactionvalidate",
-        "api-reference/endpoint/post-apitransactionbroadcast-raw"
+        "api-reference/current/endpoint/post-apiaddressencode",
+        "api-reference/current/endpoint/post-apiaddressvalidate",
+        "api-reference/current/endpoint/post-apitransactionvalidate",
+        "api-reference/current/endpoint/post-apitransactionbroadcast-raw"
       ]
     }
   ],
