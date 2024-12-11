@@ -2,70 +2,54 @@
 icon: telescope
 ---
 
-Before exploring the detailed specifications and API references, review these high-level principles for an overview of the API’s capabilities and workflow.
+Before exploring the detailed specifications and API references, review these high-level principles for an overview of the API's capabilities and workflow.
 
-## Flow of operations
+## API Categories
 
-The Adamik API follows a client/server model. Your application handles user intents and signing, while the Adamik server manages on-chain data retrieval and transaction creation, ensuring user actions are executed on the blockchain.
-The diagram below outlines the basic flow of interactions between an App and the Adamik API.
+The Adamik API is organized into four main categories:
+
+- **Chain**: Query blockchain network information and validators
+- **Address**: Handle address encoding and validation
+- **Account**: Retrieve account states, balances, and history
+- **Transaction**: Manage transaction lifecycle from encoding to broadcasting
 
 ```mermaid
 sequenceDiagram
     participant CLIENT as Client App
     participant ADAMIK as Adamik API
 
-    %% Account Management %%
-    Note right of CLIENT: Account Management
-    CLIENT->>ADAMIK: Fetch account state and history
-    ADAMIK->>CLIENT: Return account data and history
+    %% Chain & Network Info %%
+    Note right of CLIENT: Chain Information
+    CLIENT->>ADAMIK: Query chain details/validators
+    ADAMIK->>CLIENT: Return chain data
 
-    %% Transaction Process %%
-    Note right of CLIENT: Transaction Process
-    CLIENT->>ADAMIK: Initiate transaction
-    ADAMIK->>CLIENT: Return unsigned transaction
-    CLIENT->>ADAMIK: Send signature
-    ADAMIK->>CLIENT: Assemble and broadcast transaction
+    %% Account Operations %%
+    Note right of CLIENT: Account Operations
+    CLIENT->>ADAMIK: Get account state/tokens/history
+    ADAMIK->>CLIENT: Return account information
 
-    %% Transaction Status %%
-    Note right of CLIENT: Transaction Status
-    CLIENT->>ADAMIK: Get transaction status/history/balance
-    ADAMIK->>CLIENT: Return updated transaction data
+    %% Transaction Lifecycle %%
+    Note right of CLIENT: Transaction Lifecycle
+    CLIENT->>ADAMIK: Encode transaction
+    ADAMIK->>CLIENT: Return encoded transaction
+    CLIENT->>ADAMIK: Broadcast transaction
+    ADAMIK->>CLIENT: Return transaction result
 ```
 
-## Read and Write APIs
-
-The Adamik APIs are divided into two principal categories:
-
-- **Read API**: For data retrieval, including fetching account details and transaction history.
-- **Write API**: For managing transactions such as cryptocurrency transfers or staking operations.
-
-These APIs work consistently across various blockchain networks.
-
-In addition to the core APIs, Adamik offers the **Utility API** to support common operational needs. It includes tools for address format validation, or pubkey conversion to addresses, helping to streamline crypto application development.
-
-{/* TODO : REWORK */}
-
-<CardGroup cols={3}>
+<CardGroup cols={2}>
   <Card
-    title="Read API"
-    icon="readme"
-    href="../api_overview/read_API_overview_and_interaction_flow"
+    title="Chain & Address APIs"
+    icon="link"
+    href="../api-reference/current/chain/get-supported-chains"
   >
-    Retrieve on-chain information with ease using the Read API.
+    Query network information and manage address operations
   </Card>
   <Card
-    title="Write API"
-    icon="pen-to-square"
-    href="../api_overview/write_API_overview_and_interaction_flow"
+    title="Account & Transaction APIs"
+    icon="wallet"
+    href="../api-reference/current/account/get-account-state"
   >
-    Manage cryptocurrency transfers and delegations with the Write API.
-  </Card>
-  <Card
-    title="Utility API"
-    icon="gear"
-    href="../api-reference/current/address/encode-an-address"
-  >
-    Leverage tools like address format validation with the Utility API.
+    Handle account queries and transaction operations
   </Card>
 </CardGroup>
 
