@@ -65,10 +65,46 @@ sequenceDiagram
   applicable using the `nextPage` parameter.
 </Info>
 
-### Response Standardization
+## Chain-Specific Features
+
+The Read API adapts to each blockchain's capabilities:
+
+```json
+{
+  "read": {
+    "token": true, // Token information support
+    "validators": true, // Validator queries support
+    "transaction": {
+      "native": true, // Native transaction queries
+      "tokens": true, // Token transaction queries
+      "staking": true // Staking transaction queries
+    },
+    "account": {
+      "balances": {
+        "native": true, // Native balance queries
+        "tokens": true, // Token balance queries
+        "staking": true // Staking position queries
+      },
+      "transactions": {
+        "native": true, // Native transaction history
+        "tokens": true, // Token transaction history
+        "staking": true // Staking transaction history
+      }
+    }
+  }
+}
+```
+
+## Response Standardization
 
 The API provides consistent response formats across all chains:
 
 - Transaction states are normalized (`pending`, `unconfirmed`, `confirmed`, `failed`, `unknown`)
 - Transaction types are standardized (`transfer`, `transferToken`, `delegate`, `redelegate`, `undelegate`, `claimRewards`)
 - Optional `include` parameters allow requesting additional data (e.g., `parsed` and `raw` transaction details)
+
+For implementation details, refer to:
+
+- [Get Chain Details](../api-reference/current/chain/get-chain-details)
+- [Get Account State](../api-reference/current/account/get-account-state)
+- [Get Transaction Details](../api-reference/current/transaction/get-transaction-details)

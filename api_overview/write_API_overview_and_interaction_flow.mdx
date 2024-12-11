@@ -37,20 +37,18 @@ sequenceDiagram
     participant CLIENT as Client-App
     participant ADAMIK as Adamik API
 
-    %% Transaction Preparation %%
+    Note over USER,ADAMIK: 1. Transaction Construction
     USER->>CLIENT: Set transaction data
     CLIENT->>ADAMIK: POST /api/transaction/encode
     ADAMIK->>CLIENT: Return encoded transaction
-
-    %% Optional Validation %%
     CLIENT->>ADAMIK: POST /api/transaction/validate
     ADAMIK->>CLIENT: Return validation result
 
-    %% Signature Process %%
+    Note over USER,ADAMIK: 2. Transaction Signature
     CLIENT->>USER: Request signature
     USER->>CLIENT: Sign transaction
 
-    %% Broadcasting %%
+    Note over USER,ADAMIK: 3. Transaction Broadcast
     CLIENT->>ADAMIK: POST /api/transaction/broadcast
     ADAMIK->>CLIENT: Return transaction hash
 ```
@@ -68,7 +66,7 @@ The API supports various transaction types across chains:
   endpoint to check supported features for any chains.
 </Info>
 
-### Chain-Specific Features
+## Chain-Specific Features
 
 The Write API adapts to each blockchain's capabilities:
 
@@ -89,7 +87,7 @@ The Write API adapts to each blockchain's capabilities:
 }
 ```
 
-### Error Handling
+## Error Handling
 
 The API provides detailed error feedback:
 
