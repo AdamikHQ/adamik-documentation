@@ -9,9 +9,9 @@ Before exploring the detailed specifications and API references, review these hi
 The Adamik API is organized into four main categories:
 
 - **Chain**: Query blockchain network information and validators
-- **Address**: Handle address encoding and validation
 - **Account**: Retrieve account states, balances, and history
 - **Transaction**: Manage transaction lifecycle from encoding to broadcasting
+- **Utils**: Handle utility operations and helper functions
 
 ```mermaid
 sequenceDiagram
@@ -36,20 +36,27 @@ sequenceDiagram
     ADAMIK->>CLIENT: Return transaction result
 ```
 
-<CardGroup cols={2}>
+<CardGroup cols={3}>
   <Card
-    title="Chain & Address APIs"
-    icon="link"
+    title="Chain & Account APIs"
+    icon="magnifying-glass"
     href="../api-reference/current/chain/get-supported-chains"
   >
-    Query network information and manage address operations
+    Read operations: Query network information and account states
   </Card>
   <Card
-    title="Account & Transaction APIs"
-    icon="wallet"
-    href="../api-reference/current/account/get-account-state"
+    title="Transaction APIs"
+    icon="pen-to-square"
+    href="../api-reference/current/account/get-account-state-balances"
   >
-    Handle account queries and transaction operations
+    Write operations: Manage transaction lifecycle
+  </Card>
+  <Card
+    title="Utils APIs"
+    icon="wrench"
+    href="../api-reference/current/utils/encode-an-address"
+  >
+    Utility functions and helper operations
   </Card>
 </CardGroup>
 
