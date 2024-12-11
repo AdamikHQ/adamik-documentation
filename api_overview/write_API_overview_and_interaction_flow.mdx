@@ -1,9 +1,35 @@
 ---
 icon: arrow-progress
-title: Write API Interaction Flow
+title: Write API Overview
 ---
 
-The diagram below outlines the specific flow for encoding and broadcasting transactions between the app, the user, and the Adamik API.
+The Write API provides endpoints for managing blockchain transactions. These endpoints handle transaction encoding, validation, and broadcasting across all supported networks.
+
+## Transaction Lifecycle
+
+### 1. Transaction Encoding
+
+The `/api/transaction/encode` endpoint streamlines transaction creation by:
+
+- Validating input parameters
+- Calculating fees and gas estimates
+- Applying chain-specific rules
+- Preparing the transaction for signing
+
+### 2. Transaction Validation
+
+The validation endpoint helps verify transactions before broadcasting:
+
+- Checks transaction structure
+- Validates sender's balance
+- Verifies chain-specific requirements
+
+### 3. Transaction Broadcasting
+
+Two options for broadcasting transactions:
+
+- **Standard Broadcast** (`POST /api/transaction/broadcast`): For regular signed transactions
+- **Raw Broadcast** (`POST /api/transaction/broadcast/raw`): For pre-formatted transaction payloads
 
 ```mermaid
 sequenceDiagram
@@ -12,9 +38,13 @@ sequenceDiagram
     participant ADAMIK as Adamik API
 
     %% Transaction Preparation %%
-    USER->>CLIENT: Set transaction data <br/>(type, amount, sender, recipient)
+    USER->>CLIENT: Set transaction data
     CLIENT->>ADAMIK: POST /api/transaction/encode
-    ADAMIK->>CLIENT: Encoded transaction <br/>(pre-validation, fees)
+    ADAMIK->>CLIENT: Return encoded transaction
+
+    %% Optional Validation %%
+    CLIENT->>ADAMIK: POST /api/transaction/validate
+    ADAMIK->>CLIENT: Return validation result
 
     %% Signature Process %%
     CLIENT->>USER: Request signature
@@ -25,46 +55,50 @@ sequenceDiagram
     ADAMIK->>CLIENT: Return transaction hash
 ```
 
-This diagram simplifies the process into two main steps:
+## Supported Transaction Types
 
-1. **Transaction Encoding**: The app sends transaction basic details (intent) to the Adamik API, which returns an encoded transaction ready for signing.
-2. **Transaction Broadcasting**: After the user signs the transaction, the app sends the signature back to the Adamik API for broadcasting to the blockchain.
+The API supports various transaction types across chains:
+
+- **Native Transfers**: Send native blockchain currency
+- **Token Transfers**: Handle ERC20 and other token standards
+- **Staking Operations**: Delegate, redelegate, undelegate, and claim rewards
 
 <Info>
-  **Note**: The `/api/transaction/encode` and `/api/transaction/broadcast`
-  endpoints accept the same inputs across all networks.
+  Each chain may support different transaction types. Use the `/api/chains`
+  endpoint to check supported features for any chains.
 </Info>
 
-### `/api/transaction/encode` Endpoint Overview
+### Chain-Specific Features
 
-The `/api/transaction/encode` endpoint is designed to streamline the process of creating and preparing blockchain transactions. It serves as an all-in-one solution that validates, completes, and encodes transactions ready for signing. Here’s how it works:
+The Write API adapts to each blockchain's capabilities:
 
-#### Key Functions:
+```json
+{
+  "write": {
+    "transaction": {
+      "type": {
+        "native": true, // Native currency transfers
+        "tokens": true, // Token operations
+        "staking": true // Staking operations
+      },
+      "field": {
+        "memo": true // Optional transaction memo support
+      }
+    }
+  }
+}
+```
 
-1. **Input Validation**  
-   The endpoint checks that all required fields are provided and flags any inconsistencies. For example, it ensures that incompatible fields like `amount` and `useMaxAmount` are not used together. The system also verifies that the sender’s account has enough balance to cover both the transaction amount and the fees.
+### Error Handling
 
-2. **Automatic Fee & Gas Calculation**  
-   One of the key benefits of this endpoint is that it automatically calculates the necessary transaction fees and gas estimates. There's no need to input these manually, as the system computes them based on network conditions.
+The API provides detailed error feedback:
 
-3. **Transaction Completion**  
-   It computes the final transaction details, such as adjusting the amount when `useMaxAmount` is specified, or setting the nonce when applicable.
+- Pre-broadcast validation errors
+- Chain-specific rejection reasons
+- Broadcasting status and confirmation details
 
-4. **Custom Chain Rule Validation**  
-   The endpoint applies specific validation rules based on the blockchain network. This ensures that the transaction complies with the unique requirements of each supported chain.
+For implementation details, refer to:
 
-5. **Raw Transaction Encoding**  
-   Finally, the completed transaction is encoded into a raw payload that is ready for signing by the user’s wallet.
-
-### Why Leverage the `/api/transaction/encode` Endpoint?
-
-The `/api/transaction/encode` endpoint offers a streamlined, one-stop solution for handling the complexities of blockchain transactions. By leveraging this endpoint, developers can:
-
-- **Save Time**: With built-in validation, fee estimation, and gas calculation, you no longer need to manage these aspects manually. The API handles the heavy lifting, letting you focus on building your application.
-- **Reduce Errors**: The endpoint ensures your transactions are correctly formatted and validated according to custom chain rules, minimizing the risk of issues like insufficient fees or invalid transactions.
-- **Simplify Development**: Instead of juggling multiple endpoints for transaction creation, fee management, and encoding, you can rely on this single endpoint to manage the entire process from user input to the final transaction payload.
-- **Increase Reliability**: The API checks that your transactions are not only valid but also executable by confirming the sender has enough balance for the transaction amount and fees.
-
-By automating key steps in the transaction process, the `/api/transaction/encode` endpoint aligns with Adamik's goal to deliver a **developer-first** experience, offering efficiency, simplicity, and reliability in blockchain integration.
-
-For full implementation details, refer to [`/api/transaction/encode`](../api-reference/current/transaction/encode-a-transaction).
+- [Encode a Transaction](../api-reference/current/transaction/encode-a-transaction)
+- [Validate Transaction](../api-reference/current/transaction/validate-transaction)
+- [Broadcast Transaction](../api-reference/current/transaction/broadcast-transaction)
