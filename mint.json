@@ -81,9 +81,9 @@
     {
       "group": "API Overview",
       "pages": [
-        "api_reference/introduction",
-        "api_reference/read_API_overview_and_interaction_flow",
-        "api_reference/write_API_overview_and_interaction_flow"
+        "api-reference/introduction",
+        "api-reference/read_API_overview_and_interaction_flow",
+        "api-reference/write_API_overview_and_interaction_flow"
       ]
     },
     {
