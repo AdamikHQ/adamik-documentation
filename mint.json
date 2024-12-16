@@ -58,7 +58,7 @@
       "icon": "code",
       "url": "api-reference/next",
       "version": "next",
-      "openapi": "/openapi_next.json"
+      "openapi": "https://api-staging.adamik.io/openapi.json?_vercel_share=Sb8NYdNtGBGR5yfDZFlkmpNHiuBM4weM"
     },
     {
       "name": "Guides and Tutorials",
