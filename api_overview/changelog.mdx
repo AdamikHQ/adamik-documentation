@@ -35,6 +35,11 @@ description: API Endpoints Changelog dated 2024-12-16
   - Moved chainId from body to URL path
   - Payload structure remains unchanged
 
+- `/api/transaction/encode` (POST) -> `/api/{chainId}/transaction/encode` (POST)
+
+  - Moved chainId from body to URL path
+  - Transaction details remain in request body
+
 - `/api/transaction/{hash}` (GET) -> `/api/{chainId}/transaction/{hash}` (GET)
   - Added chainId to URL path
   - Response structure remains unchanged
