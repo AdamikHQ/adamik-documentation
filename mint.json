@@ -51,7 +51,7 @@
       "icon": "code",
       "url": "current/api-reference",
       "version": "current",
-      "openapi": "https://api.adamik.io/openapi.json"
+      "openapi": "/openapi.json"
     },
     {
       "name": "API Reference (next)",
