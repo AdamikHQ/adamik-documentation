@@ -54,7 +54,7 @@
       "openapi": "/openapi.json"
     },
     {
-      "name": "API Reference (next)",
+      "name": "API Reference",
       "icon": "code",
       "url": "next/api-reference",
       "version": "next",
