@@ -83,8 +83,7 @@
       "pages": [
         "api_overview/introduction",
         "api_overview/read_API_overview_and_interaction_flow",
-        "api_overview/write_API_overview_and_interaction_flow",
-        "api_overview/changelog"
+        "api_overview/write_API_overview_and_interaction_flow"
       ]
     },
     {
