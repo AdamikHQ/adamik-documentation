@@ -85,7 +85,7 @@ async function main() {
 
   // Encode the transaction with Adamik API
   const responseEncode = await fetch(
-    "https://api.adamik.io/api/transaction/encode",
+    "https://api.adamik.io/api/bitcoin/transaction/encode",
     {
       method: "POST",
       headers: {
@@ -125,7 +125,7 @@ async function main() {
 
   // Broadcast the transaction using Adamik API
   const responseBroadcast = await fetch(
-    "https://api.adamik.io/api/transaction/broadcast",
+    "https://api.adamik.io/api/bitcoin/transaction/broadcast",
     {
       method: "POST",
       headers: {
@@ -147,7 +147,7 @@ main();
 
 - **Wallet Creation**: The script begins by creating a wallet using a mnemonic phrase, which is crucial for managing private keys. Please note Adamik API doesn't have the custody of the assets.
 - **Transaction Encoding**: The transaction details are passed to the Adamik API, which translates them into a raw transaction to be signed.
-- **Signing and Broadcasting**: The transaction is then signed with the wallet’s private key and finally broadcast to the Bitcoin network using the Adamik API.
+- **Signing and Broadcasting**: The transaction is then signed with the wallet's private key and finally broadcast to the Bitcoin network using the Adamik API.
 
 ### 4. Troubleshooting
 
