@@ -24,96 +24,116 @@ npm install @ton/crypto @ton/ton node-fetch
 
 Below is the script that handles the full transaction flow, from creating a wallet to broadcasting the signed transaction.
 
+You can find the complete code example in the [Adamik GitHub repository](https://github.com/AdamikHQ/adamik-link/blob/main/test/docs/ton.spec.ts).
+
 ```javascript
 import { mnemonicToPrivateKey, sign } from "@ton/crypto";
 import { WalletContractV4 } from "@ton/ton";
 
 // Replace with your wallet's mnemonic phrase
-const walletPhrase = "YOUR MNEMONIC HERE";
-const ADAMIK_API_KEY = "your-adamik-api-key"; // get it from https://dashboard.adamik.io
-const recipientAddress = "recipient address";
+const walletPhrase = "your mnemonic phrase here";
+// Replace with your Adamik API key from https://dashboard.adamik.io
+const ADAMIK_API_KEY = "your-adamik-api-key";
+// Replace with recipient address or leave empty for self-transfer
+const recipientAddress = "";
 
 async function main() {
-  // Generate a key pair from the mnemonic phrase
-  const keyPair = await mnemonicToPrivateKey(walletPhrase.split(" "));
+  try {
+    console.log("Creating wallet...");
+    const keyPair = await mnemonicToPrivateKey(walletPhrase.split(" "));
 
-  // Define the workchain and create a wallet contract
-  let workchain = 0;
-  let wallet = WalletContractV4.create({
-    workchain,
-    publicKey: keyPair.publicKey,
-  });
-  const address = wallet.address.toString();
+    // Define the workchain and create a wallet contract
+    let workchain = 0;
+    let wallet = WalletContractV4.create({
+      workchain,
+      publicKey: keyPair.publicKey,
+    });
+    const address = wallet.address.toString();
 
-  // Prepare the transaction request
-  const requestBody = {
-    transaction: {
-      data: {
-        chainId: "ton", // TON blockchain
-        mode: "transfer",
-        sender: address,
-        recipient: recipientAddress,
-        amount: Math.floor(Math.random() * (10000 - 2 + 1) + 2).toString(), // Random amount for testing
-        useMaxAmount: false,
-        fees: "0", // Set fees to 0 for now
-        gas: "0", // Gas is not required on TON
-        memo: "", // Optionally, add a memo
-        format: "hex",
-        validatorAddress: "",
-        params: {
-          pubKey: keyPair.publicKey.toString("hex"),
+    console.log("Wallet created: ", address);
+
+    // Prepare the transaction request
+    const requestBody = {
+      transaction: {
+        data: {
+          chainId: "ton", // TON blockchain
+          mode: "transfer",
+          senderAddress: address,
+          recipientAddress: recipientAddress || address,
+          amount: "10000",
+          useMaxAmount: false,
+          fees: "0", // Set fees to 0 for now
+          gas: "0", // Gas is not required on TON
+          memo: "", // Optionally, add a memo
+          format: "hex",
+          validatorAddress: "",
+          params: {
+            pubKey: keyPair.publicKey.toString("hex"),
+          },
         },
       },
-    },
-  };
+    };
 
-  // Encode the transaction with Adamik API
-  const response = await fetch(
-    "https://api.adamik.io/api/ton/transaction/encode",
-    {
-      method: "POST",
-      headers: {
-        Authorization: ADAMIK_API_KEY,
-        "Content-Type": "application/json",
+    console.log("Encoding transaction...");
+    // Encode the transaction with Adamik API
+    const responseEncode = await fetch(
+      "https://api.adamik.io/api/ton/transaction/encode",
+      {
+        method: "POST",
+        headers: {
+          Authorization: ADAMIK_API_KEY,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      }
+    );
+
+    const encodedData = await responseEncode.json();
+    console.log(
+      "Encoded transaction data:",
+      JSON.stringify(encodedData, null, 2)
+    );
+
+    // Sign the encoded transaction
+    const tx = encodedData.transaction.encoded;
+    console.log("Signing transaction...");
+    // Sign the encoded transaction
+    const signature = sign(
+      Buffer.from(encodedData.transaction.encoded, "hex"),
+      keyPair.secretKey
+    ).toString("hex");
+    console.log("Transaction signed");
+
+    // Prepare to broadcast the signed transaction
+    const sendTransactionBody = {
+      transaction: {
+        data: encodedData.transaction.data,
+        encoded: tx,
+        signature: signature,
       },
-      body: JSON.stringify(requestBody),
-    }
-  );
+    };
 
-  const json = await response.json();
-  console.log(`Encoded Transaction: ${json.transaction.encoded}`);
+    console.log("Broadcasting transaction...");
 
-  // Sign the encoded transaction
-  const signature = sign(
-    Buffer.from(json.transaction.encoded, "hex"),
-    keyPair.secretKey
-  ).toString("hex");
-  console.log(`Signature: ${signature}`);
+    // Broadcast the transaction using Adamik API
+    const responseBroadcast = await fetch(
+      "https://api.adamik.io/api/ton/transaction/broadcast",
+      {
+        method: "POST",
+        headers: {
+          Authorization: ADAMIK_API_KEY,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(sendTransactionBody),
+      }
+    );
 
-  // Prepare to broadcast the signed transaction
-  const broadcastRequestBody = {
-    transaction: {
-      data: json.transaction.data,
-      encoded: json.transaction.encoded,
-      signature: signature,
-    },
-  };
-
-  // Broadcast the transaction using Adamik API
-  const broadcastResponse = await fetch(
-    "https://api.adamik.io/api/ton/transaction/broadcast",
-    {
-      method: "POST",
-      headers: {
-        Authorization: ADAMIK_API_KEY,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(broadcastRequestBody),
-    }
-  );
-
-  const tonResponse = await broadcastResponse.json();
-  console.log("Transaction Result:", JSON.stringify(tonResponse, null, 2));
+    const responseData = await responseBroadcast.json();
+    console.log("Transaction Result:", JSON.stringify(responseData, null, 2));
+    console.log("Transaction hash:", responseData.hash);
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }
 
 main();
@@ -121,7 +141,7 @@ main();
 
 ### 3. Explanation
 
-- **Key Pair Generation**: The script generates a key pair from a mnemonic phrase using the `@ton/crypto` library, which is helpful for managing private keys and signing transactions on TON. Please note Adamik API doesn’t have the custody of the assets.
+- **Key Pair Generation**: The script generates a key pair from a mnemonic phrase using the `@ton/crypto` library, which is helpful for managing private keys and signing transactions on TON. Please note Adamik API doesn't have the custody of the assets.
 - **Transaction Encoding**: The transaction details, such as sender, recipient, and amount, are passed to the Adamik API, which encodes the transaction for signing.
 - **Signing and Broadcasting**: The encoded transaction is signed using the private key, and the signed transaction is then broadcast to the TON blockchain via the Adamik API.
 
