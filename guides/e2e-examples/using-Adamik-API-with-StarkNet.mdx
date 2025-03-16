@@ -47,7 +47,7 @@ async function main() {
 
     // Fetch the wallet address from Adamik API
     const responseAddressEncode = await fetch(
-      "https://api-staging.adamik.io/api/starknet/address/encode",
+      "https://api.adamik.io/api/starknet/address/encode",
       {
         method: "POST",
         headers: {
@@ -80,7 +80,7 @@ async function main() {
 
     console.log("Encoding transaction...");
     const response = await fetch(
-      "https://api-staging.adamik.io/api/starknet/transaction/encode",
+      "https://api.adamik.io/api/starknet/transaction/encode",
       {
         method: "POST",
         headers: {
@@ -118,7 +118,7 @@ async function main() {
 
         console.log("Encoding deployment transaction...");
         const responseDeploy = await fetch(
-          "https://api-staging.adamik.io/api/starknet/transaction/encode",
+          "https://api.adamik.io/api/starknet/transaction/encode",
           {
             method: "POST",
             headers: {
@@ -160,7 +160,7 @@ async function main() {
     console.log("Broadcasting transaction...");
     // Broadcast the signed transaction
     const broadcastResponse = await fetch(
-      "https://api-staging.adamik.io/api/starknet/transaction/broadcast",
+      "https://api.adamik.io/api/starknet/transaction/broadcast",
       {
         method: "POST",
         headers: {
