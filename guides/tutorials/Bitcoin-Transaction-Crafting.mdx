@@ -22,9 +22,9 @@ To initiate the transaction, use the `/api/transaction/encode` endpoint with the
     "data": {
       "chainId": "bitcoin",
       "mode": "transfer",
-      "sender": "bc1qekphvuz20qvdhkzywfe29r9vvtwxrszvaxzmqm",
-      "recipient": "bc1q2e00eecxtjlvuzf6dpm4leqjd2pem0xkfggw8j",
-      "amount": "490000"
+      "senderAddress": "bc1qekphvuz20qvdhkzywfe29r9vvtwxrszvaxzmqm",
+      "recipientAddress": "bc1q2e00eecxtjlvuzf6dpm4leqjd2pem0xkfggw8j",
+      "amount": "90000"
     }
   }
 }
@@ -35,7 +35,7 @@ To initiate the transaction, use the `/api/transaction/encode` endpoint with the
 The API will respond with a hex-encoded PSBT (Partially Signed Bitcoin Transaction). Example:
 
 ```plaintext
-70736274ff01009a020000000221f8c3f9a2e6db8c5273e67031d846ca77a9154c382521e541436bbaa67e601d0100000000fdffffff84beb7db39234cd25d33e0c664e6d4566c34b35c06f470ec9368adf0412e9a740000000000fdffffff02107a070000000000160014565efce7065cbece093a68775fe4126a839dbcd6bb07000000000000160014cd8376704a7818dbd8447272a28cac62dc61c04c000000000001011fff7d040000000000160014cd8376704a7818dbd8447272a28cac62dc61c04c0001011f1a0b030000000000160014cd8376704a7818dbd8447272a28cac62dc61c04c000000
+70736274ff0100710200000001df3efc2277171e2181372f26be8b49d1bb98f0c7e5d617aac53e7e4bdac086cf0100000000fdffffff02905f010000000000160014565efce7065cbece093a68775fe4126a839dbcd69f19000000000000160014cd8376704a7818dbd8447272a28cac62dc61c04c000000000001011ff37a010000000000160014cd8376704a7818dbd8447272a28cac62dc61c04c000000
 ```
 
 ### Step 3: Analyze the PSBT
@@ -48,13 +48,12 @@ The PSBT contains details about the inputs and outputs used in the transaction.
 {
   "vin": [
     {
-      "txid": "1d607ea6ba6b4341e52125384c15a977ca46d83170e673528cdbe6a2f9c3f821",
+      "txid": "cf86c0da4b7e3ec5aa17d6e5c7f098bbd1498bbe262f3781211e177722fc3edf",
       "vout": 1,
-      "sequence": 4294967293
-    },
-    {
-      "txid": "749a2e41f0ad6893ec70f4065cb3346c56d4e664c6e0335dd24c2339dbb7be84",
-      "vout": 0,
+      "scriptSig": {
+        "asm": "",
+        "hex": ""
+      },
       "sequence": 4294967293
     }
   ]
@@ -67,15 +66,23 @@ The PSBT contains details about the inputs and outputs used in the transaction.
 {
   "vout": [
     {
-      "value": 0.0049,
+      "value": 0.0009,
+      "n": 0,
       "scriptPubKey": {
+        "asm": "0 565efce7065cbece093a68775fe4126a839dbcd6",
+        "desc": "addr(bc1q2e00eecxtjlvuzf6dpm4leqjd2pem0xkfggw8j)#c5pa6kvw",
+        "hex": "0014565efce7065cbece093a68775fe4126a839dbcd6",
         "address": "bc1q2e00eecxtjlvuzf6dpm4leqjd2pem0xkfggw8j",
         "type": "witness_v0_keyhash"
       }
     },
     {
-      "value": 0.00001979,
+      "value": 6.559e-5,
+      "n": 1,
       "scriptPubKey": {
+        "asm": "0 cd8376704a7818dbd8447272a28cac62dc61c04c",
+        "desc": "addr(bc1qekphvuz20qvdhkzywfe29r9vvtwxrszvaxzmqm)#yxdkvw7j",
+        "hex": "0014cd8376704a7818dbd8447272a28cac62dc61c04c",
         "address": "bc1qekphvuz20qvdhkzywfe29r9vvtwxrszvaxzmqm",
         "type": "witness_v0_keyhash"
       }
@@ -115,9 +122,9 @@ Example of a broadcast request:
     "data": {
       "chainId": "bitcoin",
       "mode": "transfer",
-      "sender": "bc1qekphvuz20qvdhkzywfe29r9vvtwxrszvaxzmqm",
-      "recipient": "bc1q2e00eecxtjlvuzf6dpm4leqjd2pem0xkfggw8j",
-      "amount": "490000"
+      "senderAddress": "bc1qekphvuz20qvdhkzywfe29r9vvtwxrszvaxzmqm",
+      "recipientAddress": "bc1q2e00eecxtjlvuzf6dpm4leqjd2pem0xkfggw8j",
+      "amount": "90000"
     },
     "encoded": "70736274ff01009a020000000221f8c3f9a2e6db8c5273e67031d846ca77a9154c382521e541436bbaa67e601d0100000000fdffffff84beb7db39234cd25d33e0c664e6d4566c34b35c06f470ec9368adf0412e9a740000000000fdffffff02107a070000000000160014cd8376704a7818dbd8447272a28cac62dc61c04cbb07000000000000160014cd8376704a7818dbd8447272a28cac62dc61c04c000000000001011fff7d040000000000160014cd8376704a7818dbd8447272a28cac62dc61c04c01086b0247304402205f706f0eb2c89be45308cfd558dc1ee9694ba5f85f9ecb7b9dc8d36fffa284b30220182893f9479927ffa6100adfd648c145fc4be9a07523bbc6fd9c9c42889ae549012103d14c088f9a2f63f02173be720c7ced7f0cc254d7dea3d5bb4cef1d8ccc6103080001011f1a0b030000000000160014cd8376704a7818dbd8447272a28cac62dc61c04c01086c02483045022100e04d73abc886ecee4e0a7318cd730de745421c184ad89aeca5ea33d9cba471130220760e892cd78f190d18ae6d18d4e9f65865a0f1a6652229324f2c631d6a7afd63012103d14c088f9a2f63f02173be720c7ced7f0cc254d7dea3d5bb4cef1d8ccc610308000000",
     "signature": "70736274ff01009a020000000221f8c3f9a2e6db8c5273e67031d846ca77a9154c382521e541436bbaa67e601d0100000000fdffffff84beb7db39234cd25d33e0c664e6d4566c34b35c06f470ec9368adf0412e9a740000000000fdffffff02107a070000000000160014cd8376704a7818dbd8447272a28cac62dc61c04cbb07000000000000160014cd8376704a7818dbd8447272a28cac62dc61c04c000000000001011fff7d040000000000160014cd8376704a7818dbd8447272a28cac62dc61c04c01086b0247304402205f706f0eb2c89be45308cfd558dc1ee9694ba5f85f9ecb7b9dc8d36fffa284b30220182893f9479927ffa6100adfd648c145fc4be9a07523bbc6fd9c9c42889ae549012103d14c088f9a2f63f02173be720c7ced7f0cc254d7dea3d5bb4cef1d8ccc6103080001011f1a0b030000000000160014cd8376704a7818dbd8447272a28cac62dc61c04c01086c02483045022100e04d73abc886ecee4e0a7318cd730de745421c184ad89aeca5ea33d9cba471130220760e892cd78f190d18ae6d18d4e9f65865a0f1a6652229324f2c631d6a7afd63012103d14c088f9a2f63f02173be720c7ced7f0cc254d7dea3d5bb4cef1d8ccc610308000000"
@@ -133,11 +140,11 @@ Example of a broadcast response:
   "transaction": {
     "data": {
       "chainId": "bitcoin",
-      "sender": "bc1qekphvuz20qvdhkzywfe29r9vvtwxrszvaxzmqm",
-      "recipient": "bc1q2e00eecxtjlvuzf6dpm4leqjd2pem0xkfggw8j",
+      "senderAddress": "bc1qekphvuz20qvdhkzywfe29r9vvtwxrszvaxzmqm",
+      "recipientAddress": "bc1q2e00eecxtjlvuzf6dpm4leqjd2pem0xkfggw8j",
       "useMaxAmount": false,
       "mode": "transfer",
-      "amount": "490000"
+      "amount": "90000"
     }
   },
   "status": {
