@@ -47,8 +47,8 @@ curl --request POST \
   "transaction": {
     "data": {
       "mode": "transfer",
-      "sender": "0x3f5CE5FBFe3E9af3971dD833D26bA9b5C936f0bE",
-      "recipient": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+      "senderAddress": "0x3f5CE5FBFe3E9af3971dD833D26bA9b5C936f0bE",
+      "recipientAddress": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
       "amount": "12345600000"
     }
   }
@@ -63,8 +63,8 @@ curl --request POST \
   "transaction": {
     "data": {
       "mode": "transfer",
-      "sender": "bc1pdvagvvtvs3k35zxq7hp86x6cgp5kl6np786y50p7dj2m394rhrwq236ryc",
-      "recipient": "bc1qekphvuz20qvdhkzywfe29r9vvtwxrszvaxzmqm",
+      "senderAddress": "bc1pdvagvvtvs3k35zxq7hp86x6cgp5kl6np786y50p7dj2m394rhrwq236ryc",
+      "recipientAddress": "bc1qekphvuz20qvdhkzywfe29r9vvtwxrszvaxzmqm",
       "amount": "1"
     }
   }
@@ -78,10 +78,10 @@ curl --request POST \
   --data '{
   "transaction": {
     "data": {
-      "mode": "delegate",
-      "sender": "cosmos1g84934jpu3v5de5yqukkkhxmcvsw3u2ajxvpdl",
-      "recipient": "",
-      "validatorAddress": "cosmosvaloper1clpqr4nrk4khgkxj78fcwwh6dl3uw4epsluffn",
+      "mode": "stake",
+      "senderAddress": "cosmos1g84934jpu3v5de5yqukkkhxmcvsw3u2ajxvpdl",
+      "recipientAddress": "",
+      "targetValidatorAddress": "cosmosvaloper1clpqr4nrk4khgkxj78fcwwh6dl3uw4epsluffn",
       "amount": "123"
     }
   }
