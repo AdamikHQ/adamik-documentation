@@ -1,0 +1,399 @@
+---
+icon: arrow-progress
+title: Babylon BTC Staking using the Adamik API
+---
+
+# 1. STAKING FLOW
+
+### Notes
+
+ℹ️ **The Babylon chain proposes two ways of registering a bitcoin stake:** pre-stake registration or post-stake registration.
+This proposal implements the **pre-stake registration** flow, which has a number of advantages regarding UX.
+See: [Bitcoin Stake Registration Methods](https://github.com/babylonlabs-io/babylon/blob/main/docs/register-bitcoin-stake.md#2-bitcoin-stake-registration-methods)
+
+ℹ️ **Babylon is not active on Bitcoin mainnet yet**, so it is currently only testable on the Bitcoin Signet network.
+Just need to change `"bitcoin-signet"` for `"bitcoin"` in the API calls, when Babylon goes live on Bitcoin mainnet.
+
+ℹ️ **The plain data is provided as example.** Encoded payloads are valid to be signed, but may not necessarily match the data in the examples.
+
+![image](/images/BABYLON-API-FLOWS-pre-reg.png)
+
+## 1.1. Collect user inputs
+
+✅ **Call to Adamik API to retrieve Babylon’s “finality providers”** (a.k.a validators):
+
+---
+
+#### Endpoint
+
+`GET /api/babylon/validators`
+
+#### Response
+
+```json
+{
+  "chainId": "babylon",
+  "validators": [...]
+}
+```
+
+---
+
+✅ **User input to collect from the UI:**
+
+- Chosen finality provider
+- Amount to stake
+
+✅ **Other input to collect from user data:**
+
+- User’s bitcoin address
+- User’s bitcoin pubkey (**NOT** the xpub!)
+
+### 1.2. Bitcoin staking transaction - ENCODE
+
+✅ Call to Adamik API to retrieve the Bitcoin payloads to sign:
+
+---
+
+#### Endpoint
+
+`POST /api/bitcoin-signet/transaction/encode`
+
+#### Request
+
+```json
+{
+  "transaction": {
+    "data": {
+      "mode": "stake",
+      "senderAddress": "tb1pwj4q5jhwlszj6rnrahd95huu6j56dvj9ltfnag55prqnpc53vpqsxh76tx",
+      "senderPubKey": "02bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499c",
+      "targetValidatorAddress": "ee9da95e9fecbb2191943c56a109d1dc81787a77994ad9ef89278850a58e4876",
+      "amount": "1000"
+    }
+  }
+}
+```
+
+#### Response
+
+```json
+{
+  "chainId": "bitcoin-signet",
+  "transaction": {
+    "data": {
+      "mode": "stake",
+      "senderAddress": "tb1pwj4q5jhwlszj6rnrahd95huu6j56dvj9ltfnag55prqnpc53vpqsxh76tx",
+      "senderPubKey": "02bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499c",
+      "targetValidatorAddress": "ee9da95e9fecbb2191943c56a109d1dc81787a77994ad9ef89278850a58e4876",
+      "amount": "1000",
+      "fees": "1896",
+      "params": {
+        "stakingPsbt": "xxx",
+        "slashingPsbt": "xxx",
+        "unbondingSlashingPsbt": "xxx",
+        "unbondingPsbt": "xxx"
+      }
+    },
+    "encoded": "xxx" // (stakingPsbt, duplicated for convenience and consistency)
+  },
+  "status": {
+    "errors": [],
+    "warnings": []
+  }
+}
+```
+
+---
+
+## 1.3. Bitcoin signatures
+
+✅ Sign required payloads:
+
+- Provided staking [psbt](#), signed with Bitcoin signer
+- Provided slashing [psbt](#), signed with Bitcoin signer
+- Provided [unbonding](#) slashing [psbt](#), signed with Bitcoin signer
+- User's Babylon address, signed with Bitcoin signer: `[ECDSA or BIP322](hex(bech32Address))`
+
+ℹ️ The [unbonding](#) [psbt](#) does **not** require to be signed at this stage. It is provided just because it needs to be forwarded to the registration call below.
+
+## 1.4. Babylon registration transaction - ENCODE
+
+✅ Call to Adamik API to retrieve the Babylon transaction to sign
+
+Parameters:
+
+- **senderPubKey**: user's Bitcoin pubkey (hex)
+- **senderAddress**: user's Babylon address
+- **proofOfPossession**: user's Babylon address, signed with Bitcoin signer (hex)
+- **validatorPubKey**: Bitcoin finality provider's pubkey (hex)
+- **unsignedUnbondingTransaction**: the unbonding [psbt](#), exactly as provided in the response of the bitcoin encode (see above)
+- **signedStakingTransaction**: staking transaction, signed from the provided [psbt](#) (hex)
+- **signedSlashingTransaction**: slashing transaction, signed from the provided [psbt](#) (hex)
+- **signedUnbondingSlashingTransaction**: [unbonding](#) slashing transaction, signed from the provided [psbt](#) (hex)
+
+---
+
+#### Endpoint
+
+`POST /api/babylon/transaction/encode`
+
+#### Request
+
+```json
+{
+  "transaction": {
+    "data": {
+      "mode": "registerStake",
+      "senderPubKey": "xxxxxxxxxxxxxxxxxx",
+      "senderAddress": "xxxxxxxxxxxxxxxxxx",
+      "proofOfPossession": "xxxxxxxxxxxxxxxxxx",
+      "amount": "1234",
+      "validatorPubKey": "xxxxxxxxxxxxxxxxxx",
+      "unbondingPsbt": "xxxxxxxxxxxxxxxxxx",
+      "signedStakingTransaction": "xxxxxxxxxxxxxxxxxx",
+      "signedSlashingTransaction": "xxxxxxxxxxxxxxxxxx",
+      "signedUnbondingSlashingTransaction": "xxxxxxxxxxxxxxxxxx"
+    }
+  }
+}
+```
+
+#### Response
+
+```json
+{
+  "chainId": "babylon",
+  "transaction": {
+    "data": {
+      "mode": "registerStake",
+      "senderPubKey": "xxxxxxxxxxxxxxxxxx",
+      "senderAddress": "xxxxxxxxxxxxxxxxxx",
+      "proofOfPossession": "xxxxxxxxxxxxxxxxxx",
+      "amount": "1234",
+      "validatorPubKey": "xxxxxxxxxxxxxxxxxx",
+      "unbondingPsbt": "xxxxxxxxxxxxxxxxxx",
+      "signedStakingTransaction": "xxxxxxxxxxxxxxxxxx",
+      "signedSlashingTransaction": "xxxxxxxxxxxxxxxxxx",
+      "signedUnbondingSlashingTransaction": "xxxxxxxxxxxxxxxxxx",
+      "fees": "12432",
+      "gas": "1775858"
+    },
+    "encoded": "0a330a310a2d2f626162796c6f6e2e6274637374616b696e672e76312e4d736743726561746542544344656c65676174696f6e120012650a500a460a1f2f636f736d6f732e63727970746f2e736563703235366b312e5075624b657912230a2103833d5aebe72ca68e3816c4a466d395280929f07ccf5e75dc4e2d71c2c92da45812040a020801180712110a0b0a047562626e120337303010a08d061a0a62626e2d746573742d3520eac404"
+  },
+  "status": {
+    "errors": [],
+    "warnings": []
+  }
+}
+```
+
+---
+
+ℹ️ The returned encoded transaction is in cosmos' **protobuf** format, serialized in hex.
+
+## 1.5. Babylon signatures
+
+✅ Sign the Babylon transaction provided above, with Babylon signer.
+
+## 1.6. Babylon registration transaction - BROADCAST
+
+✅ Call to Adamik API to broadcast the signed Babylon transaction:
+
+---
+
+#### Endpoint
+
+`POST /api/babylon/transaction/broadcast`
+
+#### Request
+
+```json
+{
+  "chainId": "babylon",
+  "transaction": {
+    "data": {
+      "mode": "registerStake",
+      "senderPubKey": "xxxxxxxxxxxxxxxxxx",
+      "senderAddress": "xxxxxxxxxxxxxxxxxx",
+      "proofOfPossession": "xxxxxxxxxxxxxxxxxx",
+      "amount": "1234",
+      "validatorPubKey": "xxxxxxxxxxxxxxxxxx",
+      "unbondingPsbt": "xxxxxxxxxxxxxxxxxx",
+      "signedStakingTransaction": "xxxxxxxxxxxxxxxxxx",
+      "signedSlashingTransaction": "xxxxxxxxxxxxxxxxxx",
+      "signedUnbondingSlashingTransaction": "xxxxxxxxxxxxxxxxxx",
+      "fees": "12432",
+      "gas": "1775858"
+    },
+    "encoded": "0a330a310a2d2f626162796c6f6e2e6274637374616b696e672e76312e4d736743726561746542544344656c65676174696f6e120012650a500a460a1f2f636f736d6f732e63727970746f2e736563703235366b312e5075624b657912230a2103833d5aebe72ca68e3816c4a466d395280929f07ccf5e75dc4e2d71c2c92da45812040a020801180712110a0b0a047562626e120337303010a08d061a0a62626e2d746573742d3520eac404",
+    "signature": “xxxxxxxxxxxxxxxxxx”
+  }
+}
+```
+
+#### Response
+
+```json
+{
+  "chainId": "babylon",
+  "hash": "E66FD5957527263056AB39308DA9D5AAB984AF25D38067248156339C7DDE9899"
+}
+```
+
+---
+
+## 1.7. Babylon registration transaction - WAIT FOR CONFIRMATION
+
+✅ Call to Adamik API to monitor the status of the Babylon transaction:
+
+---
+
+#### Endpoint
+
+`GET /api/babylon/transaction/{hash}`
+
+#### Response
+
+```json
+{
+  "transaction": {
+    "parsed": {
+      "id": "C5D2C6EF1092369AD9F7D8302C5F2AADDED7CC9EB43BF445D0E33D3C6A957FA3",
+      "mode": "unknown",
+      "state": "confirmed",
+      "blockHeight": "288089",
+      "timestamp": "1739465632000",
+      "fees": {
+        "amount": "12397",
+        "ticker": "ubbn"
+      },
+      "gas": "1770929"
+    }
+  },
+  "status": {
+    "errors": [],
+    "warnings": []
+  }
+}
+```
+
+---
+
+✅ Wait for transaction.parsed.state to be confirmed, before the last step, i.e broadcasting the actual Bitcoin staking transaction.
+
+## 1.8. Bitcoin staking transaction - BROADCAST
+
+✅ Call to Adamik API to broadcast the signed Bitcoin staking transaction:
+
+---
+
+#### Endpoint
+
+`POST /api/bitcoin-signet/transaction/broadcast`
+
+#### Request
+
+```json
+{
+  "chainId": "bitcoin-signet",
+  "transaction": {
+    "data": {
+      "mode": "stake",
+      "senderAddress": "tb1pwj4q5jhwlszj6rnrahd95huu6j56dvj9ltfnag55prqnpc53vpqsxh76tx",
+      "senderPubKey": "02bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499c",
+      "targetValidatorAddress": "ee9da95e9fecbb2191943c56a109d1dc81787a77994ad9ef89278850a58e4876",
+      "amount": "1000",
+      "fees": "1896"
+    },
+    "encoded": // (must be the staking psbt)
+"70736274ff010089020000000144a549ead63ac9c6987b90669208ece5e93f28de4b1f97b5e4036c995f47b3d50100000000ffffffff0250c3000000000000225120a80fe5278c52cab2e0a0c9702713f61fe8f2f248346a6d7dcc1245338c14ec1609dd06000000000022512074aa0a4aeefc052d0e63edda5a5f9cd4a9a6b245fad33ea29408c130e2916041000000000001012b31a507000000000022512074aa0a4aeefc052d0e63edda5a5f9cd4a9a6b245fad33ea29408c130e2916041011720bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499c000000",
+    "signature": “xxxxxxxxxxxxxxxxxx”,
+  }
+}
+```
+
+#### Response
+
+```json
+{
+  "chainId": "bitcoin-signet",
+  "hash": "5a2d155884d3021f5c9a9437d6b9411003a8c7fdc6d94d47c9e9723d82a9353a"
+}
+```
+
+---
+
+# 2. GET BITCOIN STAKING POSITIONS
+
+✅ Call to Adamik API to retrieve the Bitcoin staking balances and positions:
+
+---
+
+#### Endpoint
+
+`GET /api/bitcoin-signet/account/state/{public_key}?include=staking`
+
+#### Response
+
+```json
+{
+  "chainId": "bitcoin-signet",
+  "accountId": "02bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499c",
+  "balances": {
+    "staking": {
+      "total": "80000",
+      "locked": "50000",
+      "unlocking": "20000",
+      "unlocked": "10000",
+      "positions": [
+        {
+          "stakeId": "52bfb146f0f8c8b98b0fa584056dfb75658b078aac04f3c5a641db9df297387b",
+          "validatorAddresses": [
+            "d23c2c25e1fcf8fd1c21b9a402c19e2e309e531e45e92fb1e9805b6056b0cc76"
+          ],
+          "amount": "50000",
+          "status": "locked",
+          "completionDate": "1738746956000"
+        },
+        {
+          "stakeId": "d5b3475f996c03e4b5971f4bde283fe9e5ec089266907b98c6c93ad6ea49a544",
+          "validatorAddresses": [
+            "d23c2c25e1fcf8fd1c21b9a402c19e2e309e531e45e92fb1e9805b6056b0cc76"
+          ],
+          "amount": "20000",
+          "status": "unlocking",
+          "completionDate": "1738746956000"
+        },
+        {
+          "stakeId": "943b38b6e1d6ffe0194f93dbfbe36499d1eaa625867aae17a59aff2825d42109",
+          "validatorAddresses": [
+            "143a1961c97682d59b5f48d5b469ac74ac45273245947865e3c4ad575e4fa646"
+          ],
+          "amount": "10000",
+          "status": "unlocked"
+        }
+      ],
+      // Rewards unsupported yet, will come at a later step
+      "rewards": {
+        "native": [],
+        "tokens": []
+      }
+    }
+  }
+}
+```
+
+---
+
+# 3. UNBONDING
+
+Coming soon!
+
+# 4. WITHDRAW
+
+Coming soon!
+
+# 4. CLAIM REWARDS
+
+Coming soon!

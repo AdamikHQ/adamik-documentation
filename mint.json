@@ -52,6 +52,16 @@
       "openapi": "https://api.adamik.io/openapi.json"
     },
     {
+<<<<<<< Updated upstream
+=======
+      "name": "API Reference",
+      "icon": "code",
+      "url": "api-reference/next",
+      "version": "next",
+      "openapi": "https://api-staging.adamik.io/openapi.json?_vercel_share=Sb8NYdNtGBGR5yfDZFlkmpNHiuBM4weM"
+    },
+    {
+>>>>>>> Stashed changes
       "name": "Guides and Tutorials",
       "icon": "book",
       "url": "guides"
@@ -89,7 +99,10 @@
     },
     {
       "group": "Tutorials",
-      "pages": ["guides/tutorials/Bitcoin-Transaction-Crafting"]
+      "pages": [
+        "guides/tutorials/Bitcoin-Transaction-Crafting",
+        "guides/tutorials/babylon-with-adamik"
+      ]
     }
   ],
   "footerSocials": {
