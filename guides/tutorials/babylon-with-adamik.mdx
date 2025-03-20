@@ -1,0 +1,355 @@
+---
+icon: arrow-progress
+title: Babylon BTC Staking using the Adamik API
+---
+
+Babylon allows Bitcoin holders to participate in staking, earning rewards while maintaining their BTC holdings. This guide walks through the process of staking Bitcoin using the Adamik API, including transaction creation, signing, and broadcasting.
+
+## Staking Process
+
+📌 **Important Notes**
+
+- Babylon offers two registration methods: **pre-stake** and post-stake. This guide implements the more user-friendly **pre-stake registration** flow. See [Bitcoin Stake Registration Methods](https://github.com/babylonlabs-io/babylon/blob/main/docs/register-bitcoin-stake.md#2-bitcoin-stake-registration-methods) for details.
+- Babylon is still early and currently only available on Bitcoin Signet and Babylon Testnet networks. When Babylon launches on Bitcoin mainnet, simply replace `"bitcoin-signet"` with `"bitcoin"` and `"babylon-testnet"` with `"babylon"` in API calls.
+- The example data shown is for demonstration purposes. While encoded payloads are valid for signing, they may not match the provided examples exactly.
+
+### Overview
+
+![Babylon API Pre-Registration Flow](/images/BABYLON-API-FLOWS-pre-reg.png)
+
+### 1. Collect Required Information
+
+#### Retrieve Babylon Validators
+
+First, fetch the list of available Babylon "finality providers" (validators):
+
+<CodeGroup>
+```http GET Request
+GET /api/babylon/validators
+```
+
+```json Response
+{
+  "chainId": "babylon",
+  "validators": [...]
+}
+```
+
+</CodeGroup>
+
+#### User Inputs
+
+You'll need to collect:
+
+- **From UI**: Chosen validator and staking amount
+- **From user data**: Bitcoin address and Bitcoin public key (**NOT** the xpub)
+
+### 2. Create Bitcoin Staking Transaction
+
+Generate the Bitcoin transaction payloads for signing:
+
+<CodeGroup>
+```json Request
+POST /api/bitcoin-signet/transaction/encode
+{
+  "transaction": {
+    "data": {
+      "mode": "stake",
+      "senderAddress": "tb1pwj4q5jhwlszj6rnrahd95huu6j56dvj9ltfnag55prqnpc53vpqsxh76tx",
+      "senderPubKey": "02bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499c",
+      "targetValidatorAddress": "ee9da95e9fecbb2191943c56a109d1dc81787a77994ad9ef89278850a58e4876",
+      "amount": "1000"
+    }
+  }
+}
+```
+
+```json Response
+{
+  "chainId": "bitcoin-signet",
+  "transaction": {
+    "data": {
+      "mode": "stake",
+      "senderAddress": "tb1pwj4q5jhwlszj6rnrahd95huu6j56dvj9ltfnag55prqnpc53vpqsxh76tx",
+      "senderPubKey": "02bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499c",
+      "targetValidatorAddress": "ee9da95e9fecbb2191943c56a109d1dc81787a77994ad9ef89278850a58e4876",
+      "amount": "1000",
+      "fees": "1896",
+      "params": {
+        "stakingPsbt": "70736274ff010089020000000144a549ead63ac9c6987b90669208ece5e93f28de4b1f97b5e4036c995f47b3d50100000000ffffffff0250c3000000000000225120a80fe5278c52cab2e0a0c9702713f61fe8f2f248346a6d7dcc1245338c14ec1609dd06000000000022512074aa0a4aeefc052d0e63edda5a5f9cd4a9a6b245fad33ea29408c130e2916041000000000001012b31a507000000000022512074aa0a4aeefc052d0e63edda5a5f9cd4a9a6b245fad33ea29408c130e2916041011720bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499c000000",
+        "slashingPsbt": "70736274ff01007d02000000017b3897f29ddb41a6c5f304ac8a078b6575fb6d0584a50f8bb9c8f8f046b1bf520000000000ffffffff02c4090000000000001600145be12624d08a2b424095d7c07221c33450d14bf104a60000000000002251208d50aed5bc9d2e62d65e27af2bc7a424ac1906dd2dc7a29b3d88b8c7bd5026e0000000000001012b50c3000000000000225120a80fe5278c52cab2e0a0c9702713f61fe8f2f248346a6d7dcc1245338c14ec164215c050929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0089a5f44e98c08db22bb0f07e05678d015b479990161599e05c331363c9c67fefd790120bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499cad20d23c2c25e1fcf8fd1c21b9a402c19e2e309e531e45e92fb1e9805b6056b0cc76ad200aee0509b16db71c999238a4827db945526859b13c95487ab46725357c9a9f25ac20113c3a32a9d320b72190a04a020a0db3976ef36972673258e9a38a364f3dc3b0ba2017921cf156ccb4e73d428f996ed11b245313e37e27c978ac4d2cc21eca4672e4ba203bb93dfc8b61887d771f3630e9a63e97cbafcfcc78556a474df83a31a0ef899cba2040afaf47c4ffa56de86410d8e47baa2bb6f04b604f4ea24323737ddc3fe092dfba2079a71ffd71c503ef2e2f91bccfc8fcda7946f4653cef0d9f3dde20795ef3b9f0ba20d21faf78c6751a0d38e6bd8028b907ff07e9a869a43fc837d6b3f8dff6119a36ba20f5199efae3f28bb82476163a7e458c7ad445d9bffb0682d10d3bdb2cb41f8e8eba20fa9d882d45f4060bdb8042183828cd87544f1ea997380e586cab77d5fd698737ba569cc001172050929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0000000",
+        "unbondingSlashingPsbt": "70736274ff01007d02000000017b7b276f516e307c2684b9b52ee7ef476bc1f52170b02fa1df0dda39b60d51a50000000000ffffffff0260090000000000001600145be12624d08a2b424095d7c07221c33450d14bf1989e0000000000002251208d50aed5bc9d2e62d65e27af2bc7a424ac1906dd2dc7a29b3d88b8c7bd5026e0000000000001012b80bb000000000000225120925f6e5d2f54928dbbf7c7b989e2d0e8b6023baece6b7ae6efed0c4f548919994215c050929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac08418260aca037f78aa845243f0e2e4c201f3360266f71c130a21535e670351f9fd790120bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499cad20d23c2c25e1fcf8fd1c21b9a402c19e2e309e531e45e92fb1e9805b6056b0cc76ad200aee0509b16db71c999238a4827db945526859b13c95487ab46725357c9a9f25ac20113c3a32a9d320b72190a04a020a0db3976ef36972673258e9a38a364f3dc3b0ba2017921cf156ccb4e73d428f996ed11b245313e37e27c978ac4d2cc21eca4672e4ba203bb93dfc8b61887d771f3630e9a63e97cbafcfcc78556a474df83a31a0ef899cba2040afaf47c4ffa56de86410d8e47baa2bb6f04b604f4ea24323737ddc3fe092dfba2079a71ffd71c503ef2e2f91bccfc8fcda7946f4653cef0d9f3dde20795ef3b9f0ba20d21faf78c6751a0d38e6bd8028b907ff07e9a869a43fc837d6b3f8dff6119a36ba20f5199efae3f28bb82476163a7e458c7ad445d9bffb0682d10d3bdb2cb41f8e8eba20fa9d882d45f4060bdb8042183828cd87544f1ea997380e586cab77d5fd698737ba569cc001172050929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0000000",
+        "unbondingPsbt": "70736274ff01005e020000000173379dc78521b8e15c4dd5a0cf547d9f22e520a068de93101220c9ae6b34177f0000000000ffffffff0180bb0000000000002251207d1d0a7c9548850f5b2a9f33b4ab156c71ac395546559ced78224850a844ab2f000000000001012b50c30000000000002251205cd5dc2f87756eaab10fbd8a248fdb52e8df067d2c4e555786e1710ada78e3416215c150929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac049e7cd04d69e4ace167fbea710b5ca53bfd0a36278f15223c7b309ebf8668a4a3c56a81fd2fcade9658a84b61afce956d368491ecedcfa5e8fa40b4b7fb20944fd570120bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499cad200aee0509b16db71c999238a4827db945526859b13c95487ab46725357c9a9f25ac20113c3a32a9d320b72190a04a020a0db3976ef36972673258e9a38a364f3dc3b0ba2017921cf156ccb4e73d428f996ed11b245313e37e27c978ac4d2cc21eca4672e4ba203bb93dfc8b61887d771f3630e9a63e97cbafcfcc78556a474df83a31a0ef899cba2040afaf47c4ffa56de86410d8e47baa2bb6f04b604f4ea24323737ddc3fe092dfba2079a71ffd71c503ef2e2f91bccfc8fcda7946f4653cef0d9f3dde20795ef3b9f0ba20d21faf78c6751a0d38e6bd8028b907ff07e9a869a43fc837d6b3f8dff6119a36ba20f5199efae3f28bb82476163a7e458c7ad445d9bffb0682d10d3bdb2cb41f8e8eba20fa9d882d45f4060bdb8042183828cd87544f1ea997380e586cab77d5fd698737ba539cc001172050929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac00000"
+      }
+    },
+    // (staking psbt, duplicated for convenience and consistency)
+    "encoded": "70736274ff010089020000000144a549ead63ac9c6987b90669208ece5e93f28de4b1f97b5e4036c995f47b3d50100000000ffffffff0250c3000000000000225120a80fe5278c52cab2e0a0c9702713f61fe8f2f248346a6d7dcc1245338c14ec1609dd06000000000022512074aa0a4aeefc052d0e63edda5a5f9cd4a9a6b245fad33ea29408c130e2916041000000000001012b31a507000000000022512074aa0a4aeefc052d0e63edda5a5f9cd4a9a6b245fad33ea29408c130e2916041011720bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499c000000"
+  },
+  "status": {
+    "errors": [],
+    "warnings": []
+  }
+}
+```
+
+</CodeGroup>
+
+### 3. Sign Bitcoin Transactions
+
+Sign the following payloads with a compatible Bitcoin signer:
+
+- **Staking PSBT**: The main transaction for staking
+- **Slashing PSBT**: Required for the slashing mechanism
+- **Unbonding Slashing PSBT**: For slashing during unbonding
+- **Babylon Address**: Sign with Bitcoin signer: `[ECDSA or BIP322](hex(bech32Address))`
+
+> ℹ️ The unbonding PSBT does not need to be signed at this stage, but must be included in the registration transaction, see below.
+
+### 4. Register with Babylon Blockchain
+
+Create the Babylon **registration** transaction:
+
+<CodeGroup>
+```json Request
+POST /api/babylon/transaction/encode
+{
+  "transaction": {
+    "data": {
+      "mode": "registerStake",
+      // User's Bitcoin public key in hexadecimal format
+      "senderPubKey": "xxxxxxxxxxxxxxxxxx",
+      // User's Babylon address
+      "senderAddress": "xxxxxxxxxxxxxxxxxx",
+      // User's Babylon address, signed with Bitcoin signer (hex)
+      "proofOfPossession": "xxxxxxxxxxxxxxxxxx",
+      "amount": "1234",
+      // Bitcoin finality provider's public key (hex)
+      "validatorPubKey": "xxxxxxxxxxxxxxxxxx",
+      // The unbonding PSBT, exactly as provided in the response of the Bitcoin encode
+      "unbondingPsbt": "xxxxxxxxxxxxxxxxxx",
+      // Staking transaction, signed from the provided PSBT (hex)
+      "signedStakingTransaction": "xxxxxxxxxxxxxxxxxx",
+      // Slashing transaction, signed from the provided PSBT (hex)
+      "signedSlashingTransaction": "xxxxxxxxxxxxxxxxxx",
+      // Unbonding slashing transaction, signed from the provided PSBT (hex)
+      "signedUnbondingSlashingTransaction": "xxxxxxxxxxxxxxxxxx"
+    }
+  }
+}
+```
+
+```json Response
+{
+  "chainId": "babylon",
+  "transaction": {
+    "data": {
+      "mode": "registerStake",
+      "senderPubKey": "xxxxxxxxxxxxxxxxxx",
+      "senderAddress": "xxxxxxxxxxxxxxxxxx",
+      "proofOfPossession": "xxxxxxxxxxxxxxxxxx",
+      "amount": "1234",
+      "validatorPubKey": "xxxxxxxxxxxxxxxxxx",
+      "unbondingPsbt": "xxxxxxxxxxxxxxxxxx",
+      "signedStakingTransaction": "xxxxxxxxxxxxxxxxxx",
+      "signedSlashingTransaction": "xxxxxxxxxxxxxxxxxx",
+      "signedUnbondingSlashingTransaction": "xxxxxxxxxxxxxxxxxx",
+      "fees": "12432",
+      "gas": "1775858"
+    },
+    "encoded": "0a330a310a2d2f626162796c6f6e2e6274637374616b696e672e76312e4d736743726561746542544344656c65676174696f6e120012650a500a460a1f2f636f736d6f732e63727970746f2e736563703235366b312e5075624b657912230a2103833d5aebe72ca68e3816c4a466d395280929f07ccf5e75dc4e2d71c2c92da45812040a020801180712110a0b0a047562626e120337303010a08d061a0a62626e2d746573742d3520eac404"
+  },
+  "status": {
+    "errors": [],
+    "warnings": []
+  }
+}
+```
+
+</CodeGroup>
+
+> ℹ️ The returned encoded transaction is in Cosmos' protobuf format, serialized as hex.
+
+### 5. Sign Babylon Transaction
+
+Sign the encoded Babylon transaction using a Babylon-compatible wallet.
+
+### 6. Broadcast Babylon Registration Transaction
+
+<CodeGroup>
+```json Request
+POST /api/babylon/transaction/broadcast
+{
+  "chainId": "babylon",
+  "transaction": {
+    "data": {
+      "mode": "registerStake",
+      "senderPubKey": "xxxxxxxxxxxxxxxxxx",
+      "senderAddress": "xxxxxxxxxxxxxxxxxx",
+      "proofOfPossession": "xxxxxxxxxxxxxxxxxx",
+      "amount": "1234",
+      "validatorPubKey": "xxxxxxxxxxxxxxxxxx",
+      "unbondingPsbt": "xxxxxxxxxxxxxxxxxx",
+      "signedStakingTransaction": "xxxxxxxxxxxxxxxxxx",
+      "signedSlashingTransaction": "xxxxxxxxxxxxxxxxxx",
+      "signedUnbondingSlashingTransaction": "xxxxxxxxxxxxxxxxxx",
+      "fees": "12432",
+      "gas": "1775858"
+    },
+    "encoded": "0a330a310a2d2f626162796c6f6e2e6274637374616b696e672e76312e4d736743726561746542544344656c65676174696f6e120012650a500a460a1f2f636f736d6f732e63727970746f2e736563703235366b312e5075624b657912230a2103833d5aebe72ca68e3816c4a466d395280929f07ccf5e75dc4e2d71c2c92da45812040a020801180712110a0b0a047562626e120337303010a08d061a0a62626e2d746573742d3520eac404",
+    "signature": "xxxxxxxxxxxxxxxxxx"
+  }
+}
+```
+
+```json Response
+{
+  "chainId": "babylon",
+  "hash": "E66FD5957527263056AB39308DA9D5AAB984AF25D38067248156339C7DDE9899"
+}
+```
+
+</CodeGroup>
+
+### 7. Wait for Confirmation
+
+Monitor the transaction status until it's confirmed:
+
+<CodeGroup>
+```http GET Request
+GET /api/babylon/transaction/{hash}
+```
+
+```json Response
+{
+  "transaction": {
+    "parsed": {
+      "id": "C5D2C6EF1092369AD9F7D8302C5F2AADDED7CC9EB43BF445D0E33D3C6A957FA3",
+      "mode": "unknown",
+      "state": "confirmed",
+      "blockHeight": "288089",
+      "timestamp": "1739465632000",
+      "fees": {
+        "amount": "12397",
+        "ticker": "ubbn"
+      },
+      "gas": "1770929"
+    }
+  },
+  "status": {
+    "errors": [],
+    "warnings": []
+  }
+}
+```
+
+</CodeGroup>
+
+> ⚠️ **Important**: Wait for `transaction.parsed.state` to be `confirmed` before proceeding to the next step.
+
+### 8. Broadcast Bitcoin Staking Transaction
+
+Once the Babylon registration is confirmed, broadcast the signed Bitcoin staking transaction:
+
+<CodeGroup>
+```json Request
+POST /api/bitcoin-signet/transaction/broadcast
+{
+  "chainId": "bitcoin-signet",
+  "transaction": {
+    "data": {
+      "mode": "stake",
+      "senderAddress": "tb1pwj4q5jhwlszj6rnrahd95huu6j56dvj9ltfnag55prqnpc53vpqsxh76tx",
+      "senderPubKey": "02bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499c",
+      "targetValidatorAddress": "ee9da95e9fecbb2191943c56a109d1dc81787a77994ad9ef89278850a58e4876",
+      "amount": "1000",
+      "fees": "1896"
+    },
+    "encoded": "70736274ff010089020000000144a549ead63ac9c6987b90669208ece5e93f28de4b1f97b5e4036c995f47b3d50100000000ffffffff0250c3000000000000225120a80fe5278c52cab2e0a0c9702713f61fe8f2f248346a6d7dcc1245338c14ec1609dd06000000000022512074aa0a4aeefc052d0e63edda5a5f9cd4a9a6b245fad33ea29408c130e2916041000000000001012b31a507000000000022512074aa0a4aeefc052d0e63edda5a5f9cd4a9a6b245fad33ea29408c130e2916041011720bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499c000000",
+    "signature": "xxxxxxxxxxxxxxxxxx"
+  }
+}
+```
+
+```json Response
+{
+  "chainId": "bitcoin-signet",
+  "hash": "5a2d155884d3021f5c9a9437d6b9411003a8c7fdc6d94d47c9e9723d82a9353a"
+}
+```
+
+</CodeGroup>
+
+## Managing Staking Positions
+
+### View Bitcoin Staking Positions
+
+Retrieve all staking positions for a Bitcoin public key:
+
+<CodeGroup>
+```http GET Request
+GET /api/bitcoin-signet/account/state/{public_key}?include=staking
+```
+
+```json Response
+{
+  "chainId": "bitcoin-signet",
+  "accountId": "02bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499c",
+  "balances": {
+    "staking": {
+      "total": "80000",
+      "locked": "50000",
+      "unlocking": "20000",
+      "unlocked": "10000",
+      "positions": [
+        {
+          "stakeId": "52bfb146f0f8c8b98b0fa584056dfb75658b078aac04f3c5a641db9df297387b",
+          "validatorAddresses": [
+            "d23c2c25e1fcf8fd1c21b9a402c19e2e309e531e45e92fb1e9805b6056b0cc76"
+          ],
+          "amount": "50000",
+          "status": "locked",
+          "completionDate": "1738746956000"
+        },
+        {
+          "stakeId": "d5b3475f996c03e4b5971f4bde283fe9e5ec089266907b98c6c93ad6ea49a544",
+          "validatorAddresses": [
+            "d23c2c25e1fcf8fd1c21b9a402c19e2e309e531e45e92fb1e9805b6056b0cc76"
+          ],
+          "amount": "20000",
+          "status": "unlocking",
+          "completionDate": "1738746956000"
+        },
+        {
+          "stakeId": "943b38b6e1d6ffe0194f93dbfbe36499d1eaa625867aae17a59aff2825d42109",
+          "validatorAddresses": [
+            "143a1961c97682d59b5f48d5b469ac74ac45273245947865e3c4ad575e4fa646"
+          ],
+          "amount": "10000",
+          "status": "unlocked"
+        }
+      ],
+      // Rewards unsupported yet, will come at a later step
+      "rewards": {
+        "native": [],
+        "tokens": []
+      }
+    }
+  }
+}
+```
+
+</CodeGroup>
+
+## Coming Soon Features
+
+### Unbonding
+
+The unbonding process for Babylon staking will be documented soon.
+
+### Withdraw
+
+The withdrawal process for Babylon staking will be documented soon.
+
+### Claim Rewards
+
+The reward claiming process for Babylon staking will be documented soon.

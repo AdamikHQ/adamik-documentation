@@ -89,7 +89,10 @@
     },
     {
       "group": "Tutorials",
-      "pages": ["guides/tutorials/Bitcoin-Transaction-Crafting"]
+      "pages": [
+        "guides/tutorials/Bitcoin-Transaction-Crafting",
+        "guides/tutorials/babylon-with-adamik"
+      ]
     }
   ],
   "footerSocials": {
