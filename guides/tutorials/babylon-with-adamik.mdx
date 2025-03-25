@@ -19,18 +19,18 @@ Babylon allows Bitcoin holders to participate in staking, earning rewards while 
 
 ### 1. Collect Required Information
 
-#### Retrieve Babylon Validators
+#### Retrieve Bitcoin Validators
 
-First, fetch the list of available Babylon "finality providers" (validators):
+First, fetch the list of available Bitcoin "finality providers" (validators):
 
 <CodeGroup>
 ```http GET Request
-GET /api/babylon/validators
+GET /api/bitcoin-signet/validators
 ```
 
 ```json Response
 {
-  "chainId": "babylon",
+  "chainId": "bitcoin-signet",
   "validators": [...]
 }
 ```
