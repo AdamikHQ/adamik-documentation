@@ -1,0 +1,235 @@
+---
+icon: key
+title: Integrating Sodot MPC with Adamik API
+sidebarTitle: "Sodot MPC Integration"
+---
+
+This guide demonstrates how to integrate Sodot's secure Multi-Party Computation (MPC) technology with the Adamik API, based on our [live demo application](https://sodot-multichain.adamik.io). By following this implementation, you can leverage a single MPC infrastructure to sign transactions across all Adamik-supported blockchains.
+
+## Overview
+
+The [sodot-multichain demo](https://sodot-multichain.adamik.io) showcases how Sodot MPC technology can be combined with Adamik API to:
+
+- Generate cryptographic keys securely using MPC across multiple parties
+- Sign transactions for 60+ blockchains without exposing private keys
+- Provide institutional-grade security for blockchain operations
+
+The complete source code for this implementation is available in our [GitHub repository](https://github.com/AdamikHQ/adamik-tutorial).
+
+## Implementation Architecture
+
+The integration consists of three main components:
+
+1. **Sodot MPC Signer**: Handles key generation and transaction signing
+2. **Adamik API Client**: Manages blockchain interactions (encoding addresses, preparing and broadcasting transactions)
+3. **Application Logic**: Connects these components in a seamless workflow
+
+## Implementing the Sodot Signer
+
+The core of the integration is the `SodotSigner` class, which implements the `BaseSigner` interface:
+
+```typescript
+// Based on src/signers/types.ts
+export interface BaseSigner {
+  signerSpec: AdamikSignerSpec;
+  signerName: string;
+  chainId: string;
+
+  getPubkey(): Promise<string>;
+  signTransaction(encodedMessage: string): Promise<string>;
+}
+```
+
+Here's a simplified implementation based on our demo application:
+
+```typescript
+// Based on src/signers/Sodot.ts
+export class SodotSigner implements BaseSigner {
+  public chainId: string;
+  public signerSpec: AdamikSignerSpec;
+  public signerName = "SODOT";
+
+  private SODOT_VERTICES = [
+    "https://sodot-vertex-1.example.com",
+    "https://sodot-vertex-2.example.com",
+    "https://sodot-vertex-3.example.com",
+  ];
+
+  private n = 3; // Number of parties
+  private t = 2; // Threshold (minimum parties needed)
+  private keyIds: string[] = [];
+
+  constructor(chainId: string, signerSpec: AdamikSignerSpec) {
+    this.chainId = chainId;
+    this.signerSpec = signerSpec;
+  }
+
+  // Check if Sodot configuration is valid
+  static isConfigValid(): boolean {
+    // Verify environment variables and configuration
+    return true; // Simplified for this example
+  }
+
+  // Get or generate public key
+  public async getPubkey(): Promise<string> {
+    // If keys don't exist, generate them
+    if (this.keyIds.length === 0) {
+      await this.keygenVertex(
+        this.adamikCurveToSodotCurve(this.signerSpec.curve)
+      );
+    }
+
+    // Derive public key using the first vertex
+    const pubkeyResponse = await this.derivePubkeyWithVertex(
+      0,
+      this.keyIds[0],
+      [44, Number(this.signerSpec.coinType), 0, 0, 0],
+      this.adamikCurveToSodotCurve(this.signerSpec.curve)
+    );
+
+    return pubkeyResponse.pubkey;
+  }
+
+  // Sign a transaction
+  public async signTransaction(encodedMessage: string): Promise<string> {
+    // Determine hash method based on chain
+    const hashMethod = this.adamikHashFunctionToSodotHashMethod(
+      this.signerSpec.hashFunction,
+      this.signerSpec.curve
+    );
+
+    // Sign the transaction
+    const signature = await this.sign(
+      encodedMessage,
+      this.keyIds,
+      [44, Number(this.signerSpec.coinType), 0, 0, 0],
+      this.signerSpec.curve,
+      hashMethod
+    );
+
+    return signature;
+  }
+
+  // Helper methods (simplified)
+  private adamikCurveToSodotCurve(
+    adamikCurve: AdamikCurve
+  ): "ecdsa" | "ed25519" {
+    return adamikCurve === AdamikCurve.SECP256K1 ? "ecdsa" : "ed25519";
+  }
+
+  private adamikHashFunctionToSodotHashMethod(
+    hashAlgo: AdamikHashFunction,
+    curve: AdamikCurve
+  ): "sha256" | "keccak256" | undefined {
+    // Map Adamik hash functions to Sodot hash methods
+    if (hashAlgo === AdamikHashFunction.SHA256) return "sha256";
+    if (hashAlgo === AdamikHashFunction.KECCAK256) return "keccak256";
+    return undefined;
+  }
+
+  // Additional methods for key generation, signing, etc.
+  // See the full implementation in the GitHub repository
+}
+```
+
+## Integration Workflow
+
+The demo application follows this workflow:
+
+1. **Initialize the Signer**: Create a `SodotSigner` instance for the selected blockchain
+2. **Generate Public Key**: Call `getPubkey()` to generate or retrieve the MPC key
+3. **Encode Address**: Use Adamik API to convert the public key to a blockchain address
+4. **Prepare Transaction**: Use Adamik API to encode a transaction
+5. **Sign Transaction**: Use the `SodotSigner` to sign the encoded transaction
+6. **Broadcast Transaction**: Send the signed transaction to the network via Adamik API
+
+Here's how this workflow is implemented in the demo application:
+
+```typescript
+// Example from src/utils/terminalCommands.tsx (simplified)
+async function executeChainSelection(chainId: string) {
+  // Get chain information from Adamik API
+  const chain = await adamikGetChain(chainId);
+
+  // Create SodotSigner instance
+  const signer = new SodotSigner(chainId, chain.signerSpec);
+
+  // Generate public key
+  const pubkey = await signer.getPubkey();
+
+  // Convert public key to address using Adamik API
+  const { address } = await encodePubKeyToAddress(pubkey, chainId);
+
+  // Store for later use
+  workflowState.selectedChain = chainId;
+  workflowState.pubkey = pubkey;
+  workflowState.address = address;
+
+  return { success: true, address, pubkey };
+}
+
+async function executeSignTransaction() {
+  const { selectedChain, encodedTransaction } = workflowState;
+
+  // Recreate signer with the same chain and signer spec
+  const chain = await adamikGetChain(selectedChain);
+  const signer = new SodotSigner(selectedChain, chain.signerSpec);
+
+  // Sign the transaction
+  const signature = await signer.signTransaction(encodedTransaction);
+
+  // Store signature for broadcasting
+  workflowState.signature = signature;
+
+  return { success: true, signature };
+}
+
+async function executeBroadcastTransaction() {
+  const { selectedChain, encodedTransaction, signature } = workflowState;
+
+  // Broadcast the transaction using Adamik API
+  const result = await broadcastTransaction(
+    selectedChain,
+    encodedTransaction,
+    signature
+  );
+
+  // Store transaction hash
+  workflowState.txHash = result.hash;
+
+  return { success: true, hash: result.hash };
+}
+```
+
+## Adamik API Integration
+
+The demo application uses a set of utility functions to interact with the Adamik API. These functions are located in the `src/adamik` directory:
+
+- `encodePubkeyToAddress.ts`: Converts a public key to a blockchain address
+- `encodeTransaction.ts`: Prepares a transaction for signing
+- `broadcastTransaction.ts`: Broadcasts a signed transaction to the network
+
+These functions handle the API calls, error handling, and logging, making it easy to integrate with the Sodot MPC signer.
+
+## Security Considerations
+
+The demo application implements several security best practices:
+
+1. **Distributed Key Generation**: Keys are generated across multiple parties (vertices)
+2. **Threshold Signing**: Requires multiple parties to collaborate for signing
+3. **No Private Key Exposure**: Private key material is never combined or exposed
+4. **API Logging**: All API calls are logged for audit purposes
+
+## Testing the Integration
+
+You can test this integration by:
+
+1. Visiting the [live demo](https://sodot-multichain.adamik.io)
+2. Cloning the [GitHub repository](https://github.com/AdamikHQ/adamik-tutorial)
+3. Setting up your own environment with Sodot MPC and Adamik API
+
+## Conclusion
+
+The integration of Sodot MPC with Adamik API provides a powerful solution for secure multi-chain applications. By following the implementation in our demo application, you can leverage this integration to build your own secure blockchain applications.
+
+For more details, explore the full source code in our [GitHub repository](https://github.com/AdamikHQ/adamik-tutorial), particularly the `src/signers/Sodot.ts` file for the MPC implementation and the `src/adamik` directory for the API integration.

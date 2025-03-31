@@ -93,6 +93,10 @@
         "guides/tutorials/Bitcoin-Transaction-Crafting",
         "guides/tutorials/babylon-with-adamik"
       ]
+    },
+    {
+      "group": "Signer Examples",
+      "pages": ["guides/signers/integrating-sodot-mpc"]
     }
   ],
   "footerSocials": {
