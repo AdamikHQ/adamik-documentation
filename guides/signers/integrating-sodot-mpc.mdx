@@ -14,7 +14,7 @@ The [sodot-multichain demo](https://sodot-multichain.adamik.io) showcases how So
 - Sign transactions for 60+ blockchains without exposing private keys
 - Provide institutional-grade security for blockchain operations
 
-The complete source code for this implementation is available in our [GitHub repository](https://github.com/AdamikHQ/adamik-tutorial).
+The complete source code for this implementation is available in our [GitHub repository](https://github.com/AdamikHQ/adamik-tutorial/tree/sodot-signer).
 
 ## Implementation Architecture
 
@@ -213,23 +213,26 @@ These functions handle the API calls, error handling, and logging, making it eas
 
 ## Security Considerations
 
-The demo application implements several security best practices:
+This demo application uses the Sodot Demo API for demonstration purposes only. For production deployments, it is critical to:
 
-1. **Distributed Key Generation**: Keys are generated across multiple parties (vertices)
-2. **Threshold Signing**: Requires multiple parties to collaborate for signing
-3. **No Private Key Exposure**: Private key material is never combined or exposed
-4. **API Logging**: All API calls are logged for audit purposes
+1. **Use Official Sodot Setup**: Always work with Sodot through official channels to set up your production MPC infrastructure
+2. **Never Use Demo API in Production**: The Demo API is for testing and educational purposes only
+3. **Follow Security Best Practices**:
+   - Distributed Key Generation: Keys are generated across multiple parties (vertices)
+   - Threshold Signing: Requires multiple parties to collaborate for signing
+   - No Private Key Exposure: Private key material is never combined or exposed
+   - API Logging: All API calls are logged for audit purposes
 
 ## Testing the Integration
 
 You can test this integration by:
 
 1. Visiting the [live demo](https://sodot-multichain.adamik.io)
-2. Cloning the [GitHub repository](https://github.com/AdamikHQ/adamik-tutorial)
+2. Cloning the [GitHub repository](https://github.com/AdamikHQ/adamik-tutorial/tree/sodot-signer)
 3. Setting up your own environment with Sodot MPC and Adamik API
 
 ## Conclusion
 
 The integration of Sodot MPC with Adamik API provides a powerful solution for secure multi-chain applications. By following the implementation in our demo application, you can leverage this integration to build your own secure blockchain applications.
 
-For more details, explore the full source code in our [GitHub repository](https://github.com/AdamikHQ/adamik-tutorial), particularly the `src/signers/Sodot.ts` file for the MPC implementation and the `src/adamik` directory for the API integration.
+For more details, explore the full source code in our [GitHub repository](https://github.com/AdamikHQ/adamik-tutorial/tree/sodot-signer), particularly the `src/signers/Sodot.ts` file for the MPC implementation and the `src/adamik` directory for the API integration.
