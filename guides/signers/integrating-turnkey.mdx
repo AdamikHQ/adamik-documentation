@@ -1,0 +1,443 @@
+---
+icon: key
+title: Integrating Turnkey with Adamik API
+sidebarTitle: "Turnkey Integration"
+---
+
+This guide demonstrates how to integrate Turnkey's secure signing infrastructure with the Adamik API. By following this implementation, you can leverage Turnkey's institutional-grade key management system to sign transactions across all Adamik-supported blockchains.
+
+## Overview
+
+The integration showcases how Turnkey can be combined with Adamik API to:
+
+- Securely manage cryptographic keys in a custodial environment
+- Sign transactions for 60+ blockchains with enterprise-grade security
+- Automatically handle different signature formats and curves across chains
+
+The complete source code for this implementation is available in our [GitHub repository](https://github.com/AdamikHQ/adamik-tutorial).
+
+## Prerequisites
+
+To use Turnkey with Adamik API, you'll need:
+
+- A Turnkey account with API credentials
+- Environment variables properly set up (see below)
+
+### Environment Setup
+
+Depending on your project structure, you'll need to set up environment variables slightly differently:
+
+**For frontend projects (like [adamik-tutorial](https://github.com/AdamikHQ/adamik-tutorial/tree/signer-turnkey)):**
+
+```env
+# These variables need the VITE_ prefix for client-side access
+VITE_TURNKEY_BASE_URL="https://api.turnkey.com"
+VITE_TURNKEY_API_PUBLIC_KEY="your-api-public-key"
+VITE_TURNKEY_API_PRIVATE_KEY="your-api-private-key"
+VITE_TURNKEY_ORGANIZATION_ID="your-organization-id"
+VITE_TURNKEY_WALLET_ID="your-wallet-id"
+```
+
+**For backend/Node.js projects (like [adamik-link](https://github.com/AdamikHQ/adamik-link)):**
+
+```env
+# No VITE_ prefix needed for server-side code
+TURNKEY_BASE_URL="https://api.turnkey.com"
+TURNKEY_API_PUBLIC_KEY="your-api-public-key"
+TURNKEY_API_PRIVATE_KEY="your-api-private-key"
+TURNKEY_ORGANIZATION_ID="your-organization-id"
+TURNKEY_WALLET_ID="your-wallet-id"
+```
+
+## Implementing the Turnkey Signer
+
+The core of the integration is the `TurnkeySigner` class, which implements the `BaseSigner` interface:
+
+```typescript
+// Based on src/signers/types.ts
+export interface BaseSigner {
+  signerSpec: AdamikSignerSpec;
+  signerName: string;
+  chainId: string;
+
+  getPubkey(): Promise<string>;
+  signTransaction(encodedMessage: string): Promise<string>;
+}
+```
+
+Here's a complete implementation:
+
+```typescript
+import { Turnkey } from "@turnkey/sdk-server";
+import {
+  AdamikCurve,
+  AdamikHashFunction,
+  AdamikSignerSpec,
+} from "../adamik/types";
+
+export class TurnkeySigner implements BaseSigner {
+  private turnkeyClient: Turnkey;
+  public chainId: string;
+  public signerSpec: AdamikSignerSpec;
+  public signerName = "TURNKEY";
+  private pubKey: string | undefined;
+
+  constructor(chainId: string, signerSpec: AdamikSignerSpec) {
+    this.chainId = chainId;
+    this.signerSpec = signerSpec;
+
+    // Access environment variables based on your project setup
+    const baseUrl =
+      process.env.TURNKEY_BASE_URL || import.meta.env?.VITE_TURNKEY_BASE_URL;
+    const apiPublicKey =
+      process.env.TURNKEY_API_PUBLIC_KEY ||
+      import.meta.env?.VITE_TURNKEY_API_PUBLIC_KEY;
+    const apiPrivateKey =
+      process.env.TURNKEY_API_PRIVATE_KEY ||
+      import.meta.env?.VITE_TURNKEY_API_PRIVATE_KEY;
+    const organizationId =
+      process.env.TURNKEY_ORGANIZATION_ID ||
+      import.meta.env?.VITE_TURNKEY_ORGANIZATION_ID;
+
+    this.turnkeyClient = new Turnkey({
+      apiBaseUrl: baseUrl,
+      apiPublicKey: apiPublicKey,
+      apiPrivateKey: apiPrivateKey,
+      defaultOrganizationId: organizationId,
+    });
+  }
+
+  private convertAdamikCurveToTurnkeyCurve(
+    curve: AdamikCurve
+  ): "CURVE_SECP256K1" | "CURVE_ED25519" {
+    switch (curve) {
+      case AdamikCurve.SECP256K1:
+        return "CURVE_SECP256K1";
+      case AdamikCurve.ED25519:
+        return "CURVE_ED25519";
+      default:
+        throw new Error(`Unsupported curve: ${curve}`);
+    }
+  }
+
+  private convertHashFunctionToTurnkeyHashFunction(
+    hashFunction: AdamikHashFunction,
+    curve: AdamikCurve
+  ) {
+    if (curve === AdamikCurve.ED25519) {
+      return "HASH_FUNCTION_NOT_APPLICABLE";
+    }
+
+    switch (hashFunction) {
+      case AdamikHashFunction.SHA256:
+        return "HASH_FUNCTION_SHA256";
+      case AdamikHashFunction.KECCAK256:
+        return "HASH_FUNCTION_KECCAK256";
+      default:
+        return "HASH_FUNCTION_NOT_APPLICABLE";
+    }
+  }
+
+  async getPubkey(): Promise<string> {
+    try {
+      const walletId =
+        process.env.TURNKEY_WALLET_ID ||
+        import.meta.env?.VITE_TURNKEY_WALLET_ID;
+
+      const { accounts } = await this.turnkeyClient
+        .apiClient()
+        .getWalletAccounts({
+          walletId,
+          paginationOptions: {
+            limit: "100",
+          },
+        });
+
+      const accountCompressed = accounts.find(
+        (account) =>
+          account.curve ===
+            this.convertAdamikCurveToTurnkeyCurve(this.signerSpec.curve) &&
+          getCoinTypeFromDerivationPath(account.path) ===
+            Number(this.signerSpec.coinType) &&
+          account.addressFormat === "ADDRESS_FORMAT_COMPRESSED"
+      );
+
+      if (accountCompressed) {
+        this.pubKey = accountCompressed.address;
+        return accountCompressed.address;
+      }
+
+      // Create account if not found
+      try {
+        const createAccount = await this.turnkeyClient
+          .apiClient()
+          .createWalletAccounts({
+            walletId,
+            accounts: [
+              {
+                curve: this.convertAdamikCurveToTurnkeyCurve(
+                  this.signerSpec.curve
+                ),
+                path: `m/44'/${this.signerSpec.coinType}'/0'/0/0`,
+                pathFormat: "PATH_FORMAT_BIP32",
+                addressFormat: "ADDRESS_FORMAT_COMPRESSED",
+              },
+            ],
+          });
+
+        this.pubKey = createAccount.addresses[0];
+        return createAccount.addresses[0];
+      } catch (error) {
+        // Handle case where account creation fails but account exists
+        if (
+          error.message?.includes(
+            "wallet account corresponding to path already exists"
+          )
+        ) {
+          // Retry fetching accounts
+          const { accounts } = await this.turnkeyClient
+            .apiClient()
+            .getWalletAccounts({
+              walletId,
+            });
+
+          const existingAccount = accounts.find(
+            (account) =>
+              account.curve ===
+                this.convertAdamikCurveToTurnkeyCurve(this.signerSpec.curve) &&
+              getCoinTypeFromDerivationPath(account.path) ===
+                Number(this.signerSpec.coinType)
+          );
+
+          if (existingAccount) {
+            this.pubKey = existingAccount.address;
+            return existingAccount.address;
+          }
+        }
+        throw error;
+      }
+    } catch (error) {
+      console.error("Error in Turnkey getPubkey:", error);
+      throw error;
+    }
+  }
+
+  async signTransaction(encodedMessage: string): Promise<string> {
+    if (!this.pubKey) {
+      this.pubKey = await this.getPubkey();
+    }
+
+    try {
+      const txSignResult = await this.turnkeyClient.apiClient().signRawPayload({
+        signWith: this.pubKey,
+        payload: encodedMessage,
+        encoding: "PAYLOAD_ENCODING_HEXADECIMAL",
+        hashFunction: this.convertHashFunctionToTurnkeyHashFunction(
+          this.signerSpec.hashFunction,
+          this.signerSpec.curve
+        ),
+      });
+
+      return extractSignature(this.signerSpec.signatureFormat, txSignResult);
+    } catch (error) {
+      console.error("Error in Turnkey signTransaction:", error);
+      throw error;
+    }
+  }
+}
+
+// Helper functions
+function getCoinTypeFromDerivationPath(path: string): number {
+  const parts = path.split("/");
+  // Handle format like m/44'/60'/0'/0/0
+  for (let i = 0; i < parts.length; i++) {
+    if (parts[i].includes("44'") && i + 1 < parts.length) {
+      const nextPart = parts[i + 1];
+      return parseInt(nextPart.replace("'", ""));
+    }
+  }
+  return 0;
+}
+
+function extractSignature(signatureFormat: string, signResult: any): string {
+  // Implementation depends on your specific needs for different chains
+  // This is a placeholder that should be replaced with actual implementation
+  // based on signature format requirements for each blockchain
+  return signResult.r + signResult.s + (signResult.v ? signResult.v : "");
+}
+```
+
+## Integration Workflow
+
+The typical workflow for using Turnkey with Adamik API follows these steps:
+
+1. **Initialize the Signer**:
+
+```typescript
+const chain = await adamikGetChain(chainId);
+const signer = new TurnkeySigner(chainId, chain.signerSpec);
+```
+
+2. **Generate/Retrieve Public Key**:
+
+```typescript
+const pubkey = await signer.getPubkey();
+```
+
+3. **Convert to Address** (using Adamik API):
+
+```typescript
+const { address } = await encodePubKeyToAddress(pubkey, chainId);
+```
+
+4. **Prepare a Transaction** (using Adamik API):
+
+```typescript
+const { encodedTransaction } = await encodeTransaction(chainId, {
+  senderAddress: address,
+  recipientAddress: destinationAddress,
+  amount: "0.001",
+  // other parameters depending on chain
+});
+```
+
+5. **Sign Transaction**:
+
+```typescript
+const signature = await signer.signTransaction(encodedTransaction);
+```
+
+6. **Broadcast Transaction** (using Adamik API):
+
+```typescript
+const result = await broadcastTransaction(
+  chainId,
+  encodedTransaction,
+  signature
+);
+```
+
+## Key Features
+
+### Automatic Account Creation
+
+The Turnkey signer automatically creates accounts with the correct derivation paths and address formats based on the blockchain requirements. If an account already exists, it retrieves it:
+
+```typescript
+// If account not found, create it
+if (!accountCompressed) {
+  const createAccount = await this.turnkeyClient
+    .apiClient()
+    .createWalletAccounts({
+      walletId,
+      accounts: [
+        {
+          curve: this.convertAdamikCurveToTurnkeyCurve(this.signerSpec.curve),
+          path: `m/44'/${this.signerSpec.coinType}'/0'/0/0`,
+          pathFormat: "PATH_FORMAT_BIP32",
+          addressFormat: "ADDRESS_FORMAT_COMPRESSED",
+        },
+      ],
+    });
+
+  this.pubKey = createAccount.addresses[0];
+  return createAccount.addresses[0];
+}
+```
+
+### Multi-Curve Support
+
+The signer handles different cryptographic curves required by various blockchains:
+
+```typescript
+private convertAdamikCurveToTurnkeyCurve(
+  curve: AdamikCurve
+): "CURVE_SECP256K1" | "CURVE_ED25519" {
+  switch (curve) {
+    case AdamikCurve.SECP256K1:
+      return "CURVE_SECP256K1";
+    case AdamikCurve.ED25519:
+      return "CURVE_ED25519";
+    default:
+      throw new Error(`Unsupported curve: ${curve}`);
+  }
+}
+```
+
+### Error Handling
+
+The implementation includes proper error handling for common scenarios, including the case where an account exists but wasn't found in the initial lookup:
+
+```typescript
+try {
+  // Create account code...
+} catch (error) {
+  // If account creation fails but account exists
+  if (
+    error.message?.includes(
+      "wallet account corresponding to path already exists"
+    )
+  ) {
+    // Retry fetching accounts
+    const { accounts } = await this.turnkeyClient
+      .apiClient()
+      .getWalletAccounts({
+        walletId,
+      });
+
+    // Find existing account...
+  }
+  throw error;
+}
+```
+
+## Troubleshooting Common Issues
+
+### "Wallet account corresponding to path already exists"
+
+This error occurs when trying to create an account that already exists. The signer implementation handles this by:
+
+1. Catching the error
+2. Fetching the accounts again
+3. Finding the existing account with the matching path
+
+### Missing Environment Variables
+
+If you encounter errors related to missing environment variables, check:
+
+- For frontend projects: Ensure variables start with `VITE_`
+- For backend projects: No prefix needed
+- Verify all required variables are defined in your `.env` file
+- Restart your application after updating environment variables
+
+### Authentication Issues
+
+If you experience authentication problems:
+
+1. Verify your API keys are correct
+2. Ensure your organization ID and wallet ID are properly set
+3. Check that your Turnkey account has necessary permissions
+
+## Security Considerations
+
+When implementing Turnkey with Adamik API, consider these security best practices:
+
+1. **Environment Variables**: Never hardcode API credentials
+2. **Error Handling**: Implement proper error handling for API responses
+3. **Key Management**: Use appropriate key derivation paths for each blockchain
+4. **Logging**: Implement comprehensive logging for audit purposes, but avoid logging sensitive information
+
+## Testing the Integration
+
+To test this integration:
+
+1. Clone the [GitHub repository](https://github.com/AdamikHQ/adamik-tutorial/tree/signer-turnkey)
+2. Create a `.env.local` file based on the `.env.local.example`
+3. Set up your Turnkey environment variables
+4. Run the example code to test transactions on different chains
+
+## Conclusion
+
+The integration of Turnkey with Adamik API provides a secure and scalable solution for multi-chain applications. By following this implementation guide, you can leverage Turnkey's institutional-grade security while maintaining the flexibility to operate across multiple blockchains through a single interface.
+
+For more details, explore the full source code in our [GitHub repository](https://github.com/AdamikHQ/adamik-tutorial/tree/signer-turnkey), particularly the `src/signers/Turnkey.ts` file for the implementation details.

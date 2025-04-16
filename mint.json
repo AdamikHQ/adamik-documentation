@@ -96,7 +96,10 @@
     },
     {
       "group": "Signer Examples",
-      "pages": ["guides/signers/integrating-sodot-mpc"]
+      "pages": [
+        "guides/signers/integrating-sodot-mpc",
+        "guides/signers/integrating-turnkey"
+      ]
     }
   ],
   "footerSocials": {
