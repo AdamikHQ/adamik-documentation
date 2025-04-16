@@ -15,7 +15,7 @@ Babylon allows Bitcoin holders to participate in staking, earning rewards while 
 
 ### Overview
 
-![Babylon API Pre-Registration Flow](/images/BABYLON-API-FLOWS-pre-reg.png)
+![Babylon API Pre-Stake Registration Flow](/images/BABYLON-API-FLOWS-pre-reg.png)
 
 ### 1. Collect Required Information
 
@@ -31,7 +31,21 @@ GET /api/bitcoin-signet/validators
 ```json Response
 {
   "chainId": "bitcoin-signet",
-  "validators": [...]
+  "validators": [
+    {
+      "address": "d23c2c25e1fcf8fd1c21b9a402c19e2e309e531e45e92fb1e9805b6056b0cc76",
+      "name": "Babylon Foundation 0",
+      "commission": 0.1,
+      "stakedAmount": "18881117815"
+    },
+    {
+      "address": "e4889630fa8695dae630c41cd9b85ef165ccc2dc5e5935d5a24393a9defee9ef",
+      "name": "Babylon Foundation 1",
+      "commission": 0.07,
+      "stakedAmount": "11305179705"
+    },
+    ...
+  ]
 }
 ```
 
@@ -41,8 +55,9 @@ GET /api/bitcoin-signet/validators
 
 You'll need to collect:
 
-- **From UI**: Chosen validator and staking amount
-- **From user data**: Bitcoin address and Bitcoin public key (**NOT** the xpub)
+- Chosen validator
+- Staking amount
+- Bitcoin address and Bitcoin public key (**NOT** the xpub)
 
 ### 2. Create Bitcoin Staking Transaction
 
@@ -291,7 +306,7 @@ Retrieve all staking positions for a Bitcoin public key:
 
 <CodeGroup>
 ```http GET Request
-GET /api/bitcoin-signet/account/state/{public_key}?include=staking
+GET /api/bitcoin-signet/account/state/{address}?pubkey={publicKey}
 ```
 
 ```json Response
@@ -299,6 +314,11 @@ GET /api/bitcoin-signet/account/state/{public_key}?include=staking
   "chainId": "bitcoin-signet",
   "accountId": "02bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499c",
   "balances": {
+    "native": {
+      "available": "466250",
+      "unconfirmed": "0",
+      "total": "466250"
+    },
     "staking": {
       "total": "80000",
       "locked": "50000",
@@ -306,13 +326,21 @@ GET /api/bitcoin-signet/account/state/{public_key}?include=staking
       "unlocked": "10000",
       "positions": [
         {
+          "stakeId": "e6dd797fe3ced5a30f1d89c911f593f099bf9e018d3968498ba12cc8b2ea8532",
+          "validatorAddresses": [
+            "143a1961c97682d59b5f48d5b469ac74ac45273245947865e3c4ad575e4fa646"
+          ],
+          "amount": "50000",
+          "status": "pending"
+        },
+        {
           "stakeId": "52bfb146f0f8c8b98b0fa584056dfb75658b078aac04f3c5a641db9df297387b",
           "validatorAddresses": [
             "d23c2c25e1fcf8fd1c21b9a402c19e2e309e531e45e92fb1e9805b6056b0cc76"
           ],
           "amount": "50000",
           "status": "locked",
-          "completionDate": "1738746956000"
+          "completionDate": "1745382554000"
         },
         {
           "stakeId": "d5b3475f996c03e4b5971f4bde283fe9e5ec089266907b98c6c93ad6ea49a544",
@@ -343,6 +371,8 @@ GET /api/bitcoin-signet/account/state/{public_key}?include=staking
 ```
 
 </CodeGroup>
+
+> ℹ️ The stakeId is the hash of the bitcoin staking transaction
 
 ## Coming Soon Features
 
