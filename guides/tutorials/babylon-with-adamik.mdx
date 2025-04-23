@@ -3,14 +3,20 @@ icon: arrow-progress
 title: Babylon BTC Staking using the Adamik API
 ---
 
-Babylon allows Bitcoin holders to participate in staking, earning rewards while maintaining their BTC holdings. This guide walks through the process of staking Bitcoin using the Adamik API, including transaction creation, signing, and broadcasting.
+Babylon allows Bitcoin holders to participate in staking, earning rewards while maintaining their BTC holdings.
+This guide walks through the process of staking Bitcoin using the Adamik API, including transaction creation, signing, and broadcasting.
 
-## Staking Process
+## I - Stake Bitcoins
 
-📌 **Important Notes**
+### Notes
 
-- Babylon offers two registration methods: **pre-stake** and post-stake. This guide implements the more user-friendly **pre-stake registration** flow. See [Bitcoin Stake Registration Methods](https://github.com/babylonlabs-io/babylon/blob/main/docs/register-bitcoin-stake.md#2-bitcoin-stake-registration-methods) for details.
-- Babylon is still early and currently only available on Bitcoin Signet and Babylon Testnet networks. When Babylon launches on Bitcoin mainnet, simply replace `"bitcoin-signet"` with `"bitcoin"` and `"babylon-testnet"` with `"babylon"` in API calls.
+- The duration of a Bitcoin staking position is 64000 blocks (~444 days). It will naturally end after this period.
+  However the Babylon protocol also allows to manually end the staking position in advance (see part III - [Unstake Bitcoins](/guides/tutorials/babylon-with-adamik#iii-unstake-bitcoins)).
+
+- Babylon offers two registration methods: **pre-stake** and post-stake. This guide implements the more user-friendly **pre-stake registration** flow. Refer to [Babylon's documentation](https://github.com/babylonlabs-io/babylon/blob/main/docs/register-bitcoin-stake.md#2-bitcoin-stake-registration-methods) for details.
+
+- The examples are targeting Bitcoin Signet and Babylon Testnet networks. To target the mainnets, simply replace `"bitcoin-signet"` with `"bitcoin"` and `"babylon-testnet"` with `"babylon"` in API calls.
+
 - The example data shown is for demonstration purposes. While encoded payloads are valid for signing, they may not match the provided examples exactly.
 
 ### Overview
@@ -24,7 +30,7 @@ Babylon allows Bitcoin holders to participate in staking, earning rewards while 
 First, fetch the list of available Bitcoin "finality providers" (validators):
 
 <CodeGroup>
-```http GET Request
+```http Request
 GET /api/bitcoin-signet/validators
 ```
 
@@ -61,7 +67,7 @@ You'll need to collect:
 
 ### 2. Create Bitcoin Staking Transaction
 
-Generate the Bitcoin transaction payloads for signing:
+Generate the Bitcoin transaction payloads to sign, using transaction mode `stake`:
 
 <CodeGroup>
 ```json Request
@@ -197,7 +203,6 @@ Sign the encoded Babylon transaction using a Babylon-compatible wallet.
 ```json Request
 POST /api/babylon/transaction/broadcast
 {
-  "chainId": "babylon",
   "transaction": {
     "data": {
       "mode": "registerStake",
@@ -273,7 +278,6 @@ Once the Babylon registration is confirmed, broadcast the signed Bitcoin staking
 ```json Request
 POST /api/bitcoin-signet/transaction/broadcast
 {
-  "chainId": "bitcoin-signet",
   "transaction": {
     "data": {
       "mode": "stake",
@@ -298,7 +302,7 @@ POST /api/bitcoin-signet/transaction/broadcast
 
 </CodeGroup>
 
-## Managing Staking Positions
+## II - Manage Staking Positions
 
 ### View Bitcoin Staking Positions
 
@@ -372,18 +376,182 @@ GET /api/bitcoin-signet/account/state/{address}?pubkey={publicKey}
 
 </CodeGroup>
 
-> ℹ️ The stakeId is the hash of the bitcoin staking transaction
+> ℹ️ The stakeId is the hash of the Bitcoin staking transaction
 
-## Coming Soon Features
+## III - Unstake Bitcoins
 
-### Unbonding
+The Babylon protocol allows to end an active Bitcoin staking position in advance, i.e before the end of the default staking period of 64000 blocks.
+This is done by sending a dedicated bitcoin transaction, that is a request for unbonding, after which there is an unbonding period of 7 days.
+When the unbonding duration is complete, users must then send a withdrawal transaction to retrieve their bitcoins and make them spendable again (see part IV - [Withdraw Bitcoins](/guides/tutorials/babylon-with-adamik#iv-withdraw-bitcoins)).
 
-The unbonding process for Babylon staking will be documented soon.
+### 1. Create Bitcoin Transaction
 
-### Withdraw
+Generate the Bitcoin transaction payload to sign, using transaction mode `unstake`:
 
-The withdrawal process for Babylon staking will be documented soon.
+<CodeGroup>
+```json Request
+POST /api/bitcoin-signet/transaction/encode
+{
+  "transaction": {
+    "data": {
+      "mode": "unstake",
+      "senderAddress": "tb1pwj4q5jhwlszj6rnrahd95huu6j56dvj9ltfnag55prqnpc53vpqsxh76tx",
+      "senderPubKey": "02bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499c",
+      "validatorAddress": "d23c2c25e1fcf8fd1c21b9a402c19e2e309e531e45e92fb1e9805b6056b0cc76",
+      "stakeId": "52bfb146f0f8c8b98b0fa584056dfb75658b078aac04f3c5a641db9df297387b"
+    }
+  }
+}
+```
 
-### Claim Rewards
+```json Response
+{
+  "chainId": "bitcoin-signet",
+  "transaction": {
+    "data": {
+      "mode": "unstake",
+      "senderAddress": "tb1pwj4q5jhwlszj6rnrahd95huu6j56dvj9ltfnag55prqnpc53vpqsxh76tx",
+      "senderPubKey": "02bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499c",
+      "validatorAddress": "d23c2c25e1fcf8fd1c21b9a402c19e2e309e531e45e92fb1e9805b6056b0cc76",
+      "stakeId": "52bfb146f0f8c8b98b0fa584056dfb75658b078aac04f3c5a641db9df297387b",
+      "useMaxAmount": false,
+      "recipientAddress": "",
+      "fees": "2000"
+    },
+    "encoded": "70736274ff01005e02000000017b3897f29ddb41a6c5f304ac8a078b6575fb6d0584a50f8bb9c8f8f046b1bf520000000000ffffffff0180bb000000000000225120925f6e5d2f54928dbbf7c7b989e2d0e8b6023baece6b7ae6efed0c4f54891999000000000001012b50c3000000000000225120a80fe5278c52cab2e0a0c9702713f61fe8f2f248346a6d7dcc1245338c14ec166215c050929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac08b47c4bf56db05be7cc5f84b03d14987e05392d76b88d6875136d66d34db31d697cb47898d4200f9dbfb360a7dc2402178e9acd31f8c1167ae9afec71b8c34b4fd570120bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499cad200aee0509b16db71c999238a4827db945526859b13c95487ab46725357c9a9f25ac20113c3a32a9d320b72190a04a020a0db3976ef36972673258e9a38a364f3dc3b0ba2017921cf156ccb4e73d428f996ed11b245313e37e27c978ac4d2cc21eca4672e4ba203bb93dfc8b61887d771f3630e9a63e97cbafcfcc78556a474df83a31a0ef899cba2040afaf47c4ffa56de86410d8e47baa2bb6f04b604f4ea24323737ddc3fe092dfba2079a71ffd71c503ef2e2f91bccfc8fcda7946f4653cef0d9f3dde20795ef3b9f0ba20d21faf78c6751a0d38e6bd8028b907ff07e9a869a43fc837d6b3f8dff6119a36ba20f5199efae3f28bb82476163a7e458c7ad445d9bffb0682d10d3bdb2cb41f8e8eba20fa9d882d45f4060bdb8042183828cd87544f1ea997380e586cab77d5fd698737ba569cc001172050929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac00000"
+  },
+  "status": {
+    "errors": [],
+    "warnings": []
+  }
+}
+```
+
+</CodeGroup>
+
+### 2. Sign Bitcoin Transaction
+
+Sign the `encoded` payload with a compatible Bitcoin signer.
+
+### 3. Broadcast Bitcoin Transaction
+
+Broadcast the signed Bitcoin staking transaction:
+
+<CodeGroup>
+```json Request
+POST /api/bitcoin-signet/transaction/broadcast
+{
+  "transaction": {
+    "data": {
+      "mode": "unstake",
+      "senderAddress": "tb1pwj4q5jhwlszj6rnrahd95huu6j56dvj9ltfnag55prqnpc53vpqsxh76tx",
+      "senderPubKey": "02bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499c",
+      "validatorAddress": "d23c2c25e1fcf8fd1c21b9a402c19e2e309e531e45e92fb1e9805b6056b0cc76",
+      "stakeId": "52bfb146f0f8c8b98b0fa584056dfb75658b078aac04f3c5a641db9df297387b",
+      "useMaxAmount": false,
+      "recipientAddress": "",
+      "fees": "2000"
+    },
+    "encoded": "70736274ff01005e02000000017b3897f29ddb41a6c5f304ac8a078b6575fb6d0584a50f8bb9c8f8f046b1bf520000000000ffffffff0180bb000000000000225120925f6e5d2f54928dbbf7c7b989e2d0e8b6023baece6b7ae6efed0c4f54891999000000000001012b50c3000000000000225120a80fe5278c52cab2e0a0c9702713f61fe8f2f248346a6d7dcc1245338c14ec166215c050929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac08b47c4bf56db05be7cc5f84b03d14987e05392d76b88d6875136d66d34db31d697cb47898d4200f9dbfb360a7dc2402178e9acd31f8c1167ae9afec71b8c34b4fd570120bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499cad200aee0509b16db71c999238a4827db945526859b13c95487ab46725357c9a9f25ac20113c3a32a9d320b72190a04a020a0db3976ef36972673258e9a38a364f3dc3b0ba2017921cf156ccb4e73d428f996ed11b245313e37e27c978ac4d2cc21eca4672e4ba203bb93dfc8b61887d771f3630e9a63e97cbafcfcc78556a474df83a31a0ef899cba2040afaf47c4ffa56de86410d8e47baa2bb6f04b604f4ea24323737ddc3fe092dfba2079a71ffd71c503ef2e2f91bccfc8fcda7946f4653cef0d9f3dde20795ef3b9f0ba20d21faf78c6751a0d38e6bd8028b907ff07e9a869a43fc837d6b3f8dff6119a36ba20f5199efae3f28bb82476163a7e458c7ad445d9bffb0682d10d3bdb2cb41f8e8eba20fa9d882d45f4060bdb8042183828cd87544f1ea997380e586cab77d5fd698737ba569cc001172050929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac00000"
+  }
+}
+```
+
+```json Response
+{
+  "chainId": "bitcoin-signet",
+  "hash": "ab9df0f871b9b6e4302b77b0d940434aa30b89b3d7f55255918aec98fafb7f85"
+}
+```
+
+</CodeGroup>
+
+## IV - Withdraw Bitcoins
+
+After a staking position has ended, users have to send a withdrawal transaction before being able to spend their bitcoins again.
+This transaction is mandatory whether the position has ended naturally after the default staking duration or after the manual unbonding period has eneded.
+
+### 1. Create Bitcoin Transaction
+
+Generate the Bitcoin transaction payload to sign, using transaction mode `withdraw`:
+
+<CodeGroup>
+```json Request
+POST /api/bitcoin-signet/transaction/encode
+{
+  "transaction": {
+    "data": {
+      "mode": "withdraw",
+      "senderAddress": "tb1pwj4q5jhwlszj6rnrahd95huu6j56dvj9ltfnag55prqnpc53vpqsxh76tx",
+      "senderPubKey": "02bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499c",
+      "recipientAddress": "tb1pwj4q5jhwlszj6rnrahd95huu6j56dvj9ltfnag55prqnpc53vpqsxh76tx",
+      "validatorAddress": "d66124f8f42fd83e4c901a100ae3b5d706ef6cfd217b04bc64152e739a30c41e",
+      "stakeId": "943b38b6e1d6ffe0194f93dbfbe36499d1eaa625867aae17a59aff2825d42109"
+    }
+  }
+}
+```
+
+```json Response
+{
+  "chainId": "bitcoin-signet",
+  "transaction": {
+    "data": {
+      "mode": "withdraw",
+      "senderPubKey": "02bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499c",
+      "validatorAddress": "d66124f8f42fd83e4c901a100ae3b5d706ef6cfd217b04bc64152e739a30c41e",
+      "stakeId": "943b38b6e1d6ffe0194f93dbfbe36499d1eaa625867aae17a59aff2825d42109",
+      "recipientAddress": "tb1pwj4q5jhwlszj6rnrahd95huu6j56dvj9ltfnag55prqnpc53vpqsxh76tx",
+      "senderAddress": "tb1pwj4q5jhwlszj6rnrahd95huu6j56dvj9ltfnag55prqnpc53vpqsxh76tx",
+      "fees": "159"
+    },
+    "encoded": "70736274ff01005e0200000001fd2f56d383b71a98d0f86780aa591f1eca05c44e581d47e1e3838b05df259a3b0000000000f003000001e1ba00000000000022512074aa0a4aeefc052d0e63edda5a5f9cd4a9a6b245fad33ea29408c130e2916041000000000001012b80bb0000000000002251206f5554b3505cbccc88c8e86541dbac87e53f962c18b953780ccde2e4d5969d3c4215c150929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac099c5eb18cdfad5d84d849d1aa9e883c313b19b2a89726b534534dd064587eb512720bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499cad02f003b2c001172050929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac00000"
+  },
+  "status": {
+    "errors": [],
+    "warnings": []
+  }
+}
+```
+
+</CodeGroup>
+
+### 2. Sign Bitcoin Transaction
+
+Sign the `encoded` payload with a compatible Bitcoin signer.
+
+### 3. Broadcast Bitcoin Transaction
+
+Broadcast the signed Bitcoin staking transaction:
+
+<CodeGroup>
+```json Request
+POST /api/bitcoin-signet/transaction/broadcast
+{
+  "transaction": {
+    "data": {
+      "mode": "withdraw",
+      "senderPubKey": "02bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499c",
+      "validatorAddress": "d66124f8f42fd83e4c901a100ae3b5d706ef6cfd217b04bc64152e739a30c41e",
+      "stakeId": "943b38b6e1d6ffe0194f93dbfbe36499d1eaa625867aae17a59aff2825d42109",
+      "recipientAddress": "tb1pwj4q5jhwlszj6rnrahd95huu6j56dvj9ltfnag55prqnpc53vpqsxh76tx",
+      "senderAddress": "tb1pwj4q5jhwlszj6rnrahd95huu6j56dvj9ltfnag55prqnpc53vpqsxh76tx",
+      "fees": "159"
+    },
+    "encoded": "70736274ff01005e0200000001fd2f56d383b71a98d0f86780aa591f1eca05c44e581d47e1e3838b05df259a3b0000000000f003000001e1ba00000000000022512074aa0a4aeefc052d0e63edda5a5f9cd4a9a6b245fad33ea29408c130e2916041000000000001012b80bb0000000000002251206f5554b3505cbccc88c8e86541dbac87e53f962c18b953780ccde2e4d5969d3c4215c150929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac099c5eb18cdfad5d84d849d1aa9e883c313b19b2a89726b534534dd064587eb512720bd2eb288281a9e7a15ec81b8b593f243b96fbcd2b16a1a509c1b87df95fc499cad02f003b2c001172050929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac00000"
+  }
+}
+```
+
+```json Response
+{
+  "chainId": "bitcoin-signet",
+  "hash": "34b7f4ff29240eabaca4bc981205335306f51a0afc697cab4b5ad2586e480dfd"
+}
+```
+
+</CodeGroup>
+
+## V. Claim Rewards on secured chains
 
 The reward claiming process for Babylon staking will be documented soon.
