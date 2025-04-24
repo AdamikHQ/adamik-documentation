@@ -2,33 +2,145 @@
 icon: wallet
 ---
 
-We offer two flexible plans based on your needs:
+We offer flexible plans for wallets, exchanges, and custodians
 
-<CardGroup cols={2}>
-  <Card title="Free Plan" icon="handshake">
-    Start for free.  
-    - Access all blockchains  
-    - Basic rate limits  
-    - No payment required  
-    - 10,000 API calls/month  
+<CardGroup cols={3}>
+  <Card title="Free" icon="handshake">
+    <div style={{ position: 'relative', minHeight: '420px', paddingBottom: '60px' }}>
+      <div style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>$0 /month</div>
+      
+      <div style={{ marginBottom: '1rem' }}>
+        Get started for free.<br />
+        Perfect for solo builders & early prototyping
+      </div>
+      
+      <ul style={{ listStyleType: 'none', padding: 0 }}>
+        <li>✓ 5,000 API calls per month</li>
+        <li>✓ Access to all supported blockchains</li>
+        <li>✓ Discord support</li>
+        <li>✓ Ideal for hackathons, testing, and MVPs</li>
+      </ul>
+      
+      <div style={{ position: 'absolute', bottom: '0', left: '0', right: '0', textAlign: 'center' }}>
+        <a 
+          href="https://dashboard.Adamik.io" 
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ 
+            display: 'inline-block', 
+            padding: '0.5rem 1rem', 
+            backgroundColor: '#111827', 
+            color: 'white', 
+            borderRadius: '0.375rem', 
+            textDecoration: 'none', 
+            fontWeight: '500' 
+          }}
+        >
+          Get Started for Free
+        </a>
+      </div>
+    </div>
   </Card>
 
-  <Card title="Pay-As-You-Go Plan" icon="arrow-up-right-dots">
-    All Free Plan features + extras.
-    - Access all blockchains  
-    - Increased rate limits for production use  
-    - $250 monthly base fee  
-    - Flexible, pay per call after 10,000 
-    - Premium support
+{" "}
 
+<Card title="Growth" icon="arrow-up-right-dots">
+  <div
+    style={{ position: "relative", minHeight: "420px", paddingBottom: "60px" }}
+  >
+    <div
+      style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem" }}
+    >
+      $250 /month
+    </div>
+
+    <div style={{ marginBottom: "1rem" }}>
+      Pay-as-you-go.
+      Ideal for scaling teams & production use
+    </div>
+
+    <ul style={{ listStyleType: "none", padding: 0 }}>
+      <li>✓ 10,000 API calls per month</li>
+      <li>✓ Usage-based billing beyond 10k</li>
+      <li>✓ Access to all supported blockchains</li>
+      <li>✓ Priority Slack support</li>
+    </ul>
+
+    <div
+      style={{
+        position: "absolute",
+        bottom: "0",
+        left: "0",
+        right: "0",
+        textAlign: "center",
+      }}
+    >
+      <a
+        href="https://adamik.io/contact"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          display: "inline-block",
+          padding: "0.5rem 1rem",
+          backgroundColor: "#f3f4f6",
+          color: "#111827",
+          borderRadius: "0.375rem",
+          textDecoration: "none",
+          fontWeight: "500",
+        }}
+      >
+        Talk to Us →
+      </a>
+    </div>
+
+  </div>
+</Card>
+
+  <Card title="Enterprise" icon="building">
+    <div style={{ position: 'relative', minHeight: '420px', paddingBottom: '60px' }}>
+      <div style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>Custom</div>
+      
+      <div style={{ marginBottom: '1rem' }}>
+        Ideal for high-throughput enterprises
+      </div>
+      
+      <ul style={{ listStyleType: 'none', padding: 0 }}>
+        <li>✓ Unlimited Calls</li>
+        <li>✓ Access to all supported blockchains</li>
+        <li>✓ Custom Rate Limits</li>
+        <li>✓ White-glove Pilot</li>
+        <li>✓ Premium Support</li>
+      </ul>
+      
+      <div style={{ position: 'absolute', bottom: '0', left: '0', right: '0', textAlign: 'center' }}>
+        <a 
+          href="https://adamik.io/contact" 
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ 
+            display: 'inline-block', 
+            padding: '0.5rem 1rem', 
+            backgroundColor: 'white', 
+            color: '#111827', 
+            borderRadius: '0.375rem', 
+            textDecoration: 'none', 
+            fontWeight: '500' 
+          }}
+        >
+          Talk to Us →
+        </a>
+      </div>
+    </div>
   </Card>
 </CardGroup>
 
 ## How It Works
 
-1. **Free Plan**: The Free Plan gives you 10,000 API calls per month with access to all supported blockchains. It's perfect for non-production use, offering basic rate limits and access to community support. No payment information is required to get started.
+1. **Free Plan**: The Free Plan gives you 5,000 API calls per month with access to all supported blockchains. It's perfect for non-production use, offering basic rate limits and access to community support. No payment information is required to get started.
 
-2. **Pay-As-You-Go Plan**: This plan is designed for production environments. For $250 per month, you get 10,000 API calls included, premium support, and increased rate limits for higher-volume use. After the first 10,000 API calls, additional calls are charged according to the dynamic pricing tiers below, which scale based on your usage.
+2. **Growth Plan**: This plan is designed for production environments. For $250 per month, you get 10,000 API calls included, premium support, and increased rate limits for higher-volume use. After the first 10,000 API calls, additional calls are charged according to the dynamic pricing tiers below, which scale based on your usage.
+
+3. **Enterprise Plan**: For businesses with high volume needs. This plan offers custom pricing, dedicated support, and tailored features for high-throughput enterprises.
 
 ## Pricing Tiers for Pay-As-You-Go Plan
 
@@ -89,7 +201,7 @@ Your cost is recalculated immediately after each API call based on a rolling 30-
 
 **Example Scenario:**
 
-- **Plan**: Pay-As-You-Go
+- **Plan**: Growth Plan
 - **Total API Calls**: 1,200,000 (monthly)
 
 ### Calculation:
