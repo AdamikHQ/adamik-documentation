@@ -84,7 +84,8 @@
         "guides/e2e-examples/using-Adamik-API-with-Ethereum",
         "guides/e2e-examples/using-Adamik-API-with-TON",
         "guides/e2e-examples/using-Adamik-API-with-Bitcoin",
-        "guides/e2e-examples/using-Adamik-API-with-StarkNet"
+        "guides/e2e-examples/using-Adamik-API-with-StarkNet",
+        "guides/e2e-examples/using-Adamik-API-with-Stellar"
       ]
     },
     {
