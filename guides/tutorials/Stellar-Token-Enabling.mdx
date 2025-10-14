@@ -1,0 +1,273 @@
+---
+icon: book
+title: How to Enable Tokens (Trustlines) on Stellar with Adamik
+sidebarTitle: "Stellar Token Enabling"
+---
+
+This guide provides step-by-step instructions for enabling tokens on Stellar using the Adamik API. On the Stellar network, before you can receive or hold custom assets (tokens), you must establish a trustline to the asset's issuer. This process is called "enabling a token" or "creating a trustline."
+
+<Info>
+  Stellar requires users to explicitly opt-in to hold custom assets as a security measure. This prevents unwanted tokens from being sent to your account without your permission.
+</Info>
+
+## Understanding Stellar Assets
+
+On Stellar, all assets except the native XLM are identified by:
+- **Asset Code**: A 1-12 character alphanumeric code (e.g., "USDC", "EURC")
+- **Issuer Address**: The Stellar account that created and issued the asset
+
+Together, these form a unique identifier for each asset on the network.
+
+## Prerequisites
+
+Before enabling a token, ensure you have:
+1. A funded Stellar account (minimum 1 XLM for base reserve)
+2. Your account's secret key for signing transactions
+3. The asset code and issuer address of the token you want to enable
+4. An Adamik API key from [dashboard.adamik.io](https://dashboard.adamik.io)
+
+<Warning>
+  Each trustline requires 0.5 XLM to be locked as a base reserve. This XLM becomes available again if you remove the trustline.
+</Warning>
+
+## Step-by-Step Tutorial
+
+### Step 1: Prepare Your Request
+
+To enable a token, use the `/api/stellar-testnet/transaction/encode` endpoint with the `enable_token` mode:
+
+```json
+{
+  "transaction": {
+    "data": {
+      "chainId": "stellar-testnet",
+      "mode": "enable_token",
+      "tokenId": "USDC:GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5",
+      "senderAddress": "GCZ2GEDRGWOB42FGJM3UVW2PQPOTKAUD5TFYUIVTJZR3ROCBJATPGB4R",
+      "format": "json"
+    }
+  }
+}
+```
+
+<Note>
+  The `tokenId` field follows the format: `ASSET_CODE:ISSUER_ADDRESS`
+</Note>
+
+### Step 2: API Response
+
+The API returns an encoded transaction ready for signing:
+
+```json
+{
+  "chainId": "stellar-testnet",
+  "transaction": {
+    "data": {
+      "mode": "enable_token",
+      "senderAddress": "GCZ2GEDRGWOB42FGJM3UVW2PQPOTKAUD5TFYUIVTJZR3ROCBJATPGB4R",
+      "tokenId": "USDC:GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5",
+      "fees": "100"
+    },
+    "encoded": [
+      {
+        "raw": {
+          "format": "XDR",
+          "value": "cee0302d59844d32bdca915c8203dd44b33fbb7edc19051ea37abedf28ecd472..."
+        },
+        "hash": {
+          "format": "sha256",
+          "value": "a1b2c3d4e5f6..."
+        }
+      }
+    ]
+  }
+}
+```
+
+### Step 3: Sign the Transaction
+
+For Stellar, you must sign the transaction **hash** (not the raw transaction):
+
+```javascript
+const { Keypair } = require("@stellar/stellar-sdk");
+
+// Your wallet's secret key
+const secretKey = "SBFZCHU5645DOKRWYBXVOXY2ELGJKFRX6VGGPRYUWHQ7PMXXJNDZFMKD";
+const keypair = Keypair.fromSecret(secretKey);
+
+// Extract and sign the hash
+const hashToSign = encodedData.transaction.encoded[0].hash.value;
+const hashBuffer = Buffer.from(hashToSign, 'hex');
+const signature = keypair.sign(hashBuffer);
+const signatureHex = signature.toString('hex');
+```
+
+### Step 4: Broadcast the Signed Transaction
+
+Send the signed transaction back to Adamik for broadcasting:
+
+```json
+{
+  "transaction": {
+    "data": {
+      "mode": "enable_token",
+      "senderAddress": "GCZ2GEDRGWOB42FGJM3UVW2PQPOTKAUD5TFYUIVTJZR3ROCBJATPGB4R",
+      "tokenId": "USDC:GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5",
+      "fees": "100"
+    },
+    "encoded": [...],
+    "signature": "5a3e0ec98d7475332f09900cd6f2ef6e266fdb4f95b2800ee9c0244a6dba70cf..."
+  }
+}
+```
+
+Use the `/api/stellar-testnet/transaction/broadcast` endpoint to broadcast.
+
+### Step 5: Verify the Transaction
+
+Upon successful broadcast, you'll receive a transaction hash:
+
+```json
+{
+  "hash": "7f8e9d0c1b2a3..."
+}
+```
+
+You can view the transaction on Stellar Expert:
+```
+https://stellar.expert/explorer/testnet/tx/{hash}
+```
+
+## Complete Code Example
+
+Here's a complete Node.js example for enabling a token on Stellar testnet:
+
+```javascript
+const { Keypair } = require("@stellar/stellar-sdk");
+
+async function enableStellarToken() {
+  // Configuration
+  const ADAMIK_API_KEY = "your-adamik-api-key";
+  const secretKey = "your-stellar-secret-key";
+  const assetCode = "USDC";
+  const issuerAddress = "GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5";
+  
+  // Create keypair
+  const keypair = Keypair.fromSecret(secretKey);
+  const senderAddress = keypair.publicKey();
+  
+  // Step 1: Encode the enable_token transaction
+  const encodeResponse = await fetch(
+    "https://api.adamik.io/api/stellar-testnet/transaction/encode",
+    {
+      method: "POST",
+      headers: {
+        Authorization: ADAMIK_API_KEY,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        transaction: {
+          data: {
+            chainId: "stellar-testnet",
+            mode: "enable_token",
+            tokenId: `${assetCode}:${issuerAddress}`,
+            senderAddress: senderAddress,
+            format: "json",
+          },
+        },
+      }),
+    }
+  );
+
+  const encodedData = await encodeResponse.json();
+  
+  if (!encodeResponse.ok) {
+    console.error("Failed to encode:", encodedData);
+    return;
+  }
+  
+  console.log("Trustline transaction encoded successfully");
+
+  // Step 2: Sign the transaction hash
+  const hashToSign = encodedData.transaction.encoded[0].hash.value;
+  const hashBuffer = Buffer.from(hashToSign, 'hex');
+  const signature = keypair.sign(hashBuffer);
+  const signatureHex = signature.toString('hex');
+
+  // Step 3: Broadcast the signed transaction
+  const broadcastResponse = await fetch(
+    "https://api.adamik.io/api/stellar-testnet/transaction/broadcast",
+    {
+      method: "POST",
+      headers: {
+        Authorization: ADAMIK_API_KEY,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        transaction: {
+          data: encodedData.transaction.data,
+          encoded: encodedData.transaction.encoded,
+          signature: signatureHex,
+        },
+      }),
+    }
+  );
+
+  const result = await broadcastResponse.json();
+  
+  if (broadcastResponse.ok && result.hash) {
+    console.log(`✅ Token enabled successfully!`);
+    console.log(`Transaction hash: ${result.hash}`);
+    console.log(`View on explorer: https://stellar.expert/explorer/testnet/tx/${result.hash}`);
+  } else {
+    console.error("Broadcast failed:", result);
+  }
+}
+
+enableStellarToken().catch(console.error);
+```
+
+## Common Testnet Tokens
+
+Here are some commonly used tokens on Stellar testnet for testing:
+
+| Asset Code | Issuer | Description |
+|------------|--------|-------------|
+| USDC | GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5 | USD Coin Test |
+| SRT | GCDNJUBQSX7AJWLJACMJ7I4BC3Z47BQUTMHEICZLE6MU4KQBRYG5JY6B | Stellar Reference Token |
+| EURC | GB3Q6QDZYTHWT7E5PVS3W7FUT5GVAFC5KSZFFLPU25GO7VTC3NM2ZTVO | Euro Coin Test |
+
+## Troubleshooting
+
+### Common Errors and Solutions
+
+| Error | Cause | Solution |
+|-------|-------|----------|
+| "Balance is too low" | Insufficient XLM for reserves | Ensure account has at least 1.5 XLM (1 XLM base + 0.5 XLM per trustline) |
+| "Asset issuer not found" | Invalid issuer address | Verify the issuer address is correct and active |
+| "Trustline already exists" | Token already enabled | The token is already enabled for your account |
+| "Invalid asset code" | Malformed asset code | Asset codes must be 1-12 alphanumeric characters |
+
+### Important Considerations
+
+1. **Reserve Requirements**: Each trustline locks 0.5 XLM as a base reserve
+2. **Trust Limits**: You can optionally set a maximum amount you're willing to hold of an asset
+3. **Asset Freezing**: Some issuers can freeze assets - research issuers before trusting
+4. **Removing Trustlines**: You can only remove a trustline if your balance of that asset is zero
+
+## Next Steps
+
+After enabling a token, you can:
+- Receive the token from other accounts
+- Trade the token on Stellar DEX
+- Send the token to other accounts that have also enabled it
+- Set up path payments using the token
+
+For more information on Stellar assets and trustlines, visit the [Stellar documentation](https://developers.stellar.org/docs/fundamentals-and-concepts/stellar-data-structures/assets).
+
+## Get Support
+
+Need help? Connect with us:
+- [Discord Server](https://discord.gg/gsZJR2JfMR)
+- [GitHub Issues](https://github.com/AdamikHQ)
+- [Adamik Dashboard](https://dashboard.adamik.io)

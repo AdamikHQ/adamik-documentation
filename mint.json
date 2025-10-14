@@ -92,7 +92,8 @@
       "group": "Tutorials",
       "pages": [
         "guides/tutorials/Bitcoin-Transaction-Crafting",
-        "guides/tutorials/babylon-with-adamik"
+        "guides/tutorials/babylon-with-adamik",
+        "guides/tutorials/Stellar-Token-Enabling"
       ]
     },
     {
